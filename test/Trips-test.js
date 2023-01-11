@@ -219,7 +219,11 @@ describe("Trips", function () {
 		expect(trips).to.be.an.instanceof(Trips);
 	});
 
-	it("should store all travelers' trips", function () {
+	it("should return every trip for all travelers", function () {
+		expect(trips.getTripsForAllUsers()).to.deep.equal(tripsData);
+	});
+
+	it("should store every trip for all travelers", function () {
 		expect(trips.data).to.deep.equal(tripsData);
 	});
 
@@ -246,6 +250,32 @@ describe("Trips", function () {
 				suggestedActivities: [],
 			},
 		]);
+		expect(trips.findIfUserHasTrips(19)).to.deep.equal([
+			{
+				id: 14,
+				userID: 19,
+				destinationID: 35,
+				travelers: 1,
+				date: "2022/09/24",
+				duration: 10,
+				status: "approved",
+				suggestedActivities: [],
+			},
+			{
+				id: 16,
+				userID: 19,
+				destinationID: 27,
+				travelers: 1,
+				date: "2022/11/20",
+				duration: 9,
+				status: "approved",
+				suggestedActivities: [],
+			},
+		]);
+	});
+
+	it("should return false if no trips are found for a traveler by their id", function () {
+		expect(trips.findIfUserHasTrips(500)).to.equal(false);
 	});
 
 	it("should return an error message if no trips are found for a traveler by their id", function () {

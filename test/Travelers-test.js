@@ -124,11 +124,20 @@ describe("Travelers", function () {
 	});
 
 	it("should find a traveler by their id", function () {
+		expect(travelers.findIfUserExists(15)).to.deep.equal({
+			id: 15,
+			name: "Emeline Winslet",
+			travelerType: "history buff",
+		});
 		expect(travelers.findTravelerById(15)).to.deep.equal({
 			id: 15,
 			name: "Emeline Winslet",
 			travelerType: "history buff",
 		});
+	});
+
+	it("should return false if a traveler with that id is not found", function () {
+		expect(travelers.findIfUserExists(90)).to.equal(false);
 	});
 
 	it("should return an error message if a traveler with an id is not found", function () {
