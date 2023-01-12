@@ -14,7 +14,7 @@
     <div class="nav-button">
       <button class="trips-button">Your Trips</button>
       <button class="expense-button">Your Expenses</button>
-      <button>Book a New Trip</button>
+      <button class="book-trip-button">Book a New Trip</button>
       <button>Logout</button>
     </div>
   </nav>
@@ -30,7 +30,7 @@
       <section class="past-trips-grid trips-grid">
       </section>
     </section>
-    <section class="expense-view">
+    <section class="expense-view hidden">
       <h2>Your Trip Expenses</h2>
       <div class="expense-text-container">
         <p class="amount-this-year-text">You've spent $0 on trips this year</p>
@@ -45,6 +45,79 @@
         </tr>
       </table>
       <p class="expense-message">*Price includes a 10% travel agent’s fee</p>
+    </section>
+    <section class="booking-view">
+      <form class="form">
+        <h2>Request to Book a Trip</h2>
+        <p class="hidden empty-input-message">Please fill out all fields</p>
+        <div>
+          <label for="departureDate">Departure Date</label>
+          <input type="date" name="date" id="departureDate" value="2022-01-23" min="2022-01-24" max="2025-02-24">
+        </div>
+        <div>
+          <label for="numberOfDays">Number of Days</label>
+          <input type="number" name="number-of-days" id="numberOfDays" required />
+        </div>
+        <div>
+          <label for="numberOfPeople">Number of People</label>
+          <input type="number" name="number-of-people" id="numberOfPeople" required />
+        </div>
+        <div class="destination-input">
+          <label for="destination">Destination</label>
+          <select name="destination" id="destination">
+            <option value="35">Anchorage, Alaska</option>
+            <option value="3">Sydney, Australia</option>
+            <option value="44">Caye Caulker, Belize</option>
+            <option value="33">Brussels, Belgium</option>
+            <option value="27">San Francisco, California</option>
+            <option value="45">Calgary, Canada</option>
+            <option value="10">Toronto, Canada</option>
+            <option value="4">Cartagena, Colombia</option>
+            <option value="40">La Isla Tortuga, Costa Rica</option>
+            <option value="29">Willemstad, Curaçao</option>
+            <option value="23">Copenhagen, Denmark</option>
+            <option value="42">Santo Domingo, Dominican Republic</option>
+            <option value="19">Quito, Ecudor</option>
+            <option value="26">London, England</option>
+            <option value="38">Helsinki, Finland</option>
+            <option value="7">Paris, France</option>
+            <option value="20">Miami, Florida</option>
+            <option value="37">Frankfurt, Germany</option>
+            <option value="11">Mikonos, Greece</option>
+            <option value="36">Reykjavík, Iceland</option>
+            <option value="17">Jaipur, India</option>
+            <option value="6">Jakarta, Indonesia</option>
+            <option value="22">Rome, Italy</option>
+            <option value="41">Montego Bay, Jamaica</option>
+            <option value="8">Tokyo, Japan</option>
+            <option value="28">San Juan, Puerto Rico</option>
+            <option value="24">Vilnius, Lithuania</option>
+            <option value="30">Antananarivo, Madagascar</option>
+            <option value="21">Tulum, Mexico</option>
+            <option value="14">Marrakesh, Morocco</option>
+            <option value="32">Kathmandu, Nepal</option>
+            <option value="9">Amsterdam, Netherlands</option>
+            <option value="25">New York, New York</option>
+            <option value="12">Wellington, New Zealand</option>
+            <option value="1">Lima, Peru</option>
+            <option value="15">Manila, Philippines</option>
+            <option value="39">Porto, Portugal</option>
+            <option value="13">St. Petersburg, Russia</option>
+            <option value="46">Victoria, Seychelles</option>
+            <option value="18">Cape Town, South Africa</option>
+            <option value="34">Seoul, South Korea</option>
+            <option value="5">Madrid, Spain</option>
+            <option value="31">Colombo, Sri Lanka</option>
+            <option value="49">Castries, St Lucia</option>
+            <option value="2">Stockholm, Sweden</option>
+            <option value="47">Zürich, Switzerland</option>
+            <option value="48">Dar es Salaam, Tanzania</option>
+            <option value="50">Hobart, Tasmania</option>
+            <option value="16">Bangkok, Thailand</option>
+            <option value="43">Nassau, The Bahamas</option>
+          </select>
+        </div>
+      </form>
     </section>
   </main>
   

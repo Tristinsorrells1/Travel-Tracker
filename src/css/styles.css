@@ -136,6 +136,42 @@ tr:hover {
   margin: .25vw;
 }
 
+/* form */
+
+form {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  display: block;
+  margin: 2.5vh;
+  width: 10vw;
+}
+
+#destination {
+  width: 12vw;
+  margin-top: 1vh;
+  height: 4vh;
+}
+
+label {
+ display: flex;
+ justify-content: center;
+}
+
+
+.missing-info {
+  border: 3px dashed red;
+}
+
+.empty-input-message {
+  color: red;
+}
+
 .hidden {
   display: none !important;
 }

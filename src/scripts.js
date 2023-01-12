@@ -28,9 +28,10 @@ let futureTripsGrid = document.querySelector(".future-trips-grid");
 let yourJourneyAwaitsText = document.querySelector(".journey-message");
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
+let bookNewTripButton = document.querySelector(".book-trip-button");
+let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
-let tripExpenses = document.querySelector(".trip-expense-info");
 let expenseTable = document.querySelector(".expense-table");
 let totalSpentText = document.querySelector(".total-spent-text");
 let yearlyAmountText = document.querySelector(".amount-this-year-text");
@@ -38,12 +39,20 @@ let yearlyAmountText = document.querySelector(".amount-this-year-text");
 //-----------------------------------eventListeners------------------------
 
 expenseButton.addEventListener("click", function () {
-	tripsSection.classList.add("hidden");
 	expenseSection.classList.remove("hidden");
+	tripsSection.classList.add("hidden");
+	bookingSection.classList.add("hidden");
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
+	expenseSection.classList.add("hidden");
+	bookingSection.classList.add("hidden");
+});
+
+bookNewTripButton.addEventListener("click", function () {
+	bookingSection.classList.remove("hidden");
+	tripsSection.classList.add("hidden");
 	expenseSection.classList.add("hidden");
 });
 
@@ -83,9 +92,7 @@ function createLayout() {
 fetchApiPromises();
 
 function test() {
-	user = new User(travelersData[17]);
-	console.log(user.getTrips(travelers, trips));
-	console.log(user.id);
+    user = new User(travelersData[17])
 }
 
 function createInstances() {
