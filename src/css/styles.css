@@ -1,3 +1,84 @@
-body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+* {
+  font-family: 'Noto Serif'
 }
+
+body {
+  border: 2px solid red;
+  overflow: auto;
+}
+
+h2 {
+  font-size: 1.5vw;
+  padding-top: 1vh;
+  margin: auto;
+  width: 20vw;
+  height: 5vh;
+}
+
+main {
+  /* height: 100vh; */
+  width: 100%;
+  height: fit-content;
+  /* background-image: url('../images/option.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat; */
+  background-color: rgb(210, 238, 247);
+  border: 2px solid blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  height: fit-content;
+  width: 80vw;
+}
+
+nav {
+  display: flex;
+  background-color: rgb(62, 30, 30);
+  height: 2vh;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 2vh;
+}
+
+button {
+margin: 1vh;
+color: white;
+background-color: rgb(65, 44, 19);
+}
+
+button:hover {
+  background-color: rgb(181, 200, 206);
+  transition: .5s;
+}
+
+.trip-container {
+  border: 2px solid green;
+  width: 20vw;
+  background-color: rgba(255, 255, 255, 0.385);
+}
+
+.trips-view {
+  height: fit-content;
+}
+
+.trips-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 25vw;
+  grid-template-columns: 20vw;
+  grid-gap: 3vw;
+  border: 2px solid pink;
+  overflow: auto;
+}
+
+.trip-image {
+  height: 20vh;
+  width: 20vw;
+  opacity: 1;
+  background-color: blue;
+}
+
