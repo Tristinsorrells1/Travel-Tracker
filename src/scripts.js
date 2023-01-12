@@ -24,6 +24,7 @@ let today = "2020/08/07";
 let pastTripsGrid = document.querySelector(".past-trips-grid");
 let pendingTripsGrid = document.querySelector(".pending-trips-grid");
 let futureTripsGrid = document.querySelector(".future-trips-grid");
+let yourJourneyAwaitsText = document.querySelector(".journey-message");
 
 // -----------------------------------Functions----------------------------
 
@@ -34,27 +35,34 @@ const fetchApiPromises = () => {
 		destinationsData = data[2].destinations;
 		createInstances();
 		test();
-		createTripsGrid(
-			pastTripsGrid,
-			user.getTripByStatus("past", trips, travelers, today)
-		);
-		createTripsGrid(
-			pendingTripsGrid,
-			user.getTripByStatus("pending", trips, travelers, today)
-		);
-		createTripsGrid(
-			futureTripsGrid,
-			user.getTripByStatus("upcoming", trips, travelers, today)
-		);
+		createLayout();
 	});
 };
+
+function createLayout() {
+	createTripsGrid(
+		pastTripsGrid,
+		user.getTripByStatus("past", trips, travelers, today)
+	);
+	createTripsGrid(
+		pendingTripsGrid,
+		user.getTripByStatus("pending", trips, travelers, today)
+	);
+	createTripsGrid(
+		futureTripsGrid,
+		user.getTripByStatus("upcoming", trips, travelers, today)
+	);
+	yourJourneyAwaitsText.innerText = `Your Next Journey Awaits, ${
+		user.name.split(" ")[0]
+	}`;
+}
 
 fetchApiPromises();
 
 function test() {
-	user = new User(travelersData[18]);
+	user = new User(travelersData[10]);
 	console.log(user.getTrips(travelers, trips));
-    console.log(user.trips)
+	console.log(user.id);
 }
 
 function createInstances() {
@@ -64,8 +72,6 @@ function createInstances() {
 }
 
 function createTripsGrid(tripGrid, tripDate) {
-	// let pastTrips = user.getTripByStatus("past", trips, travelers, today);
-
 	tripGrid.innerHTML = "";
 	let getTrips = tripDate.map((trip) => {
 		return destinations["data"].find(
@@ -75,21 +81,21 @@ function createTripsGrid(tripGrid, tripDate) {
 
 	getTrips.forEach((destination) => {
 		tripDate.forEach((trip) => {
-			tripGrid.innerHTML += ` <div class="trip-container">
-                <div class="trip-image-container">
-                  <img class="trip-image"
-                    src=${destination.image} >
-                    </div>
-                    <p>${destination.destination}</p>
-                    <p>Duration: ${trip.duration} days</p>
-                    <p>Date: ${trip.date}</p>
-              </div>
-                `;
+			if (destination.id === trip.destinationID) {
+				tripGrid.innerHTML += ` <div class="trip-container">
+                    <div class="trip-image-container">
+                    <img class="trip-image"
+                        src=${destination.image} >
+                        </div>
+                        <p>${destination.destination}</p>
+                        <p>Duration: ${trip.duration} days</p>
+                        <p>Date: ${trip.date}</p>
+                </div>
+                    `;
+			}
 		});
 	});
-
-    if (tripGrid.innerHTML === "") {
-        tripGrid.innerHTML = `
-        <p class="no-trips-in-grid">No Trips Found</p>`
-    }
+	if (tripGrid.innerHTML === "") {
+		tripGrid.innerHTML = `<p class="no-trips-in-grid">No Trips Found</p>`;
+	}
 }
