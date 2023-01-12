@@ -7,14 +7,6 @@ body {
   overflow: auto;
 }
 
-h2 {
-  font-size: 1.5vw;
-  padding-top: 1vh;
-  margin: auto;
-  width: 20vw;
-  height: 5vh;
-}
-
 main {
   /* height: 100vh; */
   width: 100%;
@@ -59,6 +51,7 @@ button:hover {
   border: 2px solid green;
   width: 20vw;
   background-color: rgba(255, 255, 255, 0.385);
+  text-align: center;
 }
 
 .trips-view {
@@ -71,7 +64,7 @@ button:hover {
   grid-auto-columns: 25vw;
   grid-template-columns: 20vw;
   grid-gap: 3vw;
-  border: 2px solid pink;
+  border: 2px solid rgb(77, 74, 74);
   overflow: auto;
 }
 
@@ -81,4 +74,21 @@ button:hover {
   opacity: 1;
   background-color: blue;
 }
+
+h2 {
+  font-size: 1.5vw;
+  padding-top: 1vh;
+  height: 5vh;
+  /* border: 2px solid blue; */
+}
+
+.no-trips-in-grid,
+h2 {
+  width: 79vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 

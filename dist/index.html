@@ -5,9 +5,76 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webpack Starter Kit</title>
+  <link rel="stylesheet" type="text/css" href="./src/css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Noto Serif' rel='stylesheet'>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
+  <nav>
+    <div>Your Next Journey Awaits, User</div>
+    <div class="nav-button">
+      <button>Your Trips</button>
+      <button>Your Expenses</button>
+      <button>Book a New Trip</button>
+      <button>Logout</button>
+    </div>
+  </nav>
+  <main>
+    <section class="trips-view">
+      <h2>Upcoming Trips</h2>
+      <section class="future-trips-grid trips-grid">
+        <div class="trip-container">
+          <div class="trip-image-container">
+              <img class="trip-image" src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
+          </div>
+            <p>Location</p>
+            <p>Date</p>
+            <p>Duration</p>
+        </div>
+        <div class="trip-container">
+          <div class="trip-image-container">
+            <img class="trip-image"
+              src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
+          </div>
+          <p>Location</p>
+          <p>Date</p>
+          <p>Duration</p>
+        </div>
+      </section>
+      <h2>Pending Trips</h2>
+      <section class="pending-trips-grid trips-grid">
+          <div class="trip-container">
+            <div class="trip-image-container">
+              <img class="trip-image"
+                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
+            </div>
+            <p>Location</p>
+            <p>Date</p>
+            <p>Duration</p>
+          </div>
+          <div class="trip-container">
+            <div class="trip-image-container">
+              <img class="trip-image"
+                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
+            </div>
+            <p>Location</p>
+            <p>Date</p>
+            <p>Duration</p>
+          </div>
+      </section>
+      <h2>Past Trips</h2>
+      <section class="past-trips-grid trips-grid">
+          <div class="trip-container">
+            <div class="trip-image-container">
+              <img class="trip-image"
+                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
+            </div>
+            <p>Location</p>
+            <p>Date</p>
+            <p>Duration</p>
+          </div>
+      </section>
+    </section>
+  </main>
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
