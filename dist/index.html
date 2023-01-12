@@ -12,67 +12,39 @@
   <nav>
     <div class="journey-message">Your Next Journey Awaits, User</div>
     <div class="nav-button">
-      <button>Your Trips</button>
-      <button>Your Expenses</button>
+      <button class="trips-button">Your Trips</button>
+      <button class="expense-button">Your Expenses</button>
       <button>Book a New Trip</button>
       <button>Logout</button>
     </div>
   </nav>
   <main>
-    <section class="trips-view">
+    <section class="trips-view hidden">
       <h2>Upcoming Trips</h2>
       <section class="future-trips-grid trips-grid">
-        <div class="trip-container">
-          <div class="trip-image-container">
-              <img class="trip-image" src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
-          </div>
-            <p>Location</p>
-            <p>Date</p>
-            <p>Duration</p>
-        </div>
-        <div class="trip-container">
-          <div class="trip-image-container">
-            <img class="trip-image"
-              src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
-          </div>
-          <p>Location</p>
-          <p>Date</p>
-          <p>Duration</p>
-        </div>
       </section>
       <h2>Pending Trips</h2>
       <section class="pending-trips-grid trips-grid">
-          <div class="trip-container">
-            <div class="trip-image-container">
-              <img class="trip-image"
-                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
-            </div>
-            <p>Location</p>
-            <p>Date</p>
-            <p>Duration</p>
-          </div>
-          <div class="trip-container">
-            <div class="trip-image-container">
-              <img class="trip-image"
-                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
-            </div>
-            <p>Location</p>
-            <p>Date</p>
-            <p>Duration</p>
-          </div>
       </section>
       <h2>Past Trips</h2>
       <section class="past-trips-grid trips-grid">
-          <div class="trip-container">
-            <div class="trip-image-container">
-              <img class="trip-image"
-                src="https://images.unsplash.com/photo-1580237541049-2d715a09486e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2090&q=80">
-            </div>
-            <p>Location</p>
-            <p>Date</p>
-            <p>Duration</p>
-          </div>
       </section>
+    </section>
+    <section class="expense-view">
+      <h2>Your Trip Expenses</h2>
+      <div class="expense-text-container">
+        <p class="amount-this-year-text">You've spent $0 on trips this year</p>
+        <p class="total-spent-text">You've spent $$$ total</p>
+      </div>
+      <table class="expense-table">
+        <tr>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Number of Days</th>
+          <th>Price*</th>
+        </tr>
+      </table>
+      <p class="expense-message">*Price includes a 10% travel agent’s fee</p>
     </section>
   </main>
   

@@ -2,13 +2,20 @@
   font-family: 'Noto Serif'
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+}
+
 body {
   border: 2px solid red;
-  overflow: auto;
 }
 
 main {
-  /* height: 100vh; */
+  height: 100%;
   width: 100%;
   height: fit-content;
   /* background-image: url('../images/option.jpg');
@@ -27,13 +34,14 @@ section {
 }
 
 nav {
+  width: 100%;
   display: flex;
   background-color: rgb(62, 30, 30);
   height: 2vh;
   align-items: center;
   justify-content: space-between;
   color: white;
-  padding: 2vh;
+  padding: 2vh 0 2vh 0;
 }
 
 button {
@@ -83,7 +91,8 @@ h2 {
 }
 
 .no-trips-in-grid,
-h2 {
+h2,
+.expense-message {
   width: 79vw;
   height: 10vh;
   display: flex;
@@ -91,4 +100,43 @@ h2 {
   align-items: center;
 }
 
+.expense-table {
+  height: 60vh;
+  border-collapse: collapse;
+  display: flex;
+  justify-content: center;
+}
+
+th {
+  background: rgb(177, 170, 170);
+}
+
+th,
+td {
+  border: 1px solid rgb(24, 24, 24);
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background: #f2f4f5;
+}
+
+tr:hover {
+  background: #d1d1d1;
+}
+
+.expense-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -5vh;
+}
+
+.total-spent-text {
+  margin: .25vw;
+}
+
+.hidden {
+  display: none !important;
+}
 

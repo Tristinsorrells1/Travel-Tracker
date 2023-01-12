@@ -19,12 +19,33 @@ let destinationsData;
 let user;
 // let today = "2023/01/05";
 let today = "2020/08/07";
+let year = "2022/01/01";
 
 //-----------------------------------querySelectors------------------------
 let pastTripsGrid = document.querySelector(".past-trips-grid");
 let pendingTripsGrid = document.querySelector(".pending-trips-grid");
 let futureTripsGrid = document.querySelector(".future-trips-grid");
 let yourJourneyAwaitsText = document.querySelector(".journey-message");
+let expenseButton = document.querySelector(".expense-button");
+let tripButton = document.querySelector(".trips-button");
+let tripsSection = document.querySelector(".trips-view");
+let expenseSection = document.querySelector(".expense-view");
+let tripExpenses = document.querySelector(".trip-expense-info");
+let expenseTable = document.querySelector(".expense-table");
+let totalSpentText = document.querySelector(".total-spent-text");
+let yearlyAmountText = document.querySelector(".amount-this-year-text");
+
+//-----------------------------------eventListeners------------------------
+
+expenseButton.addEventListener("click", function () {
+	tripsSection.classList.add("hidden");
+	expenseSection.classList.remove("hidden");
+});
+
+tripButton.addEventListener("click", function () {
+	tripsSection.classList.remove("hidden");
+	expenseSection.classList.add("hidden");
+});
 
 // -----------------------------------Functions----------------------------
 
@@ -52,6 +73,8 @@ function createLayout() {
 		futureTripsGrid,
 		user.getTripByStatus("upcoming", trips, travelers, today)
 	);
+	createExpenseTable();
+	createExpenseReport();
 	yourJourneyAwaitsText.innerText = `Your Next Journey Awaits, ${
 		user.name.split(" ")[0]
 	}`;
@@ -60,7 +83,7 @@ function createLayout() {
 fetchApiPromises();
 
 function test() {
-	user = new User(travelersData[10]);
+	user = new User(travelersData[17]);
 	console.log(user.getTrips(travelers, trips));
 	console.log(user.id);
 }
@@ -71,16 +94,16 @@ function createInstances() {
 	destinations = new Destinations(destinationsData);
 }
 
-function createTripsGrid(tripGrid, tripDate) {
+function createTripsGrid(tripGrid, tripTimeline) {
 	tripGrid.innerHTML = "";
-	let getTrips = tripDate.map((trip) => {
+	let getTrips = tripTimeline.map((trip) => {
 		return destinations["data"].find(
 			(destination) => destination.id === trip.destinationID
 		);
 	});
 
 	getTrips.forEach((destination) => {
-		tripDate.forEach((trip) => {
+		tripTimeline.forEach((trip) => {
 			if (destination.id === trip.destinationID) {
 				tripGrid.innerHTML += ` <div class="trip-container">
                     <div class="trip-image-container">
@@ -98,4 +121,62 @@ function createTripsGrid(tripGrid, tripDate) {
 	if (tripGrid.innerHTML === "") {
 		tripGrid.innerHTML = `<p class="no-trips-in-grid">No Trips Found</p>`;
 	}
+}
+
+function createExpenseTable() {
+	let usersTrips = user.getTrips(travelers, trips);
+
+	let getTrips = usersTrips.map((trip) => {
+		return destinations["data"].find(
+			(destination) => destination.id === trip.destinationID
+		);
+	});
+
+	getTrips.forEach((destination) => {
+		usersTrips.forEach((trip) => {
+			if (destination.id === trip.destinationID) {
+				let row = expenseTable.insertRow(-1);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+
+				cell1.innerHTML = `${destination.destination}`;
+				cell2.innerHTML = `${trip.date}`;
+				cell3.innerHTML = `${trip.duration}`;
+				cell4.innerHTML = `$${destinations
+					.findTripCost(trip)
+					.toLocaleString("en-US")}`;
+			}
+		});
+	});
+	// if (tripExpenses.innerHTML === "") {
+	// 	tripExpenses.innerHTML = `<p class="You haven't spent money on a trip yet."`;
+	// }
+}
+
+function createExpenseReport() {
+	let usersTrips = user.getTrips(travelers, trips);
+	let totalSum = usersTrips.reduce((accum, trip) => {
+		let tripCost = Number(destinations.findTripCost(trip));
+		accum += tripCost;
+		return accum;
+	}, 0);
+
+	let tripsThisYear = trips.getTripsByDate(year);
+
+	if (typeof tripsThisYear === "object") {
+		let annualSum = tripsThisYear.reduce((accum, trip) => {
+			let tripCost = Number(destinations.findTripCost(trip));
+			accum += tripCost;
+			return accum;
+		}, 0);
+		yearlyAmountText.innerHTML = `You've spent $${annualSum.toLocaleString(
+			"en-US"
+		)} on trips this year`;
+	}
+
+	totalSpentText.innerHTML = `and $${totalSum.toLocaleString(
+		"en-US"
+	)} on trips total`;
 }
