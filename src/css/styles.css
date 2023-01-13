@@ -7,6 +7,7 @@ html, body {
   width: 100%;
   margin: 0px;
   padding: 0px;
+  background-color: rgb(210, 238, 247);
 }
 
 body {
@@ -16,7 +17,7 @@ body {
 
 main {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   /* background-image: url('../images/option.jpg');
   background-size: 100%;
   background-repeat: no-repeat; */
@@ -68,7 +69,7 @@ button:hover {
 }
 
 .trip-container {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   width: 20vw;
   background-color: rgba(255, 255, 255, 0.385);
   text-align: center;
@@ -76,18 +77,19 @@ button:hover {
 
 .trips-view {
   height: fit-content;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 .trips-grid {
+  margin-right: auto;
+  margin-left: auto;
   height: fit-content;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 20vw;
-  /* grid-gap: 2vw; */
-  justify-content: space-between;
+  justify-content: space-evenly;
   column-gap: 1vw;
-  border: 2px solid rgb(77, 74, 74);
+  border: 2px solid rgba(77, 74, 74, 0.33);
   overflow: auto;
 }
 
@@ -102,6 +104,7 @@ h2,
 .journey-message {
   font-size: 1.5vw;
   height: .5vh;
+  padding: 1vh;
 }
 
 .no-trips-in-grid,
@@ -110,10 +113,6 @@ h2,
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.no-trips-in-grid {
-  width: 79vw;
 }
 
 .expense-container {
@@ -152,7 +151,8 @@ th {
   padding: 4vh;
 }
 
-td {
+td,
+.trip-estimate-text {
   padding: 3vh;
 }
 
@@ -172,14 +172,13 @@ tr:hover {
 /* form */
 
 .form-container {
-height: 100vh;
+height: 70vh;
 display: flex;
-margin-top: 17vh;
 }
 
 
 form {
-  height: 60vh;
+  height: 67vh;
   width: 50vw;
   margin-right: auto;
   margin-left: auto;
@@ -215,11 +214,16 @@ label {
   border: 3px dashed red;
 }
 
-.submit-request-button {
+.submit-request-button,
+.price-estimate-button {
   height: 5vh;
   width: 15vw;
-  margin-top: 4vh;
+  margin-top: 2vh;
+}
 
+.agent-fee-text {
+  font-size: 2vh;
+  margin-top: -1vh;
 }
 
 .hidden {

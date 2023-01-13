@@ -20,7 +20,6 @@ let user;
 // let today = "2023/01/05";
 let today = "2020/08/07";
 
-
 //-----------------------------------querySelectors------------------------
 let pastTripsGrid = document.querySelector(".past-trips-grid");
 let pendingTripsGrid = document.querySelector(".pending-trips-grid");
@@ -31,15 +30,20 @@ let totalSpentText = document.querySelector(".total-spent-text");
 let yearlyAmountText = document.querySelector(".amount-this-year-text");
 let emptyInputText = document.querySelector(".empty-input-message");
 let requestToBookText = document.querySelector(".request-to-book-text");
+let tripEstimateText = document.querySelector(".trip-estimate-text");
+let agentFeeText = document.querySelector(".agent-fee-text");
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
 let bookNewTripButton = document.querySelector(".book-trip-button");
 let submitRequestButton = document.querySelector(".submit-request-button");
+let priceEstimateButton = document.querySelector(".price-estimate-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
+
+// let form = document.querySelector(".form");
 
 let expenseTable = document.querySelector(".expense-table");
 
@@ -54,22 +58,30 @@ expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
+    console.log("expense");
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
 	expenseSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
+    console.log("trip");
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	expenseSection.classList.add("hidden");
+    console.log("book")
 });
 
 submitRequestButton.addEventListener("click", function () {
 	checkForEmptyInputs();
+});
+
+priceEstimateButton.addEventListener("click", function (event) {
+	event.preventDefault();
+	getTripEstimate();
 });
 
 document.addEventListener(
@@ -78,8 +90,8 @@ document.addEventListener(
 		return function (e) {
 			e.preventDefault();
 			document.getElementById("#numberOfDays").focus();
-            document.getElementById("#numberOfPeople").focus();
-            // document.getElementById("#numberOfDays").focus();
+			document.getElementById("#numberOfPeople").focus();
+			// document.getElementById("#numberOfDays").focus();
 		};
 	})(),
 	true
@@ -128,7 +140,7 @@ function createLayout() {
 fetchApiPromises();
 
 function test() {
-	user = new User(travelersData[20]);
+	user = new User(travelersData[22]);
 }
 
 function createInstances() {
@@ -208,20 +220,18 @@ function createExpenseReport() {
 	}, 0);
 
 	let annualSum = usersTrips.reduce((accum, trip) => {
-        if (trip.date.slice(0, 4) === today.slice(0,4)) {
-            let tripCost = Number(destinations.findTripCost(trip));
-            accum += tripCost;
-        }
-        return accum
-    }, 0)
+		if (trip.date.slice(0, 4) === today.slice(0, 4)) {
+			let tripCost = Number(destinations.findTripCost(trip));
+			accum += tripCost;
+		}
+		return accum;
+	}, 0);
 
-    yearlyAmountText.innerHTML = `You've spent $${annualSum.toLocaleString(
-        "en-US"
-    )} on trips in ${today.slice(0,4)}`;
-	
-	totalSpentText.innerHTML = `and $${totalSum.toLocaleString(
+	yearlyAmountText.innerHTML = `You've spent $${annualSum.toLocaleString(
 		"en-US"
-	)} total`;
+	)} on trips in ${today.slice(0, 4)}`;
+
+	totalSpentText.innerHTML = `and $${totalSum.toLocaleString("en-US")} total`;
 }
 
 function checkForEmptyInputs() {
@@ -244,8 +254,51 @@ function checkForEmptyInputs() {
 		filtered.forEach((field) => {
 			field.classList.add("missing-info");
 		});
-        requestToBookText.innerText = "Please Fill Out All Fields "
-		requestToBookText.classList.add('red-text')
+		requestToBookText.innerText = "Please Fill Out All Fields ";
+		requestToBookText.classList.add("red-text");
 		return;
 	}
+}
+
+function createTrip() {
+	let tripRequest;
+	if (
+		dateInput.value &&
+		durationInput.value.trim() &&
+		groupSizeInput.value.trim() &&
+		destinationInput.value.trim()
+	) {
+		tripRequest = user.createTripRequest(
+			Number(destinationInput.value),
+			Number(groupSizeInput.value),
+			dateInput.value.replaceAll("-", "/"),
+			Number(durationInput.value),
+			trips
+		);
+	}
+	return tripRequest;
+}
+
+function getTripEstimate() {
+	let tripRequest = createTrip();
+	let estimateCost = destinations.findTripCost(tripRequest);
+
+	submitRequestButton.classList.add("hidden");
+	priceEstimateButton.classList.add("hidden");
+    agentFeeText.classList.remove("hidden")
+	tripEstimateText.innerHTML = `
+    <p>Based on the information provided, the estimated trip price is $${estimateCost.toLocaleString(
+			"en-US"
+		)}</p>`;
+
+	setTimeout(() => {
+		resetAfterEstimate();
+	}, "6000");
+}
+
+function resetAfterEstimate() {
+	tripEstimateText.innerHTML = "";
+	submitRequestButton.classList.remove("hidden");
+	priceEstimateButton.classList.remove("hidden");
+    agentFeeText.classList.add("hidden");
 }
