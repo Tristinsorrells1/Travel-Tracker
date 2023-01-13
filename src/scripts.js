@@ -25,16 +25,28 @@ let year = "2022/01/01";
 let pastTripsGrid = document.querySelector(".past-trips-grid");
 let pendingTripsGrid = document.querySelector(".pending-trips-grid");
 let futureTripsGrid = document.querySelector(".future-trips-grid");
+
 let yourJourneyAwaitsText = document.querySelector(".journey-message");
+let totalSpentText = document.querySelector(".total-spent-text");
+let yearlyAmountText = document.querySelector(".amount-this-year-text");
+let emptyInputText = document.querySelector(".empty-input-message");
+let requestToBookText = document.querySelector(".request-to-book-text");
+
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
 let bookNewTripButton = document.querySelector(".book-trip-button");
+let submitRequestButton = document.querySelector(".submit-request-button");
+
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
+
 let expenseTable = document.querySelector(".expense-table");
-let totalSpentText = document.querySelector(".total-spent-text");
-let yearlyAmountText = document.querySelector(".amount-this-year-text");
+
+let dateInput = document.querySelector("#departureDate");
+let durationInput = document.querySelector("#numberOfDays");
+let groupSizeInput = document.querySelector("#numberOfPeople");
+let destinationInput = document.querySelector("#destinationInput");
 
 //-----------------------------------eventListeners------------------------
 
@@ -55,6 +67,23 @@ bookNewTripButton.addEventListener("click", function () {
 	tripsSection.classList.add("hidden");
 	expenseSection.classList.add("hidden");
 });
+
+submitRequestButton.addEventListener("click", function () {
+	checkForEmptyInputs();
+});
+
+document.addEventListener(
+	"invalid",
+	(function () {
+		return function (e) {
+			e.preventDefault();
+			document.getElementById("#numberOfDays").focus();
+            document.getElementById("#numberOfPeople").focus();
+            // document.getElementById("#numberOfDays").focus();
+		};
+	})(),
+	true
+);
 
 // -----------------------------------Functions----------------------------
 
@@ -92,7 +121,7 @@ function createLayout() {
 fetchApiPromises();
 
 function test() {
-    user = new User(travelersData[17])
+	user = new User(travelersData[17]);
 }
 
 function createInstances() {
@@ -186,4 +215,30 @@ function createExpenseReport() {
 	totalSpentText.innerHTML = `and $${totalSum.toLocaleString(
 		"en-US"
 	)} on trips total`;
+}
+
+function checkForEmptyInputs() {
+	let inputValues = [
+		dateInput,
+		durationInput,
+		groupSizeInput,
+		destinationInput,
+	];
+
+	if (
+		!dateInput.value ||
+		!durationInput.value.trim() ||
+		!groupSizeInput.value.trim() ||
+		!destinationInput.value.trim()
+	) {
+		let filtered = inputValues.filter((userInput) => {
+			return userInput.value === "";
+		});
+		filtered.forEach((field) => {
+			field.classList.add("missing-info");
+		});
+        requestToBookText.innerText = "Please Fill Out All Fields "
+		requestToBookText.classList.add('red-text')
+		return;
+	}
 }
