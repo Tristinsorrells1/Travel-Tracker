@@ -17,7 +17,8 @@ body {
 
 main {
   width: 100%;
-  height: 100%;
+  height: fit-content;;
+  margin-top: 8vh;
   /* background-image: url('../images/option.jpg');
   background-size: 100%;
   background-repeat: no-repeat; */
@@ -177,7 +178,8 @@ display: flex;
 }
 
 
-form {
+form,
+.post-response-message {
   height: 67vh;
   width: 50vw;
   margin-right: auto;

@@ -17,7 +17,6 @@ let tripsData;
 let travelersData;
 let destinationsData;
 let user;
-// let today = "2023/01/05";
 let today = "2020/08/07";
 
 //-----------------------------------querySelectors------------------------
@@ -32,6 +31,7 @@ let emptyInputText = document.querySelector(".empty-input-message");
 let requestToBookText = document.querySelector(".request-to-book-text");
 let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
+let postResponseMessage = document.querySelector(".post-response-message");
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
@@ -43,7 +43,7 @@ let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
 
-// let form = document.querySelector(".form");
+let form = document.querySelector(".form");
 
 let expenseTable = document.querySelector(".expense-table");
 
@@ -58,29 +58,32 @@ expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
-    console.log("expense");
+	console.log("expense");
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
 	expenseSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
-    console.log("trip");
+	console.log("trip");
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	expenseSection.classList.add("hidden");
-    console.log("book")
+	console.log("book");
 });
 
-submitRequestButton.addEventListener("click", function () {
-	checkForEmptyInputs();
+submitRequestButton.addEventListener("click", function (event) {
+	event.preventDefault();
+    postTripRequest();
+
 });
 
 priceEstimateButton.addEventListener("click", function (event) {
 	event.preventDefault();
+	checkForEmptyInputs();
 	getTripEstimate();
 });
 
@@ -116,6 +119,7 @@ const fetchApiPromises = () => {
 		createLayout();
 	});
 };
+fetchApiPromises();
 
 function createLayout() {
 	createTripsGrid(
@@ -136,8 +140,6 @@ function createLayout() {
 		user.name.split(" ")[0]
 	}`;
 }
-
-fetchApiPromises();
 
 function test() {
 	user = new User(travelersData[22]);
@@ -205,9 +207,6 @@ function createExpenseTable() {
 			}
 		});
 	});
-	// if (tripExpenses.innerHTML === "") {
-	// 	tripExpenses.innerHTML = `<p class="You haven't spent money on a trip yet."`;
-	// }
 }
 
 function createExpenseReport() {
@@ -254,10 +253,16 @@ function checkForEmptyInputs() {
 		filtered.forEach((field) => {
 			field.classList.add("missing-info");
 		});
-		requestToBookText.innerText = "Please Fill Out All Fields ";
+		requestToBookText.innerText = "Please Fill Out All Fields";
 		requestToBookText.classList.add("red-text");
-		return;
+		return false;
 	}
+    requestToBookText.classList.remove("red-text");
+    requestToBookText.innerText = "Request to Book a Trip";
+	inputValues.forEach((field) => {
+		field.classList.remove("missing-info");
+	});
+    return true
 }
 
 function createTrip() {
@@ -285,7 +290,7 @@ function getTripEstimate() {
 
 	submitRequestButton.classList.add("hidden");
 	priceEstimateButton.classList.add("hidden");
-    agentFeeText.classList.remove("hidden")
+	agentFeeText.classList.remove("hidden");
 	tripEstimateText.innerHTML = `
     <p>Based on the information provided, the estimated trip price is $${estimateCost.toLocaleString(
 			"en-US"
@@ -300,5 +305,58 @@ function resetAfterEstimate() {
 	tripEstimateText.innerHTML = "";
 	submitRequestButton.classList.remove("hidden");
 	priceEstimateButton.classList.remove("hidden");
-    agentFeeText.classList.add("hidden");
+	agentFeeText.classList.add("hidden");
+}
+function showPostResult(result) {
+    form.classList.add("hidden");
+    postResponseMessage.classList.remove("hidden");
+    if (result === "success") {
+        postResponseMessage.innerText =
+            "Success! Your trip request will be reviewed by a travel agent soon.";
+    } else if (result === "server error") {
+        postResponseMessage.innerText =
+            "A server issue has occured. Please try again later.";
+    } else {
+        postResponseMessage.innerText =
+            "An unexpected issue has occured. Please try again later.";
+    }
+    setTimeout(resetForm, 6000);
+}
+
+function postTripRequest() {
+    if (!checkForEmptyInputs()) {
+        return checkForEmptyInputs();
+    }
+	let tripRequest = createTrip();
+	fetch(`http://localhost:3001/api/v1/trips`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(tripRequest),
+	})
+    .then((response) => {
+        if (!response.ok) {
+            response.json().then((response) => {
+                console.log(response.message);
+            });
+            showPostResult("unknown");
+        } else {
+            showPostResult("success");
+            fetch(`http://localhost:3001/api/v1/trips`)
+                .then((response) => response.json())
+                .then((data) => {
+                    fetchApiPromises();
+                });
+            return;
+        }
+    })
+    .catch((error) => {
+        showPostResult("server error");
+    });
+}
+
+
+function resetForm() {
+	form.classList.remove("hidden");
+	postResponseMessage.innerText = "";
+	postResponseMessage.classList.add("hidden");
 }
