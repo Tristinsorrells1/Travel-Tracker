@@ -21,7 +21,7 @@ main {
   background-size: 100%;
   background-repeat: no-repeat; */
   background-color: rgb(210, 238, 247);
-  border: 2px solid rgb(81, 255, 0);
+  /* border: 2px solid rgb(81, 255, 0); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,7 +94,6 @@ button:hover {
   overflow: visible;
 }
 
-
 .trip-image {
   height: 12vw;
   max-width: 15vw;
@@ -116,7 +115,6 @@ h2 {
   align-items: center;
 }
 
-
 .expense-container {
   height: fit-content;
 }
@@ -130,7 +128,6 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: -5vh; */
 }
 
 .total-spent-text {
@@ -166,8 +163,6 @@ tr:nth-child(even) {
 tr:hover {
   background: #d1d1d1;
 }
-
-/* form */
 
 .form-container {
 height: 70vh;
