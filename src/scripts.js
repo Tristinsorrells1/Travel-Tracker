@@ -87,9 +87,10 @@ document.addEventListener(
 
 // -----------------------------------Functions----------------------------
 var dt = new Date();
-document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString('en-US', {
-	hour: "2-digit",
+document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString("en-US", {
+	hour: "numeric",
 	minute: "2-digit",
+	hourCycle: "h11",
 	hour12: true,
 });
 

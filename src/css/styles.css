@@ -45,14 +45,15 @@ nav {
 
 .date-container {
   display: flex;
-  margin-left: 21vw;
+  margin-left: 23vw;
+  margin-top: 1vh;
   width: fit-content;
   border: .5px solid white;
   font-size: 2vh;
 }
 
 #dateTime {
-  padding: 1vw;
+  padding-right: 1vw;
 }
 
 button {
@@ -97,11 +98,10 @@ button:hover {
   background-color: blue;
 }
 
-h2 {
+h2,
+.journey-message {
   font-size: 1.5vw;
-  /* padding-top: .25vh; */
   height: .5vh;
-  /* border: 2px solid blue; */
 }
 
 .no-trips-in-grid,
