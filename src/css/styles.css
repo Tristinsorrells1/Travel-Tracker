@@ -10,7 +10,6 @@ html, body {
 }
 
 body {
-  border: 2px solid red;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -37,11 +36,23 @@ nav {
   width: 100%;
   display: flex;
   background-color: rgb(62, 30, 30);
-  height: 2vh;
+  height: 4vh;
   align-items: center;
   justify-content: space-between;
   color: white;
   padding: 2vh 0 2vh 0;
+}
+
+.date-container {
+  display: flex;
+  margin-left: 21vw;
+  width: fit-content;
+  border: .5px solid white;
+  font-size: 2vh;
+}
+
+#dateTime {
+  padding: 1vw;
 }
 
 button {

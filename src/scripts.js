@@ -86,6 +86,12 @@ document.addEventListener(
 );
 
 // -----------------------------------Functions----------------------------
+var dt = new Date();
+document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString('en-US', {
+	hour: "2-digit",
+	minute: "2-digit",
+	hour12: true,
+});
 
 const fetchApiPromises = () => {
 	apiCalls.fetchData().then((data) => {
