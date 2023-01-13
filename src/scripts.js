@@ -143,6 +143,7 @@ function createLayout() {
 
 function test() {
 	user = new User(travelersData[22]);
+    user.getTrips(travelers, trips)
 }
 
 function createInstances() {
@@ -153,6 +154,7 @@ function createInstances() {
 
 function createTripsGrid(tripGrid, tripTimeline) {
 	tripGrid.innerHTML = "";
+    let tripsInGrid = []
 	let getTrips = tripTimeline.map((trip) => {
 		return destinations["data"].find(
 			(destination) => destination.id === trip.destinationID
@@ -161,17 +163,18 @@ function createTripsGrid(tripGrid, tripTimeline) {
 
 	getTrips.forEach((destination) => {
 		tripTimeline.forEach((trip) => {
-			if (destination.id === trip.destinationID) {
+			if (destination.id === trip.destinationID && !tripsInGrid.includes(trip)) {
 				tripGrid.innerHTML += ` <div class="trip-container">
                     <div class="trip-image-container">
-                    <img class="trip-image"
-                        src=${destination.image} >
+                            <img class="trip-image"
+                            src=${destination.image}>
                         </div>
                         <p>${destination.destination}</p>
                         <p>Duration: ${trip.duration} days</p>
                         <p>Date: ${trip.date}</p>
                 </div>
                     `;
+                    tripsInGrid.push(trip)
 			}
 		});
 	});
@@ -182,6 +185,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 
 function createExpenseTable() {
 	let usersTrips = user.getTrips(travelers, trips);
+    let tripsAlreadyInTable = []
 
 	let getTrips = usersTrips.map((trip) => {
 		return destinations["data"].find(
@@ -191,7 +195,7 @@ function createExpenseTable() {
 
 	getTrips.forEach((destination) => {
 		usersTrips.forEach((trip) => {
-			if (destination.id === trip.destinationID) {
+			if (destination.id === trip.destinationID && !tripsAlreadyInTable.includes(trip)) {
 				let row = expenseTable.insertRow(-1);
 				let cell1 = row.insertCell(0);
 				let cell2 = row.insertCell(1);
@@ -204,6 +208,7 @@ function createExpenseTable() {
 				cell4.innerHTML = `$${destinations
 					.findTripCost(trip)
 					.toLocaleString("en-US")}`;
+                    tripsAlreadyInTable.push(trip)
 			}
 		});
 	});

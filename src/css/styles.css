@@ -3,7 +3,7 @@
 }
 
 html, body {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0px;
   padding: 0px;
@@ -16,22 +16,20 @@ body {
 }
 
 main {
-  width: 100%;
-  height: fit-content;;
   margin-top: 8vh;
   /* background-image: url('../images/option.jpg');
   background-size: 100%;
   background-repeat: no-repeat; */
   background-color: rgb(210, 238, 247);
-  border: 2px solid blue;
+  border: 2px solid rgb(81, 255, 0);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 section {
-  height: fit-content;
-  width: 80vw;
+  height: 100%;
+  width: 100%;
 }
 
 nav {
@@ -70,33 +68,36 @@ button:hover {
 }
 
 .trip-container {
-  /* border: 2px solid green; */
-  width: 20vw;
-  background-color: rgba(255, 255, 255, 0.385);
+  background-color: #ffffff62;
   text-align: center;
+  width: fit-content;
 }
 
-.trips-view {
-  height: fit-content;
-  /* border: 2px solid red; */
+.grid-container {
+  width: 70vw;
+  border: 2px solid rgb(63, 61, 61);
+  overflow: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .trips-grid {
   margin-right: auto;
   margin-left: auto;
+  width: fit-content;
   height: fit-content;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 20vw;
+  grid-auto-columns: minmax(1, 1fr);
   justify-content: space-evenly;
   column-gap: 1vw;
-  border: 2px solid rgba(77, 74, 74, 0.33);
-  overflow: auto;
+  overflow: visible;
 }
 
+
 .trip-image {
-  height: 20vh;
-  width: 20vw;
+  height: 12vw;
+  max-width: 15vw;
   opacity: 1;
   background-color: blue;
 }
@@ -109,27 +110,23 @@ h2,
 }
 
 .no-trips-in-grid,
-h2,
-.expense-message {
+h2 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.expense-container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
+.expense-container {
+  height: fit-content;
 }
 
 .expense-message {
-  width: 79vw;
-  height: 10vh;
+  font-size: 1.5vh;
 }
 
-.expense-text-container {
+.expense-text-container,
+.expense-message {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -141,7 +138,7 @@ h2,
 }
 
 .expense-table {
-  height: fit-content;
+  height: 60vh;
   border-collapse: collapse;
   display: flex;
   justify-content: center;

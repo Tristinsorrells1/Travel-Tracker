@@ -23,13 +23,19 @@
     </div>
   </nav>
   <main>
-    <section class="trips-view hidden">
+    <section class="trips-view">
       <h2>Upcoming Trips</h2>
-      <section class="future-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="future-trips-grid trips-grid"></section>
+      </div>
       <h2>Pending Trips</h2>
-      <section class="pending-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="pending-trips-grid trips-grid"></section>
+      </div>
       <h2>Past Trips</h2>
-      <section class="past-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="past-trips-grid trips-grid"></section>
+      </div>
     </section>
     <section class="expense-view hidden">
       <div class="expense-container">
@@ -38,6 +44,7 @@
           <p class="amount-this-year-text">You've spent $0 on trips this year</p>
           <p class="total-spent-text">You've spent $$$ total</p>
         </div>
+        <p class="expense-message">*Price includes a 10% travel agent fee</p>
         <table class="expense-table">
           <tr>
             <th>Location</th>
@@ -46,10 +53,9 @@
             <th>Price*</th>
           </tr>
         </table>
-        <p class="expense-message">*Price includes a 10% travel agent fee</p>
       </div>
     </section>
-    <section class="booking-view">
+    <section class="booking-view hidden">
       <div class="form-container">
           <form class="form">
             <h2 class="request-to-book-text">Request to Book a Trip</h2>
