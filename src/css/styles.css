@@ -16,7 +16,6 @@ body {
 }
 
 main {
-  height: 100%;
   width: 100%;
   height: fit-content;
   /* background-image: url('../images/option.jpg');
@@ -65,14 +64,17 @@ button:hover {
 
 .trips-view {
   height: fit-content;
+  border: 2px solid red;
 }
 
 .trips-grid {
+  height: fit-content;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 25vw;
-  grid-template-columns: 20vw;
-  grid-gap: 3vw;
+  grid-auto-columns: 20vw;
+  /* grid-gap: 2vw; */
+  justify-content: space-between;
+  column-gap: 1vw;
   border: 2px solid rgb(77, 74, 74);
   overflow: auto;
 }
@@ -86,23 +88,49 @@ button:hover {
 
 h2 {
   font-size: 1.5vw;
-  padding-top: 1vh;
-  height: 5vh;
+  /* padding-top: .25vh; */
+  height: .5vh;
   /* border: 2px solid blue; */
 }
 
 .no-trips-in-grid,
 h2,
 .expense-message {
-  width: 79vw;
-  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.no-trips-in-grid {
+  width: 79vw;
+}
+
+.expense-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.expense-message {
+  width: 79vw;
+  height: 10vh;
+}
+
+.expense-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: -5vh; */
+}
+
+.total-spent-text {
+  margin: .25vw;
+}
+
 .expense-table {
-  height: 59vh;
+  height: fit-content;
   border-collapse: collapse;
   display: flex;
   justify-content: center;
@@ -110,12 +138,16 @@ h2,
 
 th {
   background: rgb(177, 170, 170);
+  padding: 4vh;
+}
+
+td {
+  padding: 3vh;
 }
 
 th,
 td {
   border: 1px solid rgb(24, 24, 24);
-  padding: 8px;
 }
 
 tr:nth-child(even) {
@@ -124,17 +156,6 @@ tr:nth-child(even) {
 
 tr:hover {
   background: #d1d1d1;
-}
-
-.expense-text-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -5vh;
-}
-
-.total-spent-text {
-  margin: .25vw;
 }
 
 /* form */

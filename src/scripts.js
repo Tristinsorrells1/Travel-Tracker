@@ -19,7 +19,7 @@ let destinationsData;
 let user;
 // let today = "2023/01/05";
 let today = "2020/08/07";
-let year = "2022/01/01";
+
 
 //-----------------------------------querySelectors------------------------
 let pastTripsGrid = document.querySelector(".past-trips-grid");
@@ -121,7 +121,7 @@ function createLayout() {
 fetchApiPromises();
 
 function test() {
-	user = new User(travelersData[17]);
+	user = new User(travelersData[20]);
 }
 
 function createInstances() {
@@ -193,28 +193,28 @@ function createExpenseTable() {
 
 function createExpenseReport() {
 	let usersTrips = user.getTrips(travelers, trips);
+
 	let totalSum = usersTrips.reduce((accum, trip) => {
 		let tripCost = Number(destinations.findTripCost(trip));
 		accum += tripCost;
 		return accum;
 	}, 0);
 
-	let tripsThisYear = trips.getTripsByDate(year);
+	let annualSum = usersTrips.reduce((accum, trip) => {
+        if (trip.date.slice(0, 4) === today.slice(0,4)) {
+            let tripCost = Number(destinations.findTripCost(trip));
+            accum += tripCost;
+        }
+        return accum
+    }, 0)
 
-	if (typeof tripsThisYear === "object") {
-		let annualSum = tripsThisYear.reduce((accum, trip) => {
-			let tripCost = Number(destinations.findTripCost(trip));
-			accum += tripCost;
-			return accum;
-		}, 0);
-		yearlyAmountText.innerHTML = `You've spent $${annualSum.toLocaleString(
-			"en-US"
-		)} on trips this year`;
-	}
-
+    yearlyAmountText.innerHTML = `You've spent $${annualSum.toLocaleString(
+        "en-US"
+    )} on trips in ${today.slice(0,4)}`;
+	
 	totalSpentText.innerHTML = `and $${totalSum.toLocaleString(
 		"en-US"
-	)} on trips total`;
+	)} total`;
 }
 
 function checkForEmptyInputs() {
