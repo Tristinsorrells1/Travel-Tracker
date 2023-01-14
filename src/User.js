@@ -69,7 +69,6 @@ class User {
 		travelers,
 		date,
 		duration,
-		suggestedActivities,
 		trips
 	) {
 		let allTrips = trips.getTripsForAllUsers();
@@ -82,7 +81,7 @@ class User {
 			date,
 			duration,
 			status: "pending",
-			suggestedActivities,
+			"suggestedActivities": []
 		};
 		return tripRequest;
 	}

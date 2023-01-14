@@ -16,30 +16,35 @@
         <div><span id="dateTime"></span></div>
         <a>01/05/2020</a>
       </div>
-      <!-- <div class="nav-button"> -->
         <button class="trips-button">Your Trips</button>
         <button class="expense-button">Your Expenses</button>
         <button class="book-trip-button">Book a New Trip</button>
         <button>Logout</button>
-      <!-- </div> -->
     </div>
   </nav>
   <main>
-    <section class="trips-view hidden">
+    <section class="trips-view">
       <h2>Upcoming Trips</h2>
-      <section class="future-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="future-trips-grid trips-grid"></section>
+      </div>
       <h2>Pending Trips</h2>
-      <section class="pending-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="pending-trips-grid trips-grid"></section>
+      </div>
       <h2>Past Trips</h2>
-      <section class="past-trips-grid trips-grid"></section>
+      <div class="grid-container">
+        <section class="past-trips-grid trips-grid"></section>
+      </div>
     </section>
-    <section class="expense-view">
+    <section class="expense-view hidden">
       <div class="expense-container">
         <h2>Your Trip Expenses</h2>
         <div class="expense-text-container">
           <p class="amount-this-year-text">You've spent $0 on trips this year</p>
           <p class="total-spent-text">You've spent $$$ total</p>
         </div>
+        <p class="expense-message">*Price includes a 10% travel agent fee</p>
         <table class="expense-table">
           <tr>
             <th>Location</th>
@@ -48,7 +53,6 @@
             <th>Price*</th>
           </tr>
         </table>
-        <p class="expense-message">*Price includes a 10% travel agent fee</p>
       </div>
     </section>
     <section class="booking-view hidden">
@@ -61,11 +65,11 @@
             </div>
             <div>
               <label for="numberOfDays">Number of Days</label>
-              <input type="number" name="number-of-days" id="numberOfDays" required />
+              <input type="number" name="number-of-days" min="1" oninput="validity.valid||(value='');" id="numberOfDays" required />
             </div>
             <div>
               <label for="numberOfPeople">Number of People</label>
-              <input type="number" name="number-of-people" id="numberOfPeople" required />
+              <input type="number" name="number-of-people" min="1" oninput="validity.valid||(value='');" id="numberOfPeople" required />
             </div>
             <div class="destination-input">
               <label for="destinationInput">Destination</label>
@@ -122,9 +126,15 @@
                 <option value="43">Nassau, The Bahamas</option>
               </select>
             </div>
-            <button class="submit-request-button">Submit Trip Request</button>
+            <div class="trip-estimate-text"></div>
+            <div class="agent-fee-text hidden">*Price includes a 10% travel agent fee</div>
+            <div class="form-button-container">
+              <button class="price-estimate-button">See Price Estimate</button>
+              <button class="submit-request-button">Submit Trip Request</button>
+            </div>
             <p class="empty-input-message hidden">Please fill out all fields</p>
           </form>
+          <h2 class="post-response-message hidden"></h2>
       </div>
     </section>
   </main>
