@@ -14,25 +14,26 @@
     <div class="nav-container">
       <div class="date-container">
         <div><span id="dateTime"></span></div>
-        <a>01/05/2020</a>
+        <a class="date">01/05/2020</a>
       </div>
         <button class="trips-button">Your Trips</button>
         <button class="expense-button">Your Expenses</button>
         <button class="book-trip-button">Book a New Trip</button>
-        <button>Logout</button>
+        <button class="logout-button">Logout</button>
     </div>
   </nav>
   <main>
-    <section class="trips-view">
-      <h2>Upcoming Trips</h2>
+    <section class="trips-view hidden">
+      <h1>Your Trips</h1>
+      <h2>Upcoming</h2>
       <div class="grid-container">
         <section class="future-trips-grid trips-grid"></section>
       </div>
-      <h2>Pending Trips</h2>
+      <h2>Pending</h2>
       <div class="grid-container">
         <section class="pending-trips-grid trips-grid"></section>
       </div>
-      <h2>Past Trips</h2>
+      <h2>Past</h2>
       <div class="grid-container">
         <section class="past-trips-grid trips-grid"></section>
       </div>
@@ -46,16 +47,18 @@
         </div>
         <p class="expense-message">*Price includes a 10% travel agent fee</p>
         <table class="expense-table">
+          <caption class="hidden">Your Expenses</caption>
           <tr>
             <th>Location</th>
             <th>Date</th>
             <th>Number of Days</th>
+            <th>Status</th>
             <th>Price*</th>
           </tr>
         </table>
       </div>
     </section>
-    <section class="booking-view hidden">
+    <section class="booking-view">
       <div class="form-container">
           <form class="form">
             <h2 class="request-to-book-text">Request to Book a Trip</h2>
@@ -134,7 +137,7 @@
             </div>
             <p class="empty-input-message hidden">Please fill out all fields</p>
           </form>
-          <h2 class="post-response-message hidden"></h2>
+          <h2 class="post-response-message hidden">Status of Post Request</h2>
       </div>
     </section>
   </main>
