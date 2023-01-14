@@ -200,14 +200,16 @@ function createExpenseTable() {
 				let cell1 = row.insertCell(0);
 				let cell2 = row.insertCell(1);
 				let cell3 = row.insertCell(2);
-				let cell4 = row.insertCell(3);
-                let cell5 = row.insertCell(4)
+                let cell4 = row.insertCell(3)
+				let cell5 = row.insertCell(4);
+                let cell6 = row.insertCell(5)
 
 				cell1.innerHTML = `${destination.destination}`;
 				cell2.innerHTML = `${trip.date}`;
 				cell3.innerHTML = `${trip.duration}`;
-                cell4.innerHTML = `${trip.status}`;
-				cell5.innerHTML = `$${destinations
+                cell4.innerHTML = `${trip.travelers}`
+                cell5.innerHTML = `${trip.status}`;
+				cell6.innerHTML = `$${destinations
 					.findTripCost(trip)
 					.toLocaleString("en-US")}`;
                     tripsAlreadyInTable.push(trip)
@@ -282,9 +284,9 @@ function createTrip() {
 	) {
 		tripRequest = user.createTripRequest(
 			Number(destinationInput.value),
-			Number(groupSizeInput.value),
 			dateInput.value.replaceAll("-", "/"),
 			Number(durationInput.value),
+			Number(groupSizeInput.value),
 			trips
 		);
 	}

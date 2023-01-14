@@ -425,7 +425,7 @@ describe("Destinations", function () {
 	});
 
 	it("should calculate how much a user's trip request would cost", function () {
-       let request = user.createTripRequest(19, 5, "2022/04/30", 6, [], trips)
+       let request = user.createTripRequest(19,"2022/04/30", 6, 5, trips)
 		expect(
 			destinations.findTripCost(request)
 		).to.equal(7392);
