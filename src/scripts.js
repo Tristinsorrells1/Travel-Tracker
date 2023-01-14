@@ -5,8 +5,6 @@ import Destinations from "../src/Destinations";
 import User from "../src/User";
 import Trips from "../src/Trips";
 import Travelers from "../src/Travelers";
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/turing-logo.png";
 
 // ----------------------------------Variables----------------------------
@@ -33,15 +31,8 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 
-let expenseButton = document.querySelector(".expense-button");
-let tripButton = document.querySelector(".trips-button");
-let bookNewTripButton = document.querySelector(".book-trip-button");
 let submitRequestButton = document.querySelector(".submit-request-button");
 let priceEstimateButton = document.querySelector(".price-estimate-button");
-
-let bookingSection = document.querySelector(".booking-view");
-let tripsSection = document.querySelector(".trips-view");
-let expenseSection = document.querySelector(".expense-view");
 
 let form = document.querySelector(".form");
 
@@ -53,27 +44,6 @@ let groupSizeInput = document.querySelector("#numberOfPeople");
 let destinationInput = document.querySelector("#destinationInput");
 
 //-----------------------------------eventListeners------------------------
-
-expenseButton.addEventListener("click", function () {
-	expenseSection.classList.remove("hidden");
-	tripsSection.classList.add("hidden");
-	bookingSection.classList.add("hidden");
-	console.log("expense");
-});
-
-tripButton.addEventListener("click", function () {
-	tripsSection.classList.remove("hidden");
-	expenseSection.classList.add("hidden");
-	bookingSection.classList.add("hidden");
-	console.log("trip");
-});
-
-bookNewTripButton.addEventListener("click", function () {
-	bookingSection.classList.remove("hidden");
-	tripsSection.classList.add("hidden");
-	expenseSection.classList.add("hidden");
-	console.log("book");
-});
 
 submitRequestButton.addEventListener("click", function (event) {
 	event.preventDefault();
@@ -94,7 +64,6 @@ document.addEventListener(
 			e.preventDefault();
 			document.getElementById("#numberOfDays").focus();
 			document.getElementById("#numberOfPeople").focus();
-			// document.getElementById("#numberOfDays").focus();
 		};
 	})(),
 	true
@@ -200,14 +169,16 @@ function createExpenseTable() {
 				let cell1 = row.insertCell(0);
 				let cell2 = row.insertCell(1);
 				let cell3 = row.insertCell(2);
-				let cell4 = row.insertCell(3);
-                let cell5 = row.insertCell(4)
+                let cell4 = row.insertCell(3)
+				let cell5 = row.insertCell(4);
+                let cell6 = row.insertCell(5)
 
 				cell1.innerHTML = `${destination.destination}`;
 				cell2.innerHTML = `${trip.date}`;
 				cell3.innerHTML = `${trip.duration}`;
-                cell4.innerHTML = `${trip.status}`;
-				cell5.innerHTML = `$${destinations
+                cell4.innerHTML = `${trip.travelers}`;
+                cell5.innerHTML = `${trip.status}`;
+				cell6.innerHTML = `$${destinations
 					.findTripCost(trip)
 					.toLocaleString("en-US")}`;
                     tripsAlreadyInTable.push(trip)
@@ -282,9 +253,9 @@ function createTrip() {
 	) {
 		tripRequest = user.createTripRequest(
 			Number(destinationInput.value),
-			Number(groupSizeInput.value),
 			dateInput.value.replaceAll("-", "/"),
 			Number(durationInput.value),
+			Number(groupSizeInput.value),
 			trips
 		);
 	}
@@ -293,6 +264,7 @@ function createTrip() {
 
 function getTripEstimate() {
 	let tripRequest = createTrip();
+    console.log(tripRequest)
 	let estimateCost = destinations.findTripCost(tripRequest);
 
 	submitRequestButton.classList.add("hidden");

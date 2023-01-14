@@ -17,12 +17,9 @@ body {
 
 main {
   margin-top: 8vh;
-  /* background-image: url('../images/option.jpg');
-  background-size: 100%;
-  background-repeat: no-repeat; */
   background-color: rgb(210, 238, 247);
-  /* border: 2px solid rgb(81, 255, 0); */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -179,9 +176,9 @@ height: 70vh;
 display: flex;
 }
 
-
 form,
 .post-response-message {
+  margin-top: 34vw;
   height: 67vh;
   width: 50vw;
   margin-right: auto;

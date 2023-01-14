@@ -535,18 +535,18 @@ describe("User", function () {
 		]);
 	});
 	it("should create a trip request", function () {
-		expect(
-			user.createTripRequest(29, 5, "2022/04/30", 6, [], trips)
-		).to.deep.equal({
-			id: 11,
-			userID: 3,
-			destinationID: 29,
-			travelers: 5,
-			date: "2022/04/30",
-			duration: 6,
-			status: "pending",
-			suggestedActivities: [],
-		});
+		expect(user.createTripRequest(11, 5, "2022/04/30", 6, trips)).to.deep.equal(
+			{
+				id: 11,
+				userID: 3,
+				destinationID: 11,
+				travelers: 6,
+				date: 5,
+				duration: "2022/04/30",
+				status: "pending",
+				suggestedActivities: [],
+			}
+		);
 	});
 
 	it("should calculate the total amount a user has spent on trips", function () {

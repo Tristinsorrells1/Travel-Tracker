@@ -66,9 +66,9 @@ class User {
 	}
 	createTripRequest(
 		destinationID,
-		travelers,
 		date,
 		duration,
+		travelers,
 		trips
 	) {
 		let allTrips = trips.getTripsForAllUsers();

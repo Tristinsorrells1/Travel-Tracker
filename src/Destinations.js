@@ -7,9 +7,9 @@ class Destinations {
 			(destination) => destination.id === request.destinationID
 		);
 		let tripCost =
-			destination.estimatedLodgingCostPerDay * request.duration +
-			destination.estimatedFlightCostPerPerson * request.travelers;
-
+		(destination.estimatedLodgingCostPerDay * request.duration) +
+		(destination.estimatedFlightCostPerPerson * request.travelers);
+		
 		let tripWithFee = tripCost + tripCost * 0.1;
 		return tripWithFee;
 	}
