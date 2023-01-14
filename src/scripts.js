@@ -167,7 +167,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 				tripGrid.innerHTML += ` <div class="trip-container">
                     <div class="trip-image-container">
                             <img class="trip-image"
-                            src=${destination.image}>
+                            src=${destination.image} alt="A picturesque view in ${destination.destination}">
                         </div>
                         <p>${destination.destination}</p>
                         <p>Duration: ${trip.duration} days</p>
@@ -201,11 +201,13 @@ function createExpenseTable() {
 				let cell2 = row.insertCell(1);
 				let cell3 = row.insertCell(2);
 				let cell4 = row.insertCell(3);
+                let cell5 = row.insertCell(4)
 
 				cell1.innerHTML = `${destination.destination}`;
 				cell2.innerHTML = `${trip.date}`;
 				cell3.innerHTML = `${trip.duration}`;
-				cell4.innerHTML = `$${destinations
+                cell4.innerHTML = `${trip.status}`;
+				cell5.innerHTML = `$${destinations
 					.findTripCost(trip)
 					.toLocaleString("en-US")}`;
                     tripsAlreadyInTable.push(trip)
