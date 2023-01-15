@@ -98,19 +98,6 @@ logoutButton.addEventListener("click", function () {
 	logoutUser();
 });
 
-document.addEventListener(
-	"invalid",
-	(function () {
-		return function (e) {
-			e.preventDefault();
-			document.getElementById("#numberOfDays").focus();
-			document.getElementById("#numberOfPeople").focus();
-			// document.getElementById("#numberOfDays").focus();
-		};
-	})(),
-	true
-);
-
 // -----------------------------------Functions----------------------------
 var dt = new Date();
 document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString("en-US", {
@@ -355,6 +342,12 @@ function showPostResult(result) {
 	setTimeout(resetForm, 6000);
 }
 
+function resetForm() {
+    form.classList.remove("hidden");
+    postResponseMessage.innerText = "";
+    postResponseMessage.classList.add("hidden");
+}
+
 function postTripRequest() {
 	if (!checkForEmptyInputs()) {
 		return checkForEmptyInputs();
@@ -368,33 +361,27 @@ function postTripRequest() {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(tripRequest),
 	})
-		.then((response) => {
-			if (!response.ok) {
-				response.json().then((response) => {
-					console.log(response.message);
-				});
-				return showPostResult("unknown");
-			} else {
-				showPostResult("success");
-				fetch(`http://localhost:3001/api/v1/trips`)
-					.then((response) => response.json())
-					.then((data) => {
-						fetchApiPromises().then(() => {
-							resetExpenseTable();
-							createLayout();
-						});
-					});
-			}
-		})
-		.catch((error) => {
-			showPostResult("server error");
-		});
-}
-
-function resetForm() {
-	form.classList.remove("hidden");
-	postResponseMessage.innerText = "";
-	postResponseMessage.classList.add("hidden");
+    .then((response) => {
+        if (!response.ok) {
+            response.json().then((response) => {
+                console.log(response.message);
+            });
+            return showPostResult("unknown");
+        } else {
+            showPostResult("success");
+            fetch(`http://localhost:3001/api/v1/trips`)
+                .then((response) => response.json())
+                .then((data) => {
+                    fetchApiPromises().then(() => {
+                        resetExpenseTable();
+                        createLayout();
+                    });
+                });
+        }
+    })
+    .catch((error) => {
+        showPostResult("server error");
+    });
 }
 
 function verifyLoginInfo() {
