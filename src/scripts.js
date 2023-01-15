@@ -179,7 +179,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 				destination.id === trip.destinationID &&
 				!tripsInGrid.includes(trip)
 			) {
-				tripGrid.innerHTML += ` <div class="trip-container">
+				tripGrid.innerHTML += ` <div class="trip-container border">
                     <div class="trip-image-container">
                             <img class="trip-image"
                             src=${destination.image} alt="A picturesque view in ${destination.destination}">
