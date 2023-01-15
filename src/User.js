@@ -74,7 +74,7 @@ class User {
 		let allTrips = trips.getTripsForAllUsers();
 		let lastUsedId = allTrips[allTrips.length - 1].id;
 		let tripRequest = {
-			id: lastUsedId + 1,
+			id: lastUsedId += 1,
 			userID: this.id,
 			destinationID,
 			travelers,
