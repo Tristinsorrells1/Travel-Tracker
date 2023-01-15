@@ -32,25 +32,33 @@ let requestToBookText = document.querySelector(".request-to-book-text");
 let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
+let loginMessage = document.querySelector(".request-to-book-text");
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
 let bookNewTripButton = document.querySelector(".book-trip-button");
 let submitRequestButton = document.querySelector(".submit-request-button");
 let priceEstimateButton = document.querySelector(".price-estimate-button");
+let loginButton = document.querySelector(".login-button");
+let logoutButton = document.querySelector(".logout-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
+let loginSection = document.querySelector(".login-view");
 
-let form = document.querySelector(".form");
+let form = document.querySelector(".booking-form");
 
 let expenseTable = document.querySelector(".expense-table");
+
+let dateandTime = document.querySelector(".date-container");
 
 let dateInput = document.querySelector("#departureDate");
 let durationInput = document.querySelector("#numberOfDays");
 let groupSizeInput = document.querySelector("#numberOfPeople");
 let destinationInput = document.querySelector("#destinationInput");
+let usernameInput = document.querySelector("#username");
+let passwordInput = document.querySelector("#password");
 
 //-----------------------------------eventListeners------------------------
 
@@ -58,33 +66,39 @@ expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
-	console.log("expense");
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
 	expenseSection.classList.add("hidden");
 	bookingSection.classList.add("hidden");
-	console.log("trip");
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
 	expenseSection.classList.add("hidden");
-	console.log("book");
 });
 
 submitRequestButton.addEventListener("click", function (event) {
 	event.preventDefault();
-    postTripRequest();
-
+	test();
+	postTripRequest();
 });
 
 priceEstimateButton.addEventListener("click", function (event) {
 	event.preventDefault();
 	checkForEmptyInputs();
 	getTripEstimate();
+});
+
+loginButton.addEventListener("click", function (event) {
+	event.preventDefault();
+	verifyLoginInfo();
+});
+
+logoutButton.addEventListener("click", function () {
+	logoutUser();
 });
 
 document.addEventListener(
@@ -110,13 +124,11 @@ document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString("en-US", {
 });
 
 const fetchApiPromises = () => {
-	apiCalls.fetchData().then((data) => {
+	return apiCalls.fetchData().then((data) => {
 		travelersData = data[0].travelers;
 		tripsData = data[1].trips;
 		destinationsData = data[2].destinations;
 		createInstances();
-		test();
-		createLayout();
 	});
 };
 fetchApiPromises();
@@ -136,14 +148,12 @@ function createLayout() {
 	);
 	createExpenseTable();
 	createExpenseReport();
-	yourJourneyAwaitsText.innerText = `Your Next Journey Awaits, ${
-		user.name.split(" ")[0]
-	}`;
 }
 
 function test() {
-	user = new User(travelersData[22]);
-    user.getTrips(travelers, trips)
+	console.log(trips);
+	let getTrips = trips.getTripsByUser(user.id);
+	console.log(getTrips);
 }
 
 function createInstances() {
@@ -154,7 +164,7 @@ function createInstances() {
 
 function createTripsGrid(tripGrid, tripTimeline) {
 	tripGrid.innerHTML = "";
-    let tripsInGrid = []
+	let tripsInGrid = [];
 	let getTrips = tripTimeline.map((trip) => {
 		return destinations["data"].find(
 			(destination) => destination.id === trip.destinationID
@@ -163,7 +173,10 @@ function createTripsGrid(tripGrid, tripTimeline) {
 
 	getTrips.forEach((destination) => {
 		tripTimeline.forEach((trip) => {
-			if (destination.id === trip.destinationID && !tripsInGrid.includes(trip)) {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsInGrid.includes(trip)
+			) {
 				tripGrid.innerHTML += ` <div class="trip-container">
                     <div class="trip-image-container">
                             <img class="trip-image"
@@ -174,7 +187,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
                         <p>Date: ${trip.date}</p>
                 </div>
                     `;
-                    tripsInGrid.push(trip)
+				tripsInGrid.push(trip);
 			}
 		});
 	});
@@ -185,7 +198,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 
 function createExpenseTable() {
 	let usersTrips = user.getTrips(travelers, trips);
-    let tripsAlreadyInTable = []
+	let tripsAlreadyInTable = [];
 
 	let getTrips = usersTrips.map((trip) => {
 		return destinations["data"].find(
@@ -195,24 +208,27 @@ function createExpenseTable() {
 
 	getTrips.forEach((destination) => {
 		usersTrips.forEach((trip) => {
-			if (destination.id === trip.destinationID && !tripsAlreadyInTable.includes(trip)) {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsAlreadyInTable.includes(trip)
+			) {
 				let row = expenseTable.insertRow(-1);
 				let cell1 = row.insertCell(0);
 				let cell2 = row.insertCell(1);
 				let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3)
+				let cell4 = row.insertCell(3);
 				let cell5 = row.insertCell(4);
-                let cell6 = row.insertCell(5)
+				let cell6 = row.insertCell(5);
 
 				cell1.innerHTML = `${destination.destination}`;
 				cell2.innerHTML = `${trip.date}`;
 				cell3.innerHTML = `${trip.duration}`;
-                cell4.innerHTML = `${trip.travelers}`
-                cell5.innerHTML = `${trip.status}`;
+				cell4.innerHTML = `${trip.travelers}`;
+				cell5.innerHTML = `${trip.status}`;
 				cell6.innerHTML = `$${destinations
 					.findTripCost(trip)
 					.toLocaleString("en-US")}`;
-                    tripsAlreadyInTable.push(trip)
+				tripsAlreadyInTable.push(trip);
 			}
 		});
 	});
@@ -257,7 +273,7 @@ function checkForEmptyInputs() {
 		!destinationInput.value.trim()
 	) {
 		let filtered = inputValues.filter((userInput) => {
-			return userInput.value === "";
+			return userInput.value.trim() === "";
 		});
 		filtered.forEach((field) => {
 			field.classList.add("missing-info");
@@ -266,12 +282,12 @@ function checkForEmptyInputs() {
 		requestToBookText.classList.add("red-text");
 		return false;
 	}
-    requestToBookText.classList.remove("red-text");
-    requestToBookText.innerText = "Request to Book a Trip";
+	requestToBookText.classList.remove("red-text");
+	requestToBookText.innerText = "Request to Book a Trip";
 	inputValues.forEach((field) => {
 		field.classList.remove("missing-info");
 	});
-    return true
+	return true;
 }
 
 function createTrip() {
@@ -317,55 +333,142 @@ function resetAfterEstimate() {
 	agentFeeText.classList.add("hidden");
 }
 function showPostResult(result) {
-    form.classList.add("hidden");
-    postResponseMessage.classList.remove("hidden");
-    if (result === "success") {
-        postResponseMessage.innerText =
-            "Success! Your trip request will be reviewed by a travel agent soon.";
-    } else if (result === "server error") {
-        postResponseMessage.innerText =
-            "A server issue has occured. Please try again later.";
-    } else {
-        postResponseMessage.innerText =
-            "An unexpected issue has occured. Please try again later.";
-    }
-    setTimeout(resetForm, 6000);
+	form.classList.add("hidden");
+	postResponseMessage.classList.remove("hidden");
+	if (result === "success") {
+		postResponseMessage.innerText =
+			"Success! Your trip request will be reviewed by a travel agent soon.";
+	} else if (result === "server error") {
+		postResponseMessage.innerText =
+			"A server issue has occured. Please try again later.";
+	} else {
+		postResponseMessage.innerText =
+			"An unexpected issue has occured. Please try again later.";
+	}
+	setTimeout(resetForm, 6000);
 }
 
 function postTripRequest() {
-    if (!checkForEmptyInputs()) {
-        return checkForEmptyInputs();
-    }
+	if (!checkForEmptyInputs()) {
+		return checkForEmptyInputs();
+	}
 	let tripRequest = createTrip();
+	durationInput.value = null
+	groupSizeInput.value = null
+	destinationInput.value = null
 	fetch(`http://localhost:3001/api/v1/trips`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(tripRequest),
 	})
-    .then((response) => {
-        if (!response.ok) {
-            response.json().then((response) => {
-                console.log(response.message);
-            });
-            showPostResult("unknown");
-        } else {
-            showPostResult("success");
-            fetch(`http://localhost:3001/api/v1/trips`)
-                .then((response) => response.json())
-                .then((data) => {
-                    fetchApiPromises();
-                });
-            return;
-        }
-    })
-    .catch((error) => {
-        showPostResult("server error");
-    });
+		.then((response) => {
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showPostResult("unknown");
+			} else {
+				showPostResult("success");
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+						resetExpenseTable();
+						createLayout();
+					});
+                    })
+                }
+             })
+	    .catch((error) => {
+			showPostResult("server error");
+	});
 }
-
 
 function resetForm() {
 	form.classList.remove("hidden");
 	postResponseMessage.innerText = "";
 	postResponseMessage.classList.add("hidden");
+}
+
+function verifyLoginInfo() {
+	let inputValues = [usernameInput, passwordInput];
+
+	if (!usernameInput.value.trim() || !passwordInput.value.trim()) {
+		let filtered = inputValues.filter((userInput) => {
+			return userInput.value.trim() === "";
+		});
+		filtered.forEach((field) => {
+			field.classList.add("missing-info");
+		});
+		loginMessage.innerText = "Please enter a username and password.";
+		loginMessage.classList.add("red-text");
+		return;
+	}
+	inputValues.forEach((field) => {
+		field.classList.remove("missing-info");
+	});
+	loginMessage.innerText = "Login";
+	loginMessage.classList.remove("red-text");
+	findUserInSystem();
+}
+
+function findUserInSystem() {
+	if (
+		usernameInput.value.slice(0, 8) !== "traveler" ||
+		isNaN(usernameInput.value.slice(8)) ||
+		usernameInput.value.slice(8) <= 0 ||
+		usernameInput.value.slice(8) > 50
+	) {
+		usernameInput.classList.add("missing-info");
+		loginMessage.innerText = "Please enter a valid username.";
+		loginMessage.classList.add("red-text");
+		return;
+	}
+	if (passwordInput.value !== "travel") {
+		passwordInput.classList.add("missing-info");
+		loginMessage.innerText =
+			"Please enter a valid username and password combination.";
+		loginMessage.classList.add("red-text");
+		return;
+	}
+	loginAsUser();
+}
+
+function loginAsUser() {
+	let userID = Number(usernameInput.value.slice(8));
+	user = new User(travelers.findTravelerById(userID));
+	loginSection.classList.add("hidden");
+	tripsSection.classList.remove("hidden");
+	expenseButton.classList.remove("hidden");
+	tripButton.classList.remove("hidden");
+	bookNewTripButton.classList.remove("hidden");
+	logoutButton.classList.remove("hidden");
+	yourJourneyAwaitsText.innerText = `Your Next Journey Awaits, ${
+		user.name.split(" ")[0]
+	}`;
+	dateandTime.classList.remove("hidden");
+	createLayout();
+}
+
+function logoutUser() {
+	user = null;
+	passwordInput.value = "";
+	usernameInput.value = "";
+	loginSection.classList.remove("hidden");
+	tripsSection.classList.add("hidden");
+	expenseSection.classList.add("hidden");
+	expenseButton.classList.add("hidden");
+	tripButton.classList.add("hidden");
+	bookNewTripButton.classList.add("hidden");
+	logoutButton.classList.add("hidden");
+	yourJourneyAwaitsText.innerText =
+		"Travel Tracker - Imagine Where Life Can Take You";
+	dateandTime.classList.add("hidden");
+	resetExpenseTable();
+}
+
+function resetExpenseTable() {
+	while (expenseTable.rows.length > 0) {
+		expenseTable.deleteRow(0);
+	}
 }
