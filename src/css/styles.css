@@ -5,7 +5,7 @@
 
 html, body {
   min-height: 100%;
-  width: 100%;
+  /* width: 100%; */
   margin: 0px;
   padding: 0px;
   background-image: url('../images/old-map.jpg')
@@ -27,11 +27,37 @@ nav,
 .trip-expense-text,
 .expense-text-container,
 .past-pending-upcoming-h2,
-.booking-form-container {
+.booking-form-container
+ {
   border: 2px solid rgb(57, 55, 55);
 }
 
+main,
+.booking-form,
+.post-response-message,
+.login-container,
+.no-trips-in-grid,
+h2,
+h1,
+.expense-text-container,
+.expense-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+label,
+.expense-table {
+  display: flex;
+  justify-content: center;
+}
+
+section,
+nav,
+html,
+body {
+  width: 100%;
+}
 
 
 body {
@@ -43,22 +69,14 @@ body {
 main {
   margin-top: 8vh;
   background-image: url('../images/old-map.jpg');
-  /* background-color: rgb(210, 238, 247); */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 section {
   height: 100%;
-  width: 100%;
 }
 
 nav {
-  width: 100%;
   display: flex;
-  /* background-color: rgba(154, 196, 200, 0.932); */
-  /* border: 2px solid rgb(117, 114, 114); */
   height: 4vh;
   align-items: center;
   justify-content: space-between;
@@ -83,10 +101,6 @@ nav {
 .login-container {
   height: 40vh;
   width: 30vw;
-  /* border: 2px solid rgb(117, 114, 114); */
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   margin-right: auto;
   margin-left: auto;
@@ -109,7 +123,6 @@ button:hover {
 .trip-container {
   margin-top: 6vh;
   background-color: #9d96965e;
-  /* border: 2px solid rgb(63, 61, 61); */
   text-align: center;
   width: 15vw;
   margin-bottom: 1vh;
@@ -121,7 +134,6 @@ button:hover {
   overflow: auto;
   margin-right: auto;
   margin-left: auto;
-  /* background-color: rgba(154, 196, 200, 0.927); */
 }
 
 
@@ -129,10 +141,8 @@ button:hover {
 .trip-expense-text {
   background-color: rgba(154, 196, 200, 0.61);
   border-radius: .25vw;
-  border: 2px solid rgb(63, 61, 61);
   width: fit-content;
   padding: 0 2vw 0 2vw;
-  /* border: 2px solid rgb(63, 61, 61); */
   margin-right: auto;
   margin-left: auto;
 }
@@ -180,13 +190,6 @@ h1 {
   margin-top: -2vw;
 }
 
-.no-trips-in-grid,
-h2,
-h1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .expense-container {
   height: fit-content;
@@ -195,15 +198,11 @@ h1 {
 .expense-message {
   font-size: 1vw;
   border-bottom: 2px solid rgb(63, 61, 61);
-  /* background-color: rgba(154, 196, 200, 0.764); */
   margin: 5vh;
 }
 
 .expense-text-container,
 .expense-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: -1vw;
   width: 60vw;
   margin-right: auto;
@@ -212,9 +211,7 @@ h1 {
 
 .expense-text-container {
   border-radius: .25vw;
-  /* border: 2px solid rgb(63, 61, 61); */
   height: 10vh;
-  /* background-color: rgba(154, 196, 200, 0.771); */
 }
 
 .total-spent-text {
@@ -224,8 +221,8 @@ h1 {
 .expense-table {
   height: 60vh;
   border-collapse: collapse;
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: center; */
   padding-bottom: 2vw;
 }
 
@@ -249,7 +246,6 @@ tr:nth-child(even) {
 }
 
 .past-pending-upcoming-h2 {
-  /* border: 2px solid rgb(3, 3, 3); */
   margin-left: 15vw;
   height: 3.5vh;
   background-color: rgb(0, 0, 0);
@@ -269,9 +265,7 @@ tr:hover {
 .booking-form-container {
 height: 70vh;
 display: flex;
-/* background-color: rgba(154, 196, 200, 0.743); */
 width: 50vw;
-/* border: 2px solid rgb(8, 8, 8); */
 margin-right: auto;
 margin-left: auto;
 }
@@ -283,10 +277,10 @@ margin-left: auto;
   width: 50vw;
   margin-right: auto;
   margin-left: auto;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 input {
@@ -303,10 +297,7 @@ input {
   height: 4vh;
 }
 
-label {
- display: flex;
- justify-content: center;
-}
+
 
 .red-text {
   color: red;
