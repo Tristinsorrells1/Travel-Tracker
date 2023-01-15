@@ -33,6 +33,7 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
+let h1 = document.querySelector('#h1')
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
@@ -82,7 +83,6 @@ bookNewTripButton.addEventListener("click", function () {
 
 submitRequestButton.addEventListener("click", function (event) {
 	event.preventDefault();
-	test();
 	postTripRequest();
 });
 
@@ -148,13 +148,15 @@ function createLayout() {
 	);
 	createExpenseTable();
 	createExpenseReport();
+    h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
 }
 
-function test() {
-	console.log(trips);
-	let getTrips = trips.getTripsByUser(user.id);
-	console.log(getTrips);
-}
+// function test() {
+//     console.log(travelers)
+// 	user = new User(travelers.data[22])
+// }
+
+
 
 function createInstances() {
 	travelers = new Travelers(travelersData);
@@ -177,7 +179,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 				destination.id === trip.destinationID &&
 				!tripsInGrid.includes(trip)
 			) {
-				tripGrid.innerHTML += ` <div class="trip-container">
+				tripGrid.innerHTML += ` <div class="trip-container border">
                     <div class="trip-image-container">
                             <img class="trip-image"
                             src=${destination.image} alt="A picturesque view in ${destination.destination}">
@@ -192,7 +194,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 		});
 	});
 	if (tripGrid.innerHTML === "") {
-		tripGrid.innerHTML = `<p class="no-trips-in-grid">No Trips Found</p>`;
+		tripGrid.innerHTML = `<p class="no-trips-in-grid center">No Trips Found</p>`;
 	}
 }
 
@@ -456,6 +458,7 @@ function logoutUser() {
 	usernameInput.value = "";
 	loginSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
+    bookingSection.classList.add("hidden")
 	expenseSection.classList.add("hidden");
 	expenseButton.classList.add("hidden");
 	tripButton.classList.add("hidden");
