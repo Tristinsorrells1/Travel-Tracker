@@ -3,72 +3,29 @@
   color: black;
 }
 
-html, body {
-  min-height: 100%;
-  /* width: 100%; */
-  margin: 0px;
-  padding: 0px;
+html,
+body,
+main {
   background-image: url('../images/old-map.jpg')
 }
 
-nav,
-.grid-container,
-.expense-message,
-.expense-text-container,
-.booking-form-container {
-  background-color: rgba(154, 196, 200, 0.932);
-  
-}
 
-nav,
-.login-container,
-.trip-container,
-#h1,
-.trip-expense-text,
-.expense-text-container,
-.past-pending-upcoming-h2,
-.booking-form-container
- {
-  border: 2px solid rgb(57, 55, 55);
+html, body {
+  min-height: 100%;
+  margin: 0px;
+  padding: 0px;
+  /* background-image: url('../images/old-map.jpg') */
 }
-
-main,
-.booking-form,
-.post-response-message,
-.login-container,
-.no-trips-in-grid,
-h2,
-h1,
-.expense-text-container,
-.expense-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-label,
-.expense-table {
-  display: flex;
-  justify-content: center;
-}
-
-section,
-nav,
-html,
-body {
-  width: 100%;
-}
-
 
 body {
   overflow-x: hidden;
   overflow-y: auto;
-  background-image: url('../images/old-map.jpg');
+  /* background-image: url('../images/old-map.jpg'); */
 }
 
 main {
   margin-top: 8vh;
-  background-image: url('../images/old-map.jpg');
+  /* background-image: url('../images/old-map.jpg'); */
 }
 
 section {
@@ -102,16 +59,14 @@ nav {
   height: 40vh;
   width: 30vw;
   flex-direction: column;
-  margin-right: auto;
-  margin-left: auto;
   text-align: center;
   background-color: rgba(154, 196, 200, 0.693);
 }
 
 button {
-padding: 0 0 0 .25vh;
-color: white;
-background-color: rgb(50, 50, 51);
+  padding: 0 0 0 .25vh;
+  color: white;
+  background-color: rgb(50, 50, 51);
 }
 
 button:hover {
@@ -132,8 +87,6 @@ button:hover {
   width: 70vw;
   border: 2px solid rgb(63, 61, 61);
   overflow: auto;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 
@@ -143,8 +96,6 @@ button:hover {
   border-radius: .25vw;
   width: fit-content;
   padding: 0 2vw 0 2vw;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .trip-expense-text {
@@ -152,8 +103,6 @@ button:hover {
 }
 
 .trips-grid {
-  margin-right: auto;
-  margin-left: auto;
   width: fit-content;
   height: fit-content;
   display: grid;
@@ -167,7 +116,7 @@ button:hover {
 .trip-image {
   height: 12vw;
   max-width: 15vw;
-  opacity: 1;
+  /* opacity: 1; */
   position: absoulute;
 }
 
@@ -180,8 +129,6 @@ h2,
 
 h2 {
   width: fit-content;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 
@@ -205,8 +152,6 @@ h1 {
 .expense-message {
   margin-top: -1vw;
   width: 60vw;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .expense-text-container {
@@ -221,8 +166,6 @@ h1 {
 .expense-table {
   height: 60vh;
   border-collapse: collapse;
-  /* display: flex; */
-  /* justify-content: center; */
   padding-bottom: 2vw;
 }
 
@@ -263,11 +206,9 @@ tr:hover {
 }
 
 .booking-form-container {
-height: 70vh;
-display: flex;
-width: 50vw;
-margin-right: auto;
-margin-left: auto;
+  height: 70vh;
+  display: flex;
+  width: 50vw;
 }
 
 
@@ -275,20 +216,13 @@ margin-left: auto;
 .post-response-message {
   height: 67vh;
   width: 50vw;
-  margin-right: auto;
-  margin-left: auto;
-  /* display: flex; */
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 
 input {
   display: block;
   margin: 2.5vh;
   width: 11vw;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 #destinationInput {
@@ -296,8 +230,6 @@ input {
   margin-top: 1vh;
   height: 4vh;
 }
-
-
 
 .red-text {
   color: red;
@@ -317,6 +249,70 @@ input {
 .agent-fee-text {
   font-size: 2vh;
   margin-top: -1vh;
+}
+
+nav,
+.grid-container,
+.expense-message,
+.expense-text-container,
+.booking-form-container {
+  background-color: rgba(154, 196, 200, 0.932);
+  
+}
+
+nav,
+.login-container,
+.trip-container,
+#h1,
+.trip-expense-text,
+.expense-text-container,
+.past-pending-upcoming-h2,
+.booking-form-container
+ {
+  border: 2px solid rgb(57, 55, 55);
+}
+
+.login-container,
+.grid-container,
+#h1,
+.trip-expense-text,
+.trips-grid,
+h2,
+.expense-text-container,
+.expense-message,
+.booking-form-container,
+input,
+.booking-form,
+.post-response-message {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+main,
+.booking-form,
+.post-response-message,
+.login-container,
+.no-trips-in-grid,
+h2,
+h1,
+.expense-text-container,
+.expense-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label,
+.expense-table {
+  display: flex;
+  justify-content: center;
+}
+
+section,
+nav,
+html,
+body {
+  width: 100%;
 }
 
 .hidden {
