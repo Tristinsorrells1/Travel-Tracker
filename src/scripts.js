@@ -194,7 +194,7 @@ function createTripsGrid(tripGrid, tripTimeline) {
 		});
 	});
 	if (tripGrid.innerHTML === "") {
-		tripGrid.innerHTML = `<p class="no-trips-in-grid">No Trips Found</p>`;
+		tripGrid.innerHTML = `<p class="no-trips-in-grid center">No Trips Found</p>`;
 	}
 }
 

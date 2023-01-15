@@ -261,15 +261,9 @@ input {
   margin-left: auto;
 }
 
-main,
-.booking-form,
-.post-response-message,
-.login-container,
-.no-trips-in-grid,
 h2,
 h1,
-.expense-text-container,
-.expense-message {
+.center {
   display: flex;
   justify-content: center;
   align-items: center;
