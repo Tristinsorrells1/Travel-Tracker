@@ -33,7 +33,7 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
-let h1 = document.querySelector('#h1')
+let h1 = document.querySelector("#h1");
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
@@ -65,20 +65,17 @@ let passwordInput = document.querySelector("#password");
 
 expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
-	tripsSection.classList.add("hidden");
-	bookingSection.classList.add("hidden");
+    addHiddenClass([tripsSection, bookingSection])
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
-	expenseSection.classList.add("hidden");
-	bookingSection.classList.add("hidden");
+    addHiddenClass([expenseSection, bookingSection]);
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
-	tripsSection.classList.add("hidden");
-	expenseSection.classList.add("hidden");
+    addHiddenClass([expenseSection, tripsSection]);
 });
 
 submitRequestButton.addEventListener("click", function (event) {
@@ -101,19 +98,6 @@ logoutButton.addEventListener("click", function () {
 	logoutUser();
 });
 
-document.addEventListener(
-	"invalid",
-	(function () {
-		return function (e) {
-			e.preventDefault();
-			document.getElementById("#numberOfDays").focus();
-			document.getElementById("#numberOfPeople").focus();
-			// document.getElementById("#numberOfDays").focus();
-		};
-	})(),
-	true
-);
-
 // -----------------------------------Functions----------------------------
 var dt = new Date();
 document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString("en-US", {
@@ -131,7 +115,20 @@ const fetchApiPromises = () => {
 		createInstances();
 	});
 };
+
 fetchApiPromises();
+
+function addHiddenClass(array) {
+	array.forEach((item) => {
+		item.classList.add("hidden");
+	});
+}
+
+function removeHiddenClass(array) {
+	array.forEach((item) => {
+		item.classList.remove("hidden");
+	});
+}
 
 function createLayout() {
 	createTripsGrid(
@@ -148,15 +145,13 @@ function createLayout() {
 	);
 	createExpenseTable();
 	createExpenseReport();
-    h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
+	h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
 }
 
 // function test() {
 //     console.log(travelers)
 // 	user = new User(travelers.data[22])
 // }
-
-
 
 function createInstances() {
 	travelers = new Travelers(travelersData);
@@ -314,9 +309,7 @@ function createTrip() {
 function getTripEstimate() {
 	let tripRequest = createTrip();
 	let estimateCost = destinations.findTripCost(tripRequest);
-
-	submitRequestButton.classList.add("hidden");
-	priceEstimateButton.classList.add("hidden");
+    addHiddenClass([submitRequestButton, priceEstimateButton])
 	agentFeeText.classList.remove("hidden");
 	tripEstimateText.innerHTML = `
     <p>Based on the information provided, the estimated trip price is $${estimateCost.toLocaleString(
@@ -330,8 +323,7 @@ function getTripEstimate() {
 
 function resetAfterEstimate() {
 	tripEstimateText.innerHTML = "";
-	submitRequestButton.classList.remove("hidden");
-	priceEstimateButton.classList.remove("hidden");
+    removeHiddenClass([submitRequestButton, priceEstimateButton])
 	agentFeeText.classList.add("hidden");
 }
 function showPostResult(result) {
@@ -350,46 +342,46 @@ function showPostResult(result) {
 	setTimeout(resetForm, 6000);
 }
 
+function resetForm() {
+    form.classList.remove("hidden");
+    postResponseMessage.innerText = "";
+    postResponseMessage.classList.add("hidden");
+}
+
 function postTripRequest() {
 	if (!checkForEmptyInputs()) {
 		return checkForEmptyInputs();
 	}
 	let tripRequest = createTrip();
-	durationInput.value = null
-	groupSizeInput.value = null
-	destinationInput.value = null
+	durationInput.value = null;
+	groupSizeInput.value = null;
+	destinationInput.value = null;
 	fetch(`http://localhost:3001/api/v1/trips`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(tripRequest),
 	})
-		.then((response) => {
-			if (!response.ok) {
-				response.json().then((response) => {
-					console.log(response.message);
-				});
-				return showPostResult("unknown");
-			} else {
-				showPostResult("success");
-				fetch(`http://localhost:3001/api/v1/trips`)
-					.then((response) => response.json())
-					.then((data) => {
-						fetchApiPromises().then(() => {
-						resetExpenseTable();
-						createLayout();
-					});
-                    })
-                }
-             })
-	    .catch((error) => {
-			showPostResult("server error");
-	});
-}
-
-function resetForm() {
-	form.classList.remove("hidden");
-	postResponseMessage.innerText = "";
-	postResponseMessage.classList.add("hidden");
+    .then((response) => {
+        if (!response.ok) {
+            response.json().then((response) => {
+                console.log(response.message);
+            });
+            return showPostResult("unknown");
+        } else {
+            showPostResult("success");
+            fetch(`http://localhost:3001/api/v1/trips`)
+                .then((response) => response.json())
+                .then((data) => {
+                    fetchApiPromises().then(() => {
+                        resetExpenseTable();
+                        createLayout();
+                    });
+                });
+        }
+    })
+    .catch((error) => {
+        showPostResult("server error");
+    });
 }
 
 function verifyLoginInfo() {
@@ -440,15 +432,17 @@ function loginAsUser() {
 	let userID = Number(usernameInput.value.slice(8));
 	user = new User(travelers.findTravelerById(userID));
 	loginSection.classList.add("hidden");
-	tripsSection.classList.remove("hidden");
-	expenseButton.classList.remove("hidden");
-	tripButton.classList.remove("hidden");
-	bookNewTripButton.classList.remove("hidden");
-	logoutButton.classList.remove("hidden");
+	removeHiddenClass([
+		tripsSection,
+		expenseButton,
+		tripButton,
+		bookNewTripButton,
+		logoutButton,
+		dateandTime,
+	]);
 	yourJourneyAwaitsText.innerText = `Your Next Journey Awaits, ${
 		user.name.split(" ")[0]
 	}`;
-	dateandTime.classList.remove("hidden");
 	createLayout();
 }
 
@@ -457,16 +451,18 @@ function logoutUser() {
 	passwordInput.value = "";
 	usernameInput.value = "";
 	loginSection.classList.remove("hidden");
-	tripsSection.classList.add("hidden");
-    bookingSection.classList.add("hidden")
-	expenseSection.classList.add("hidden");
-	expenseButton.classList.add("hidden");
-	tripButton.classList.add("hidden");
-	bookNewTripButton.classList.add("hidden");
-	logoutButton.classList.add("hidden");
+	addHiddenClass([
+		tripsSection,
+		expenseButton,
+		tripButton,
+		bookNewTripButton,
+		logoutButton,
+		dateandTime,
+        bookingSection,
+        expenseSection
+	]);
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
-	dateandTime.classList.add("hidden");
 	resetExpenseTable();
 }
 
