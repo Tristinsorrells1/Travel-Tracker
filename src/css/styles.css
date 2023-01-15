@@ -8,7 +8,6 @@ html, body {
   width: 100%;
   margin: 0px;
   padding: 0px;
-  /* background-color: rgb(210, 238, 247); */
   background-image: url('../images/old-map.jpg')
 }
 
@@ -20,6 +19,19 @@ nav,
   background-color: rgba(154, 196, 200, 0.932);
   
 }
+
+nav,
+.login-container,
+.trip-container,
+#h1,
+.trip-expense-text,
+.expense-text-container,
+.past-pending-upcoming-h2,
+.booking-form-container {
+  border: 2px solid rgb(57, 55, 55);
+}
+
+
 
 
 body {
@@ -46,7 +58,7 @@ nav {
   width: 100%;
   display: flex;
   /* background-color: rgba(154, 196, 200, 0.932); */
-  border: 2px solid rgb(117, 114, 114);
+  /* border: 2px solid rgb(117, 114, 114); */
   height: 4vh;
   align-items: center;
   justify-content: space-between;
@@ -71,7 +83,7 @@ nav {
 .login-container {
   height: 40vh;
   width: 30vw;
-  border: 2px solid rgb(117, 114, 114);
+  /* border: 2px solid rgb(117, 114, 114); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,7 +109,7 @@ button:hover {
 .trip-container {
   margin-top: 6vh;
   background-color: #9d96965e;
-  border: 2px solid rgb(63, 61, 61);
+  /* border: 2px solid rgb(63, 61, 61); */
   text-align: center;
   width: 15vw;
   margin-bottom: 1vh;
@@ -120,7 +132,7 @@ button:hover {
   border: 2px solid rgb(63, 61, 61);
   width: fit-content;
   padding: 0 2vw 0 2vw;
-  border: 2px solid rgb(63, 61, 61);
+  /* border: 2px solid rgb(63, 61, 61); */
   margin-right: auto;
   margin-left: auto;
 }
@@ -200,7 +212,7 @@ h1 {
 
 .expense-text-container {
   border-radius: .25vw;
-  border: 2px solid rgb(63, 61, 61);
+  /* border: 2px solid rgb(63, 61, 61); */
   height: 10vh;
   /* background-color: rgba(154, 196, 200, 0.771); */
 }
@@ -237,7 +249,7 @@ tr:nth-child(even) {
 }
 
 .past-pending-upcoming-h2 {
-  border: 2px solid rgb(3, 3, 3);
+  /* border: 2px solid rgb(3, 3, 3); */
   margin-left: 15vw;
   height: 3.5vh;
   background-color: rgb(0, 0, 0);
@@ -259,7 +271,7 @@ height: 70vh;
 display: flex;
 /* background-color: rgba(154, 196, 200, 0.743); */
 width: 50vw;
-border: 2px solid rgb(8, 8, 8);
+/* border: 2px solid rgb(8, 8, 8); */
 margin-right: auto;
 margin-left: auto;
 }
