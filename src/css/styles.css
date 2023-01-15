@@ -14,18 +14,15 @@ html, body {
   min-height: 100%;
   margin: 0px;
   padding: 0px;
-  /* background-image: url('../images/old-map.jpg') */
 }
 
 body {
   overflow-x: hidden;
   overflow-y: auto;
-  /* background-image: url('../images/old-map.jpg'); */
 }
 
 main {
   margin-top: 8vh;
-  /* background-image: url('../images/old-map.jpg'); */
 }
 
 section {
@@ -85,7 +82,7 @@ button:hover {
 
 .grid-container {
   width: 70vw;
-  border: 2px solid rgb(63, 61, 61);
+  /* border: 2px solid rgb(63, 61, 61); */
   overflow: auto;
 }
 
@@ -116,8 +113,6 @@ button:hover {
 .trip-image {
   height: 12vw;
   max-width: 15vw;
-  /* opacity: 1; */
-  position: absoulute;
 }
 
 h2,
@@ -251,11 +246,7 @@ input {
   margin-top: -1vh;
 }
 
-nav,
-.grid-container,
-.expense-message,
-.expense-text-container,
-.booking-form-container {
+.blue-background {
   background-color: rgba(154, 196, 200, 0.932);
   
 }
@@ -267,7 +258,8 @@ nav,
 .trip-expense-text,
 .expense-text-container,
 .past-pending-upcoming-h2,
-.booking-form-container
+.booking-form-container,
+.grid-container
  {
   border: 2px solid rgb(57, 55, 55);
 }
