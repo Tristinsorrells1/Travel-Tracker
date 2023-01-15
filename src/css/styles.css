@@ -254,18 +254,9 @@ input {
   border: 2px solid rgb(57, 55, 55);
 }
 
-.login-container,
-.grid-container,
-#h1,
-.trip-expense-text,
-.trips-grid,
+.auto-margins,
 h2,
-.expense-text-container,
-.expense-message,
-.booking-form-container,
-input,
-.booking-form,
-.post-response-message {
+input {
   margin-right: auto;
   margin-left: auto;
 }
