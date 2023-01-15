@@ -458,6 +458,7 @@ function logoutUser() {
 	usernameInput.value = "";
 	loginSection.classList.remove("hidden");
 	tripsSection.classList.add("hidden");
+    bookingSection.classList.add("hidden")
 	expenseSection.classList.add("hidden");
 	expenseButton.classList.add("hidden");
 	tripButton.classList.add("hidden");

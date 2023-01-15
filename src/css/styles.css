@@ -9,7 +9,6 @@ main {
   background-image: url('../images/old-map.jpg')
 }
 
-
 html, body {
   min-height: 100%;
   margin: 0px;
@@ -82,7 +81,6 @@ button:hover {
 
 .grid-container {
   width: 70vw;
-  /* border: 2px solid rgb(63, 61, 61); */
   overflow: auto;
 }
 
@@ -205,7 +203,6 @@ tr:hover {
   display: flex;
   width: 50vw;
 }
-
 
 .booking-form,
 .post-response-message {
