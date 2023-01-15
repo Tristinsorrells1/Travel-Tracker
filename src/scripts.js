@@ -33,6 +33,7 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
+let h1 = document.querySelector('#h1')
 
 let expenseButton = document.querySelector(".expense-button");
 let tripButton = document.querySelector(".trips-button");
@@ -82,7 +83,6 @@ bookNewTripButton.addEventListener("click", function () {
 
 submitRequestButton.addEventListener("click", function (event) {
 	event.preventDefault();
-	test();
 	postTripRequest();
 });
 
@@ -148,13 +148,15 @@ function createLayout() {
 	);
 	createExpenseTable();
 	createExpenseReport();
+    h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
 }
 
-function test() {
-	console.log(trips);
-	let getTrips = trips.getTripsByUser(user.id);
-	console.log(getTrips);
-}
+// function test() {
+//     console.log(travelers)
+// 	user = new User(travelers.data[22])
+// }
+
+
 
 function createInstances() {
 	travelers = new Travelers(travelersData);

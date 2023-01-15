@@ -1,5 +1,6 @@
 * {
-  font-family: 'Noto Serif'
+  font-family: 'Noto Serif';
+  color: black;
 }
 
 html, body {
@@ -8,20 +9,19 @@ html, body {
   margin: 0px;
   padding: 0px;
   background-color: rgb(210, 238, 247);
+  background-image: url('../images/old-map.jpg')
 }
 
 body {
   overflow-x: hidden;
   overflow-y: auto;
+  background-image: url('../images/old-map.jpg');
 }
 
 main {
   margin-top: 8vh;
-  /* background-image: url('../images/option.jpg');
-  background-size: 100%;
-  background-repeat: no-repeat; */
+  background-image: url('../images/old-map.jpg');
   background-color: rgb(210, 238, 247);
-  /* border: 2px solid rgb(81, 255, 0); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +35,8 @@ section {
 nav {
   width: 100%;
   display: flex;
-  background-color: rgb(62, 30, 30);
+  background-color: rgba(154, 196, 200, 0.932);
+  border: 2px solid rgb(117, 114, 114);
   height: 4vh;
   align-items: center;
   justify-content: space-between;
@@ -45,10 +46,9 @@ nav {
 
 .date-container {
   display: flex;
-  margin-left: 17.5vw;
-  margin-top: 1vh;
+  margin: 1vh 0 .5vh 13vw;
   width: fit-content;
-  border: .5px solid white;
+  border: 1px solid rgb(14, 13, 13);
   font-size: 2vh;
 }
 
@@ -61,7 +61,7 @@ nav {
 .login-container {
   height: 40vh;
   width: 30vw;
-  border: 2px solid rgb(14, 13, 13);
+  border: 2px solid rgb(117, 114, 114);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,20 +69,23 @@ nav {
   margin-right: auto;
   margin-left: auto;
   text-align: center;
+  background-color: rgba(154, 196, 200, 0.693);
 }
 
 button {
-margin: .25vh;
+padding: 0 0 0 .25vh;
 color: white;
-background-color: rgb(65, 44, 19);
+background-color: rgb(50, 50, 51);
 }
 
 button:hover {
-  background-color: rgb(181, 200, 206);
-  transition: .5s;
+  background-color: rgb(203, 211, 214);
+  transition: 1s;
+  color: black;
 }
 
 .trip-container {
+  margin-top: 6vh;
   background-color: #ffffff62;
   text-align: center;
   width: 15vw;
@@ -94,6 +97,24 @@ button:hover {
   overflow: auto;
   margin-right: auto;
   margin-left: auto;
+  background-color: rgba(154, 196, 200, 0.927);
+}
+
+
+#h1,
+.trip-expense-text {
+  background-color: rgba(154, 196, 200, 0.61);
+  border-radius: .25vw;
+  border: 2px solid rgb(63, 61, 61);
+  width: fit-content;
+  padding: 0 2vw 0 2vw;
+  border: 2px solid rgb(63, 61, 61);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.trip-expense-text {
+  height: 5vh;
 }
 
 .trips-grid {
@@ -114,6 +135,7 @@ button:hover {
   max-width: 15vw;
   opacity: 1;
   background-color: blue;
+  position: absoulute;
 }
 
 h2,
@@ -122,6 +144,13 @@ h2,
   height: .5vh;
   padding: 1vh;
 }
+
+h2 {
+  width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 
 h1 {
   font-size: 2vw;
@@ -142,6 +171,9 @@ h1 {
 
 .expense-message {
   font-size: 1vw;
+  border-bottom: 2px solid rgb(63, 61, 61);
+  background-color: rgba(154, 196, 200, 0.764);
+  margin: 5vh;
 }
 
 .expense-text-container,
@@ -150,6 +182,16 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: -1vw;
+  width: 60vw;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.expense-text-container {
+  border-radius: .25vw;
+  border: 2px solid rgb(63, 61, 61);
+  height: 10vh;
+  background-color: rgba(154, 196, 200, 0.771);
 }
 
 .total-spent-text {
@@ -165,7 +207,7 @@ h1 {
 }
 
 th {
-  background: rgb(177, 170, 170);
+  background-color: rgba(152, 155, 155, 0.892);
   padding: 4vh;
 }
 
@@ -180,16 +222,35 @@ td {
 }
 
 tr:nth-child(even) {
-  background: #f2f4f5;
+  background: rgba(154, 196, 200, 0.856);
+}
+
+.past-pending-upcoming-h2 {
+  border: 2px solid rgb(3, 3, 3);
+  margin-left: 15vw;
+  height: 3.5vh;
+  background-color: rgb(0, 0, 0);
+  width: 12vw;
+  padding: 0 1vw 0 1vw;
+  margin-bottom: -3vw;
+}
+
+tr:nth-child(odd) {
+  background: rgba(152, 155, 155, 0.892);
 }
 
 tr:hover {
-  background: #d1d1d1;
+  background: rgba(207, 213, 214, 0.892)
 }
 
 .booking-form-container {
 height: 70vh;
 display: flex;
+background-color: rgba(154, 196, 200, 0.743);
+width: 50vw;
+border: 2px solid rgb(8, 8, 8);
+margin-right: auto;
+margin-left: auto;
 }
 
 
@@ -203,7 +264,6 @@ display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid rgb(8, 8, 8);
 }
 
 input {
