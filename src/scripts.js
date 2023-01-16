@@ -35,6 +35,8 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
+let agentResponseMessage = document.querySelector(".agent-result");
+let agentStats = document.querySelector(".agent-stats");
 let h1 = document.querySelector("#h1");
 
 let expenseButton = document.querySelector(".expense-button");
@@ -46,7 +48,7 @@ let loginButton = document.querySelector(".login-button");
 let logoutButton = document.querySelector(".logout-button");
 let searchButton = document.querySelector(".search-button");
 let approveTripButton = document.querySelector(".aprove-trip-button");
-let deleteTripButton = document.querySelector('.delete-trip-button')
+let deleteTripButton = document.querySelector(".delete-trip-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
@@ -74,7 +76,9 @@ let annualMoneyEarned = document.querySelector(".annual-money-earned");
 let allTripsTable = document.querySelector(".all-users-table");
 let searchedUserTable = document.querySelector(".searched-table");
 let foundTrip = document.querySelector(".found-trip");
-let searchForUserContainer = document.querySelector(".search-for-user-container");
+let searchForUserContainer = document.querySelector(
+	".search-for-user-container"
+);
 
 //-----------------------------------eventListeners------------------------
 
@@ -123,18 +127,13 @@ searchedUserTable.addEventListener("click", function (event) {
 });
 
 allTripsTable.addEventListener("click", function (event) {
-	console.log(event.target.innerText);
 	let tripFound = trips.data.find(
 		(trip) => trip.id === Number(event.target.innerText)
 	);
 	if (tripFound) {
-		allTripsTable.classList.add("hidden");
 		getTripToApproveOrDeny(tripFound);
 	}
-	console.log(tripFound);
 });
-
-
 
 // -----------------------------------Functions----------------------------
 var dt = new Date();
@@ -382,6 +381,28 @@ function showPostResult(result) {
 	setTimeout(resetForm, 6000);
 }
 
+function showAgentResult(result) {
+	addHiddenClass([agentStats, approveTripButton, deleteTripButton]);
+	
+	if (result === "success") {
+		agentResponseMessage.innerText =
+			"Success! This trip request has been deleted.";
+	} else if (result === "server error") {
+		agentResponseMessage.innerText =
+			"A server issue has occured. Please try again later.";
+	} else {
+		agentResponseMessage.innerText =
+			"An unexpected issue has occured. Please try again later.";
+	}
+	setTimeout(resetAgentDashboard, 6000);
+}
+
+function resetAgentDashboard() {
+	agentStats.classList.remove("hidden");
+	agentResponseMessage = ""
+	getAgentStats();
+}
+
 function resetForm() {
 	form.classList.remove("hidden");
 	postResponseMessage.innerText = "";
@@ -413,7 +434,7 @@ function postTripRequest() {
 					.then((response) => response.json())
 					.then((data) => {
 						fetchApiPromises().then(() => {
-							resetExpenseTable();
+							resetTable(expenseTable);
 							createLayout();
 						});
 					});
@@ -503,12 +524,12 @@ function logoutUser() {
 	]);
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
-	resetExpenseTable();
+	resetTable(expenseTable);
 }
 
-function resetExpenseTable() {
-	while (expenseTable.rows.length > 0) {
-		expenseTable.deleteRow(0);
+function resetTable() {
+	while (allTripsTable.rows.length > 1) {
+		allTripsTable.deleteRow(1);
 	}
 }
 
@@ -545,6 +566,7 @@ function getAgentStats() {
 }
 
 function createAgentTable() {
+	allTripsTable.classList.remove("hidden")
 	let usersTrips = trips.getTripsForAllUsers();
 	let tripsAlreadyInTable = [];
 
@@ -553,7 +575,6 @@ function createAgentTable() {
 			(destination) => destination.id === trip.destinationID
 		);
 	});
-
 	getTrips.forEach((destination) => {
 		usersTrips.forEach((trip) => {
 			if (
@@ -643,13 +664,37 @@ function createTableForSearchUser(user) {
 }
 
 function getTripToApproveOrDeny(tripFound) {
-	addHiddenClass([searchForUserContainer, searchButton]);
+	addHiddenClass([searchForUserContainer, searchButton, allTripsTable]);
 	foundTrip.classList.remove("hidden");
-    deleteTripButton.addEventListener("click", function () {
-			deleteTrip(tripFound);
-		});
+	deleteTripButton.addEventListener("click", function () {
+		deleteTrip(tripFound.id);
+	});
 }
 
-function deleteTrip(trip) {
-
+function deleteTrip(id) {
+	fetch(`http://localhost:3001/api/v1/trips/${id}`, {
+		method: "DELETE",
+	})
+		.then((response) => {
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showAgentResult("unknown");
+			} else {
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+							createInstances();
+							allTripsTable.classList.add("hidden");
+							resetTable();
+							showAgentResult("success");
+						});
+					});
+			}
+		})
+		.catch((error) => {
+			showAgentResult("server error");
+		});
 }
