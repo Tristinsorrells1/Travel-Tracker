@@ -281,14 +281,27 @@ body {
 
 /* Agent */
 
-/* .agent-stats {
+.search-for-user-container {
+  display: flex;
+  flex-direction: column;
+}
 
-} */
+.agent-stats-text-container,
+.search-for-user-container {
+  width: 30vw;
+  height: 25vh;
+}
 
-
-
+.agent-stats {
+  width: 80vw;
+  margin-bottom: 5vh;
+}
 
 .hidden {
   display: none !important;
+}
+
+.search-button {
+ width: 10vw;
 }
 

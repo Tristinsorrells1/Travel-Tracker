@@ -590,11 +590,10 @@ function createAgentTable() {
 				let cell6 = row.insertCell(5);
 				let cell7 = row.insertCell(6);
 				let cell8 = row.insertCell(7);
-				let cell9 = row.insertCell(8);
+		
 
 				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
 				cell8.innerHTML = `${trip.id}`;
-				cell9.innerHTML = `${trip.id}`;
 				cell2.innerHTML = `${destination.destination}`;
 				cell3.innerHTML = `${trip.date}`;
 				cell4.innerHTML = `${trip.duration} days`;

@@ -158,19 +158,21 @@
         </div>
       </section>
       <section class="agent-view blue-background">
-        <div class="agent-stats">
-          <p class="pending-trips">Number of Pending Trips</p>
-          <p class="users-on-a-trip">Users on a Trip</p>
-          <p class="money-earned">Total Money Earned</p>
-          <p class="annual-money-earned">Annual Money Earned</p>
-          <div class="search-for-user-container">
-            <label for="search">Find a User</label>
-            <input type="text" name="search" id="search" required />
+        <div class="agent-stats center auto-margins">
+          <div class="agent-stats-text-container border">
+            <p class="pending-trips center">Number of Pending Trips</p>
+            <p class="users-on-a-trip center">Users on a Trip</p>
+            <p class="money-earned center">Total Money Earned</p>
+            <p class="annual-money-earned center">Annual Money Earned</p>
           </div>
-          <button class="search-button">Search for User</button>
+          <div class="search-for-user-container auto-margins center border">
+            <label for="search">Find a User By First and Last Name</label>
+            <input type="text" name="search" id="search" required />
+            <button class="search-button auto-margins">Search for User</button>
+          </div>
         </div>
         <table class="all-users-table">
-          <caption class="hidden">All Users</caption>
+          <caption>To approve or delete a trip, click on the trip ID in the table</caption>
           <tr>
             <th>User Name</th>
             <th>Destination</th>
@@ -179,8 +181,7 @@
             <th>Number of Travelers</th>
             <th>Commision</th>
             <th>Status</th>
-            <th>If pending, approve trip</th>
-            <th>If approved, cancel trip</th>
+            <th>Trip ID</th>
           </tr>
         </table>
         <div class="found-trip hidden">
@@ -189,7 +190,7 @@
         </div>
         <div class="agent-result"></div>
         <table class="searched-table hidden">
-          <caption class="hidden">User's Trips</caption>
+          <caption">To approve or delete a trip, click on the trip ID in the table</caption>
           <tr>
             <th>User Name</th>
             <th>Destination</th>
@@ -198,8 +199,7 @@
             <th>Number of Travelers</th>
             <th>Commision</th>
             <th>Status</th>
-            <th>If pending, approve trip</th>
-            <th>If approved, cancel trip</th>
+            <th>Trip ID</th>
           </tr>
         </table>
       </section>
