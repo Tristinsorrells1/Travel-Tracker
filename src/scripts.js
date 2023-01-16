@@ -60,6 +60,10 @@ let destinationInput = document.querySelector("#destinationInput");
 let usernameInput = document.querySelector("#username");
 let passwordInput = document.querySelector("#password");
 
+let pendingTrips = document.querySelector('.pending-trips')
+let usersOnTrips = document.querySelector(".users-on-a-trip");
+let moneyEarned = document.querySelector(".money-earned");
+
 //-----------------------------------eventListeners------------------------
 
 expenseButton.addEventListener("click", function () {
@@ -129,6 +133,7 @@ const fetchApiPromises = () => {
 		tripsData = data[1].trips;
 		destinationsData = data[2].destinations;
 		createInstances();
+        getAgentStats();
 	});
 };
 fetchApiPromises();
@@ -471,4 +476,16 @@ function resetExpenseTable() {
 	while (expenseTable.rows.length > 0) {
 		expenseTable.deleteRow(0);
 	}
+}
+
+
+///// Agents
+
+function getAgentStats() {
+    let pendingTrips = trips.getTripsForAllUser.filter(
+			(trip) => trip.status === "pending"
+		);
+   pendingTrips.innerText = `There are ${pendingTrips.length} to review`
+    usersOnTrips.innerText = 
+    moneyEarned
 }

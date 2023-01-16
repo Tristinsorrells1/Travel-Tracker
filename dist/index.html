@@ -23,7 +23,7 @@
       </div>
     </nav>
     <main>
-      <section class="login-view">
+      <section class="login-view hidden">
         <div class="login-container">
           <form class="login-form">
               <h3 class="request-to-book-text">Login</h3>
@@ -156,6 +156,23 @@
             </form>
             <h2 class="post-response-message hidden">Status of Post Request</h2>
         </div>
+      </section>
+      <section class="agent-view">
+        <div class="agent-stats">
+          <p class="pending-trips">Number of Pending Trips</p>
+          <p class="users-on-a-trip">Users on a Trip</p>
+          <p class="money-earned">Money Earned</p>
+        </div>
+        <table class="all-users-table">
+          <caption class="hidden">All Users</caption>
+          <tr>
+            <th>User Name</th>
+            <th>Destination</th>
+            <th>Number of Days</th>
+            <th>Number of Travelers</th>
+            <th>Commision</th>
+          </tr>
+        </table>
       </section>
     </main>
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->

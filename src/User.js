@@ -1,7 +1,7 @@
 class User {
 	constructor(userData) {
 		this.id = userData.id;
-		this.name = userData.name;
+		this.name = userData.name
 		this.travelerType = userData.travelerType;
 		this.trips;
 		this.amountSpent = 0;
