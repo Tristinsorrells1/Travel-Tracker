@@ -18,7 +18,7 @@ class Agent {
 
 	findUsersOnATripToday(week) {
 		let date = new Date(week);
-        let usersOnTrips = []
+		let usersOnTrips = [];
 
 		this.tripsInfo.forEach((trip) => {
 			let startDate = new Date(trip.date);

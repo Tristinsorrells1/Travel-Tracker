@@ -5,6 +5,7 @@ import Destinations from "../src/Destinations";
 import User from "../src/User";
 import Trips from "../src/Trips";
 import Travelers from "../src/Travelers";
+import Agent from "../src/Agent";
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/turing-logo.png";
@@ -17,6 +18,7 @@ let tripsData;
 let travelersData;
 let destinationsData;
 let user;
+let agent;
 let today = "2020/08/07";
 
 //-----------------------------------querySelectors------------------------
@@ -60,9 +62,10 @@ let destinationInput = document.querySelector("#destinationInput");
 let usernameInput = document.querySelector("#username");
 let passwordInput = document.querySelector("#password");
 
-let pendingTrips = document.querySelector('.pending-trips')
+let pendingTrips = document.querySelector(".pending-trips");
 let usersOnTrips = document.querySelector(".users-on-a-trip");
-let moneyEarned = document.querySelector(".money-earned");
+let totalMoneyEarned = document.querySelector(".money-earned");
+let annualMoneyEarned = document.querySelector(".annual-money-earned");
 
 //-----------------------------------eventListeners------------------------
 
@@ -133,7 +136,6 @@ const fetchApiPromises = () => {
 		tripsData = data[1].trips;
 		destinationsData = data[2].destinations;
 		createInstances();
-        getAgentStats();
 	});
 };
 fetchApiPromises();
@@ -156,15 +158,15 @@ function createLayout() {
 }
 
 function test() {
-	console.log(trips);
 	let getTrips = trips.getTripsByUser(user.id);
-	console.log(getTrips);
 }
 
 function createInstances() {
 	travelers = new Travelers(travelersData);
 	trips = new Trips(tripsData);
 	destinations = new Destinations(destinationsData);
+	agent = new Agent(travelersData, tripsData);
+	getAgentStats();
 }
 
 function createTripsGrid(tripGrid, tripTimeline) {
@@ -358,9 +360,9 @@ function postTripRequest() {
 		return checkForEmptyInputs();
 	}
 	let tripRequest = createTrip();
-	durationInput.value = null
-	groupSizeInput.value = null
-	destinationInput.value = null
+	durationInput.value = null;
+	groupSizeInput.value = null;
+	destinationInput.value = null;
 	fetch(`http://localhost:3001/api/v1/trips`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -378,15 +380,15 @@ function postTripRequest() {
 					.then((response) => response.json())
 					.then((data) => {
 						fetchApiPromises().then(() => {
-						resetExpenseTable();
-						createLayout();
+							resetExpenseTable();
+							createLayout();
+						});
 					});
-                    })
-                }
-             })
-	    .catch((error) => {
+			}
+		})
+		.catch((error) => {
 			showPostResult("server error");
-	});
+		});
 }
 
 function resetForm() {
@@ -478,14 +480,34 @@ function resetExpenseTable() {
 	}
 }
 
-
 ///// Agents
 
 function getAgentStats() {
-    let pendingTrips = trips.getTripsForAllUser.filter(
-			(trip) => trip.status === "pending"
-		);
-   pendingTrips.innerText = `There are ${pendingTrips.length} to review`
-    usersOnTrips.innerText = 
-    moneyEarned
+	let getPendingTrips = trips
+		.getTripsForAllUsers()
+		.filter((trip) => trip.status === "pending");
+
+	let getUsersOnTrips = agent.findUsersOnATripToday(today);
+
+    let totalSum = trips.getTripsForAllUsers().reduce((accum, trip) => {
+        let tripCost = destinations.findTripCost(trip, "agent")
+        accum += tripCost
+        return accum
+    }, 0)
+
+   	let annualSum = trips.getTripsForAllUsers().reduce((accum, trip) => {
+			if (trip.date.slice(0, 4) === today.slice(0, 4)) {
+				let tripCost = Number(destinations.findTripCost(trip, "agent"));
+				accum += tripCost;
+			}
+			return accum;
+		}, 0);
+
+
+	pendingTrips.innerText = `There are ${getPendingTrips.length} pending trips to review`;
+	usersOnTrips.innerText = `There are ${getUsersOnTrips.length} users on a trip today`;
+
+	totalMoneyEarned.innerText = `You have earned a total commission of $${totalSum.toLocaleString(
+			"en-US"
+		)}`
 }
