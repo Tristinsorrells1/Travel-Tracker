@@ -23,7 +23,7 @@
       </div>
     </nav>
     <main class="center">
-      <section class="login-view">
+      <section class="login-view hidden">
         <div class="login-container border center auto-margins">
           <form class="login-form">
               <h3 class="request-to-book-text">Login</h3>
@@ -157,21 +157,48 @@
             <h2 class="post-response-message auto-margins center hidden">Status of Post Request</h2>
         </div>
       </section>
-      <section class="agent-view">
+      <section class="agent-view blue-background">
         <div class="agent-stats">
           <p class="pending-trips">Number of Pending Trips</p>
           <p class="users-on-a-trip">Users on a Trip</p>
           <p class="money-earned">Total Money Earned</p>
           <p class="annual-money-earned">Annual Money Earned</p>
+          <div class="search-for-user-container">
+            <label for="search">Find a User</label>
+            <input type="text" name="search" id="search" required />
+          </div>
+          <button class="search-button">Search for User</button>
         </div>
         <table class="all-users-table">
           <caption class="hidden">All Users</caption>
           <tr>
             <th>User Name</th>
             <th>Destination</th>
+            <th>Date</th>
             <th>Number of Days</th>
             <th>Number of Travelers</th>
             <th>Commision</th>
+            <th>Status</th>
+            <th>If pending, approve trip</th>
+            <th>If approved, cancel trip</th>
+          </tr>
+        </table>
+        <div class="found-trip hidden">
+            <button class="aprove-trip-button">Approve this Trip</button>
+            <button class="delete-trip-button">Cancel/Deny this trip</button>
+        </div>
+        <table class="searched-table hidden">
+          <caption class="hidden">User's Trips</caption>
+          <tr>
+            <th>User Name</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Number of Days</th>
+            <th>Number of Travelers</th>
+            <th>Commision</th>
+            <th>Status</th>
+            <th>If pending, approve trip</th>
+            <th>If approved, cancel trip</th>
           </tr>
         </table>
       </section>

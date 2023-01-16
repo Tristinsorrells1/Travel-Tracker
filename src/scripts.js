@@ -44,6 +44,9 @@ let submitRequestButton = document.querySelector(".submit-request-button");
 let priceEstimateButton = document.querySelector(".price-estimate-button");
 let loginButton = document.querySelector(".login-button");
 let logoutButton = document.querySelector(".logout-button");
+let searchButton = document.querySelector(".search-button");
+let approveTripButton = document.querySelector(".aprove-trip-button");
+let deleteTripButton = document.querySelector('.delete-trip-button')
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
@@ -62,27 +65,32 @@ let groupSizeInput = document.querySelector("#numberOfPeople");
 let destinationInput = document.querySelector("#destinationInput");
 let usernameInput = document.querySelector("#username");
 let passwordInput = document.querySelector("#password");
+let searchInput = document.querySelector("#search");
 
 let pendingTrips = document.querySelector(".pending-trips");
 let usersOnTrips = document.querySelector(".users-on-a-trip");
 let totalMoneyEarned = document.querySelector(".money-earned");
 let annualMoneyEarned = document.querySelector(".annual-money-earned");
+let allTripsTable = document.querySelector(".all-users-table");
+let searchedUserTable = document.querySelector(".searched-table");
+let foundTrip = document.querySelector(".found-trip");
+let searchForUserContainer = document.querySelector(".search-for-user-container");
 
 //-----------------------------------eventListeners------------------------
 
 expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
-    addHiddenClass([tripsSection, bookingSection])
+	addHiddenClass([tripsSection, bookingSection]);
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
-    addHiddenClass([expenseSection, bookingSection]);
+	addHiddenClass([expenseSection, bookingSection]);
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
-    addHiddenClass([expenseSection, tripsSection]);
+	addHiddenClass([expenseSection, tripsSection]);
 });
 
 submitRequestButton.addEventListener("click", function (event) {
@@ -104,6 +112,29 @@ loginButton.addEventListener("click", function (event) {
 logoutButton.addEventListener("click", function () {
 	logoutUser();
 });
+
+searchButton.addEventListener("click", function () {
+	event.preventDefault();
+	searchForUser();
+});
+
+searchedUserTable.addEventListener("click", function (event) {
+	console.log(event.target);
+});
+
+allTripsTable.addEventListener("click", function (event) {
+	console.log(event.target.innerText);
+	let tripFound = trips.data.find(
+		(trip) => trip.id === Number(event.target.innerText)
+	);
+	if (tripFound) {
+		allTripsTable.classList.add("hidden");
+		getTripToApproveOrDeny(tripFound);
+	}
+	console.log(tripFound);
+});
+
+
 
 // -----------------------------------Functions----------------------------
 var dt = new Date();
@@ -155,12 +186,10 @@ function createLayout() {
 	h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
 }
 
-
 // function test() {
 //     console.log(travelers)
 // 	user = new User(travelers.data[22])
 // }
-
 
 function createInstances() {
 	travelers = new Travelers(travelersData);
@@ -320,7 +349,7 @@ function createTrip() {
 function getTripEstimate() {
 	let tripRequest = createTrip();
 	let estimateCost = destinations.findTripCost(tripRequest);
-    addHiddenClass([submitRequestButton, priceEstimateButton])
+	addHiddenClass([submitRequestButton, priceEstimateButton]);
 	agentFeeText.classList.remove("hidden");
 	tripEstimateText.innerHTML = `
     <p>Based on the information provided, the estimated trip price is $${estimateCost.toLocaleString(
@@ -334,7 +363,7 @@ function getTripEstimate() {
 
 function resetAfterEstimate() {
 	tripEstimateText.innerHTML = "";
-    removeHiddenClass([submitRequestButton, priceEstimateButton])
+	removeHiddenClass([submitRequestButton, priceEstimateButton]);
 	agentFeeText.classList.add("hidden");
 }
 function showPostResult(result) {
@@ -354,9 +383,9 @@ function showPostResult(result) {
 }
 
 function resetForm() {
-    form.classList.remove("hidden");
-    postResponseMessage.innerText = "";
-    postResponseMessage.classList.add("hidden");
+	form.classList.remove("hidden");
+	postResponseMessage.innerText = "";
+	postResponseMessage.classList.add("hidden");
 }
 
 function postTripRequest() {
@@ -469,8 +498,8 @@ function logoutUser() {
 		bookNewTripButton,
 		logoutButton,
 		dateandTime,
-        bookingSection,
-        expenseSection
+		bookingSection,
+		expenseSection,
 	]);
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
@@ -486,31 +515,141 @@ function resetExpenseTable() {
 ///// Agents
 
 function getAgentStats() {
-	let getPendingTrips = trips
-		.getTripsForAllUsers()
-		.filter((trip) => trip.status === "pending");
-
+	let allUsersTrips = trips.getTripsForAllUsers();
+	let getPendingTrips = allUsersTrips.filter(
+		(trip) => trip.status === "pending"
+	);
 	let getUsersOnTrips = agent.findUsersOnATripToday(today);
-
-    let totalSum = trips.getTripsForAllUsers().reduce((accum, trip) => {
-        let tripCost = destinations.findTripCost(trip, "agent")
-        accum += tripCost
-        return accum
-    }, 0)
-
-   	let annualSum = trips.getTripsForAllUsers().reduce((accum, trip) => {
-			if (trip.date.slice(0, 4) === today.slice(0, 4)) {
-				let tripCost = Number(destinations.findTripCost(trip, "agent"));
-				accum += tripCost;
-			}
-			return accum;
-		}, 0);
-
+	let totalSum = allUsersTrips.reduce((accum, trip) => {
+		let tripCost = destinations.findTripCost(trip, "agent");
+		accum += tripCost;
+		return accum;
+	}, 0);
+	let annualSum = allUsersTrips.reduce((accum, trip) => {
+		if (trip.date.slice(0, 4) === today.slice(0, 4)) {
+			let tripCost = Number(destinations.findTripCost(trip, "agent"));
+			accum += tripCost;
+		}
+		return accum;
+	}, 0);
 
 	pendingTrips.innerText = `There are ${getPendingTrips.length} pending trips to review`;
 	usersOnTrips.innerText = `There are ${getUsersOnTrips.length} users on a trip today`;
-
 	totalMoneyEarned.innerText = `You have earned a total commission of $${totalSum.toLocaleString(
-			"en-US"
-		)}`
+		"en-US"
+	)}`;
+	annualMoneyEarned.innerText = `You have earned $${annualSum.toLocaleString(
+		"en-US"
+	)} this year`;
+	createAgentTable();
+}
+
+function createAgentTable() {
+	let usersTrips = trips.getTripsForAllUsers();
+	let tripsAlreadyInTable = [];
+
+	let getTrips = usersTrips.map((trip) => {
+		return destinations["data"].find(
+			(destination) => destination.id === trip.destinationID
+		);
+	});
+
+	getTrips.forEach((destination) => {
+		usersTrips.forEach((trip) => {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsAlreadyInTable.includes(trip)
+			) {
+				let row = allTripsTable.insertRow(-1);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+				let cell5 = row.insertCell(4);
+				let cell6 = row.insertCell(5);
+				let cell7 = row.insertCell(6);
+				let cell8 = row.insertCell(7);
+				let cell9 = row.insertCell(8);
+
+				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
+				cell8.innerHTML = `${trip.id}`;
+				cell9.innerHTML = `${trip.id}`;
+				cell2.innerHTML = `${destination.destination}`;
+				cell3.innerHTML = `${trip.date}`;
+				cell4.innerHTML = `${trip.duration} days`;
+				cell5.innerHTML = `${trip.travelers} travelers`;
+				cell7.innerHTML = `${trip.status}`;
+				cell6.innerHTML = `$${destinations
+					.findTripCost(trip, "agent")
+					.toLocaleString("en-US")}`;
+				tripsAlreadyInTable.push(trip);
+			}
+		});
+	});
+}
+
+function searchForUser() {
+	let foundUser = agent.findUserByName(searchInput.value);
+	allTripsTable.classList.add("hidden");
+
+	// Rachael Vaughten
+	searchInput.value = "";
+	createTableForSearchUser(foundUser);
+}
+
+function createTableForSearchUser(user) {
+	let usersTrips = trips.getTripsByUser(user.id);
+	searchedUserTable.classList.remove("hidden");
+	allTripsTable.classList.add("hidden");
+	let tripsAlreadyInTable = [];
+
+	let getTrips = usersTrips.map((trip) => {
+		return destinations["data"].find(
+			(destination) => destination.id === trip.destinationID
+		);
+	});
+
+	getTrips.forEach((destination) => {
+		usersTrips.forEach((trip) => {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsAlreadyInTable.includes(trip)
+			) {
+				console.log(trip);
+				let row = searchedUserTable.insertRow(-1);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+				let cell5 = row.insertCell(4);
+				let cell6 = row.insertCell(5);
+				let cell7 = row.insertCell(6);
+				let cell8 = row.insertCell(7);
+
+				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
+				cell2.innerHTML = `${trip.id}`;
+				cell3.innerHTML = `${destination.destination}`;
+				cell4.innerHTML = `${trip.date}`;
+				cell5.innerHTML = `${trip.duration}`;
+				cell6.innerHTML = `${trip.travelers}`;
+				cell8.innerHTML = `${trip.status}`;
+				cell7.innerHTML = `$${destinations
+					.findTripCost(trip, "agent")
+					.toLocaleString("en-US")}`;
+				tripsAlreadyInTable.push(trip);
+			}
+		});
+	});
+}
+
+function getTripToApproveOrDeny(tripFound) {
+	addHiddenClass([searchForUserContainer, searchButton]);
+	foundTrip.classList.remove("hidden");
+    deleteTripButton.addEventListener("click", function () {
+			deleteTrip(tripFound);
+		});
+}
+
+function deleteTrip(trip) {
+
 }
