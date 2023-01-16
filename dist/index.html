@@ -158,6 +158,7 @@
         </div>
       </section>
       <section class="agent-view blue-background">
+        <h2>Travel Tracker Agent View</h2>
         <div class="agent-stats center auto-margins">
           <div class="agent-stats-text-container border">
             <p class="pending-trips center">Number of Pending Trips</p>
@@ -165,7 +166,7 @@
             <p class="money-earned center">Total Money Earned</p>
             <p class="annual-money-earned center">Annual Money Earned</p>
           </div>
-          <div class="search-for-user-container auto-margins center border">
+          <div class="search-for-user-container auto-margins border">
             <label for="search">Find a User By First and Last Name</label>
             <input type="text" name="search" id="search" required />
             <button class="search-button auto-margins">Search for User</button>
@@ -184,13 +185,14 @@
             <th>Trip ID</th>
           </tr>
         </table>
-        <div class="found-trip hidden">
-            <button class="aprove-trip-button">Approve this Trip</button>
-            <button class="delete-trip-button">Cancel/Deny this trip</button>
+        <div class="found-trip auto-margins center hidden border">
+            <button class="aprove-trip-button agent-button">Click to Approve Trip</button>
+            <button class="delete-trip-button agent-button">Click to Cancel Trip</button>
+            <button class="see-all-trips-button agent-button">Go Back</button>
+            <div class="agent-result"></div>
         </div>
-        <div class="agent-result"></div>
         <table class="searched-table hidden">
-          <caption">To approve or delete a trip, click on the trip ID in the table</caption>
+          <caption>To approve or cancel a trip, click on the trip ID in the table</caption>
           <tr>
             <th>User Name</th>
             <th>Destination</th>

@@ -49,6 +49,7 @@ let logoutButton = document.querySelector(".logout-button");
 let searchButton = document.querySelector(".search-button");
 let approveTripButton = document.querySelector(".aprove-trip-button");
 let deleteTripButton = document.querySelector(".delete-trip-button");
+let goBackButton = document.querySelector(".see-all-trips-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
@@ -134,6 +135,10 @@ allTripsTable.addEventListener("click", function (event) {
 		getTripToApproveOrDeny(tripFound);
 	}
 });
+
+goBackButton.addEventListener('click', function() {
+	goBackToTable()
+})
 
 // -----------------------------------Functions----------------------------
 var dt = new Date();
@@ -382,8 +387,12 @@ function showPostResult(result) {
 }
 
 function showAgentResult(result) {
-	addHiddenClass([agentStats, approveTripButton, deleteTripButton]);
-	
+	addHiddenClass([
+		agentStats,
+		approveTripButton,
+		deleteTripButton, goBackButton
+	]);
+
 	if (result === "success") {
 		agentResponseMessage.innerText =
 			"Success! This trip request has been deleted.";
@@ -399,7 +408,7 @@ function showAgentResult(result) {
 
 function resetAgentDashboard() {
 	agentStats.classList.remove("hidden");
-	agentResponseMessage = ""
+	agentResponseMessage = "";
 	getAgentStats();
 }
 
@@ -566,7 +575,7 @@ function getAgentStats() {
 }
 
 function createAgentTable() {
-	allTripsTable.classList.remove("hidden")
+	allTripsTable.classList.remove("hidden");
 	let usersTrips = trips.getTripsForAllUsers();
 	let tripsAlreadyInTable = [];
 
@@ -590,7 +599,6 @@ function createAgentTable() {
 				let cell6 = row.insertCell(5);
 				let cell7 = row.insertCell(6);
 				let cell8 = row.insertCell(7);
-		
 
 				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
 				cell8.innerHTML = `${trip.id}`;
@@ -663,7 +671,12 @@ function createTableForSearchUser(user) {
 }
 
 function getTripToApproveOrDeny(tripFound) {
-	addHiddenClass([searchForUserContainer, searchButton, allTripsTable]);
+	addHiddenClass([
+		searchForUserContainer,
+		searchButton,
+		allTripsTable,
+		agentStats,
+	]);
 	foundTrip.classList.remove("hidden");
 	deleteTripButton.addEventListener("click", function () {
 		deleteTrip(tripFound.id);
@@ -696,4 +709,14 @@ function deleteTrip(id) {
 		.catch((error) => {
 			showAgentResult("server error");
 		});
+}
+
+function goBackToTable() {
+	removeHiddenClass([
+		searchForUserContainer,
+		searchButton,
+		allTripsTable,
+		agentStats,
+	]);
+	foundTrip.classList.add("hidden");
 }

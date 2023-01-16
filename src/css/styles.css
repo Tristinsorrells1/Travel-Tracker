@@ -290,12 +290,25 @@ body {
 .search-for-user-container {
   width: 30vw;
   height: 25vh;
+  margin-bottom: 5vh;
 }
 
 .agent-stats {
   width: 80vw;
-  margin-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
 }
+
+.found-trip {
+  width: 30vw;
+}
+
+.agent-button {
+  margin: .5vw;
+  width: 10vw;
+  height: 6.5vh;
+}
+
 
 .hidden {
   display: none !important;
