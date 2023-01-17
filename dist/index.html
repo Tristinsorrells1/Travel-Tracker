@@ -157,6 +157,56 @@
             <h2 class="post-response-message auto-margins center hidden">Status of Post Request</h2>
         </div>
       </section>
+      <section class="agent-view blue-background hidden">
+        <h2>Travel Tracker Agent View</h2>
+        <div class="agent-stats center auto-margins">
+          <div class="agent-stats-text-container border">
+            <p class="pending-trips center">Number of Pending Trips</p>
+            <p class="users-on-a-trip center">Users on a Trip</p>
+            <p class="money-earned center">Total Money Earned</p>
+            <p class="annual-money-earned center">Annual Money Earned</p>
+          </div>
+          <div class="search-for-user-container auto-margins border center">
+            <label for="search">Find a User By First and Last Name</label>
+            <input type="text" name="search" id="search" required />
+            <button class="search-button auto-margins">Search for User</button>
+            <button class="show-all-users-table-button auto-margins hidden">See Trips for all Users</button>
+            <div class="no-user-with-name hidden">No user with that first and last name found. Please check spelling and try again.</div>
+          </div>
+        </div>
+        <table class="all-users-table">
+          <caption>To Approve or Cancel a Trip, Click on the Trip ID Number in the Table</caption>
+          <tr>
+            <th>User Name</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Number of Days</th>
+            <th>Number of Travelers</th>
+            <th>Commision</th>
+            <th>Status</th>
+            <th>Trip ID</th>
+          </tr>
+        </table>
+        <div class="found-trip auto-margins center hidden border">
+            <button class="aprove-trip-button agent-button">Approve Trip Request</button>
+            <button class="delete-trip-button agent-button">Deny Trip Request or Cancel Trip</button>
+            <button class="see-all-trips-button agent-button">Go Back Home</button>
+            <div class="agent-result"></div>
+        </div>
+        <table class="searched-table hidden">
+          <caption>To approve or cancel a trip, click on the trip's ID number in the table</caption>
+          <tr>
+            <th>User Name</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Number of Days</th>
+            <th>Number of Travelers</th>
+            <th>Commision</th>
+            <th>Status</th>
+            <th>Trip ID</th>
+          </tr>
+        </table>
+      </section>
     </main>
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>

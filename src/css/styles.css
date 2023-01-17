@@ -223,7 +223,8 @@ input {
   height: 4vh;
 }
 
-.red-text {
+.red-text,
+caption {
   color: red;
 }
 
@@ -279,7 +280,52 @@ body {
   width: 100%;
 }
 
+/* Agent */
+
+.search-for-user-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-stats-text-container,
+.search-for-user-container {
+  width: 30vw;
+  height: 30.5vh;
+  margin-bottom: 5vh;
+}
+
+.agent-stats {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.found-trip {
+  width: 35vw;
+}
+
+.agent-button {
+  margin: .5vw;
+  width: 11vw;
+  height: 8vh;
+}
+
+
 .hidden {
   display: none !important;
+}
+
+.search-button,
+.show-all-users-table-button {
+ width: 10vw;
+ margin-bottom: 1vw;
+}
+
+.aprove-trip-button {
+  background-color: rgb(125, 141, 125);
+}
+
+.delete-trip-button {
+  background-color: rgb(216, 129, 129);
 }
 

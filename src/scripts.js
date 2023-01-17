@@ -5,6 +5,7 @@ import Destinations from "../src/Destinations";
 import User from "../src/User";
 import Trips from "../src/Trips";
 import Travelers from "../src/Travelers";
+import Agent from "../src/Agent";
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/turing-logo.png";
@@ -17,6 +18,7 @@ let tripsData;
 let travelersData;
 let destinationsData;
 let user;
+let agent;
 let today = "2020/08/07";
 
 //-----------------------------------querySelectors------------------------
@@ -33,6 +35,9 @@ let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
+let agentResponseMessage = document.querySelector(".agent-result");
+let noUsersWithNameMessage = document.querySelector(".no-user-with-name ");
+let agentStats = document.querySelector(".agent-stats");
 let h1 = document.querySelector("#h1");
 
 let expenseButton = document.querySelector(".expense-button");
@@ -42,11 +47,17 @@ let submitRequestButton = document.querySelector(".submit-request-button");
 let priceEstimateButton = document.querySelector(".price-estimate-button");
 let loginButton = document.querySelector(".login-button");
 let logoutButton = document.querySelector(".logout-button");
+let searchButton = document.querySelector(".search-button");
+let approveTripButton = document.querySelector(".aprove-trip-button");
+let deleteTripButton = document.querySelector(".delete-trip-button");
+let goBackButton = document.querySelector(".see-all-trips-button");
+let showAllUsersButton = document.querySelector(".show-all-users-table-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
 let expenseSection = document.querySelector(".expense-view");
 let loginSection = document.querySelector(".login-view");
+let agentView = document.querySelector(".agent-view");
 
 let form = document.querySelector(".booking-form");
 
@@ -60,22 +71,34 @@ let groupSizeInput = document.querySelector("#numberOfPeople");
 let destinationInput = document.querySelector("#destinationInput");
 let usernameInput = document.querySelector("#username");
 let passwordInput = document.querySelector("#password");
+let searchInput = document.querySelector("#search");
+
+let pendingTrips = document.querySelector(".pending-trips");
+let usersOnTrips = document.querySelector(".users-on-a-trip");
+let totalMoneyEarned = document.querySelector(".money-earned");
+let annualMoneyEarned = document.querySelector(".annual-money-earned");
+let allTripsTable = document.querySelector(".all-users-table");
+let searchedUserTable = document.querySelector(".searched-table");
+let foundTrip = document.querySelector(".found-trip");
+let searchForUserContainer = document.querySelector(
+	".search-for-user-container"
+);
 
 //-----------------------------------eventListeners------------------------
 
 expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
-    addHiddenClass([tripsSection, bookingSection])
+	addHiddenClass([tripsSection, bookingSection]);
 });
 
 tripButton.addEventListener("click", function () {
 	tripsSection.classList.remove("hidden");
-    addHiddenClass([expenseSection, bookingSection]);
+	addHiddenClass([expenseSection, bookingSection]);
 });
 
 bookNewTripButton.addEventListener("click", function () {
 	bookingSection.classList.remove("hidden");
-    addHiddenClass([expenseSection, tripsSection]);
+	addHiddenClass([expenseSection, tripsSection]);
 });
 
 submitRequestButton.addEventListener("click", function (event) {
@@ -96,6 +119,38 @@ loginButton.addEventListener("click", function (event) {
 
 logoutButton.addEventListener("click", function () {
 	logoutUser();
+});
+
+searchButton.addEventListener("click", function () {
+	event.preventDefault();
+	searchForUser();
+});
+
+
+searchedUserTable.addEventListener("click", function (event) {
+	let tripFound = trips.data.find(
+		(trip) => trip.id === Number(event.target.innerText)
+	);
+	if (tripFound) {
+		getTripToApproveOrDeny(tripFound);
+	}
+});
+
+allTripsTable.addEventListener("click", function (event) {
+	let tripFound = trips.data.find(
+		(trip) => trip.id === Number(event.target.innerText)
+	);
+	if (tripFound) {
+		getTripToApproveOrDeny(tripFound);
+	}
+});
+
+goBackButton.addEventListener("click", function () {
+	goBackToTable();
+});
+
+showAllUsersButton.addEventListener("click", function () {
+	goBackToTable();
 });
 
 // -----------------------------------Functions----------------------------
@@ -157,6 +212,8 @@ function createInstances() {
 	travelers = new Travelers(travelersData);
 	trips = new Trips(tripsData);
 	destinations = new Destinations(destinationsData);
+	agent = new Agent(travelersData, tripsData);
+	getAgentStats();
 }
 
 function createTripsGrid(tripGrid, tripTimeline) {
@@ -309,7 +366,7 @@ function createTrip() {
 function getTripEstimate() {
 	let tripRequest = createTrip();
 	let estimateCost = destinations.findTripCost(tripRequest);
-    addHiddenClass([submitRequestButton, priceEstimateButton])
+	addHiddenClass([submitRequestButton, priceEstimateButton]);
 	agentFeeText.classList.remove("hidden");
 	tripEstimateText.innerHTML = `
     <p>Based on the information provided, the estimated trip price is $${estimateCost.toLocaleString(
@@ -323,7 +380,7 @@ function getTripEstimate() {
 
 function resetAfterEstimate() {
 	tripEstimateText.innerHTML = "";
-    removeHiddenClass([submitRequestButton, priceEstimateButton])
+	removeHiddenClass([submitRequestButton, priceEstimateButton]);
 	agentFeeText.classList.add("hidden");
 }
 function showPostResult(result) {
@@ -342,10 +399,41 @@ function showPostResult(result) {
 	setTimeout(resetForm, 6000);
 }
 
+function showAgentResult(result) {
+	addHiddenClass([
+		agentStats,
+		approveTripButton,
+		deleteTripButton,
+		goBackButton,
+	]);
+
+	if (result === "success") {
+		agentResponseMessage.innerText =
+			"Success! This trip request has been deleted.";
+	} else if (result === "server error") {
+		agentResponseMessage.innerText =
+			"A server issue has occured. Please try again later.";
+	} else if (result === "update") {
+		agentResponseMessage.innerText =
+			"Success! The trip is approved and the status has been changed.";
+	} else {
+		agentResponseMessage.innerText =
+			"An unexpected issue has occured. Please try again later.";
+	}
+	setTimeout(resetAgentDashboard, 4000);
+}
+
+function resetAgentDashboard() {
+	removeHiddenClass([agentStats, searchForUserContainer, searchButton]);
+	foundTrip.classList.add("hidden")
+	agentResponseMessage.innerText = "";
+	getAgentStats();
+}
+
 function resetForm() {
-    form.classList.remove("hidden");
-    postResponseMessage.innerText = "";
-    postResponseMessage.classList.add("hidden");
+	form.classList.remove("hidden");
+	postResponseMessage.innerText = "";
+	postResponseMessage.classList.add("hidden");
 }
 
 function postTripRequest() {
@@ -361,27 +449,27 @@ function postTripRequest() {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(tripRequest),
 	})
-    .then((response) => {
-        if (!response.ok) {
-            response.json().then((response) => {
-                console.log(response.message);
-            });
-            return showPostResult("unknown");
-        } else {
-            showPostResult("success");
-            fetch(`http://localhost:3001/api/v1/trips`)
-                .then((response) => response.json())
-                .then((data) => {
-                    fetchApiPromises().then(() => {
-                        resetExpenseTable();
-                        createLayout();
-                    });
-                });
-        }
-    })
-    .catch((error) => {
-        showPostResult("server error");
-    });
+		.then((response) => {
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showPostResult("unknown");
+			} else {
+				showPostResult("success");
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+							resetTable();
+							createLayout();
+						});
+					});
+			}
+		})
+		.catch((error) => {
+			showPostResult("server error");
+		});
 }
 
 function verifyLoginInfo() {
@@ -407,7 +495,13 @@ function verifyLoginInfo() {
 }
 
 function findUserInSystem() {
-	if (
+	if (usernameInput.value === "agent" && passwordInput.value === "travel") {
+		return loginAsAdmin();
+	} else if (usernameInput.value === "agent") {
+		loginMessage.innerText = "Incorrect password. Please try again.";
+		loginMessage.classList.add("red-text");
+		return;
+	} else if (
 		usernameInput.value.slice(0, 8) !== "traveler" ||
 		isNaN(usernameInput.value.slice(8)) ||
 		usernameInput.value.slice(8) <= 0 ||
@@ -446,6 +540,11 @@ function loginAsUser() {
 	createLayout();
 }
 
+function loginAsAdmin() {
+	removeHiddenClass([agentView, logoutButton]);
+	addHiddenClass([loginSection]);
+}
+
 function logoutUser() {
 	user = null;
 	passwordInput.value = "";
@@ -458,16 +557,246 @@ function logoutUser() {
 		bookNewTripButton,
 		logoutButton,
 		dateandTime,
-        bookingSection,
-        expenseSection
+		bookingSection,
+		expenseSection,
+		agentView,
 	]);
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
-	resetExpenseTable();
+	resetTable();
 }
 
-function resetExpenseTable() {
-	while (expenseTable.rows.length > 0) {
-		expenseTable.deleteRow(0);
+function resetTable() {
+	while (expenseTable.rows.length > 1) {
+		expenseTable.deleteRow(1);
 	}
+}
+
+///// Agents
+
+function getAgentStats() {
+	let allUsersTrips = trips.getTripsForAllUsers();
+	let getPendingTrips = allUsersTrips.filter(
+		(trip) => trip.status === "pending"
+	);
+	let getUsersOnTrips = agent.findUsersOnATripToday(today);
+	let totalSum = allUsersTrips.reduce((accum, trip) => {
+		let tripCost = destinations.findTripCost(trip, "agent");
+		accum += tripCost;
+		return accum;
+	}, 0);
+	let annualSum = allUsersTrips.reduce((accum, trip) => {
+		if (trip.date.slice(0, 4) === today.slice(0, 4)) {
+			let tripCost = Number(destinations.findTripCost(trip, "agent"));
+			accum += tripCost;
+		}
+		return accum;
+	}, 0);
+
+	pendingTrips.innerText = `There are ${getPendingTrips.length} pending trips to review`;
+	usersOnTrips.innerText = `There are ${getUsersOnTrips.length} users on a trip today`;
+	totalMoneyEarned.innerText = `You have earned a total commission of $${totalSum.toLocaleString(
+		"en-US"
+	)}`;
+	annualMoneyEarned.innerText = `You have earned $${annualSum.toLocaleString(
+		"en-US"
+	)} in 2020`;
+	createAgentTable();
+}
+
+function createAgentTable() {
+	while (allTripsTable.rows.length > 1) {
+		allTripsTable.deleteRow(1);
+	}
+
+	allTripsTable.classList.remove("hidden");
+	let usersTrips = trips.getTripsForAllUsers();
+	let tripsAlreadyInTable = [];
+
+	let getTrips = usersTrips.map((trip) => {
+		return destinations["data"].find(
+			(destination) => destination.id === trip.destinationID
+		);
+	});
+	getTrips.forEach((destination) => {
+		usersTrips.forEach((trip) => {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsAlreadyInTable.includes(trip)
+			) {
+				let row = allTripsTable.insertRow(-1);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+				let cell5 = row.insertCell(4);
+				let cell6 = row.insertCell(5);
+				let cell7 = row.insertCell(6);
+				let cell8 = row.insertCell(7);
+
+				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
+				cell8.innerHTML = `${trip.id}`;
+				cell2.innerHTML = `${destination.destination}`;
+				cell3.innerHTML = `${trip.date}`;
+				cell4.innerHTML = `${trip.duration} days`;
+				cell5.innerHTML = `${trip.travelers} travelers`;
+				cell7.innerHTML = `${trip.status}`;
+				cell6.innerHTML = `$${destinations
+					.findTripCost(trip, "agent")
+					.toLocaleString("en-US")}`;
+				tripsAlreadyInTable.push(trip);
+			}
+		});
+	});
+}
+
+function searchForUser() {
+	let foundUser = agent.findUserByName(searchInput.value);
+	allTripsTable.classList.add("hidden");
+
+	// Marijo MacNeilley
+	// Rachael Vaughten
+	// Ham Leadbeater
+	searchInput.value = "";
+	if (foundUser instanceof User) {
+		noUsersWithNameMessage.classList.add("hidden");
+		showAllUsersButton.classList.remove("hidden");
+		return createTableForSearchUser(foundUser);
+	}
+	noUsersWithNameMessage.classList.remove("hidden");
+	resetAgentDashboard();
+}
+
+function createTableForSearchUser(user) {
+	while (searchedUserTable.rows.length > 1) {
+		searchedUserTable.deleteRow(1);
+	}
+
+	let usersTrips = trips.getTripsByUser(user.id);
+	searchedUserTable.classList.remove("hidden");
+	allTripsTable.classList.add("hidden");
+	let tripsAlreadyInTable = [];
+
+	let getTrips = usersTrips.map((trip) => {
+		return destinations["data"].find(
+			(destination) => destination.id === trip.destinationID
+		);
+	});
+
+	getTrips.forEach((destination) => {
+		usersTrips.forEach((trip) => {
+			if (
+				destination.id === trip.destinationID &&
+				!tripsAlreadyInTable.includes(trip)
+			) {
+				let row = searchedUserTable.insertRow(-1);
+				let cell1 = row.insertCell(0);
+				let cell2 = row.insertCell(1);
+				let cell3 = row.insertCell(2);
+				let cell4 = row.insertCell(3);
+				let cell5 = row.insertCell(4);
+				let cell6 = row.insertCell(5);
+				let cell7 = row.insertCell(6);
+				let cell8 = row.insertCell(7);
+
+				cell1.innerHTML = `${travelers.findTravelerById(trip.userID).name}`;
+				cell8.innerHTML = `${trip.id}`;
+				cell2.innerHTML = `${destination.destination}`;
+				cell3.innerHTML = `${trip.date}`;
+				cell4.innerHTML = `${trip.duration} days`;
+				cell5.innerHTML = `${trip.travelers} travelers`;
+				cell7.innerHTML = `${trip.status}`;
+				cell6.innerHTML = `$${destinations
+					.findTripCost(trip, "agent")
+					.toLocaleString("en-US")}`;
+				tripsAlreadyInTable.push(trip);
+			}
+		});
+	});
+}
+
+function getTripToApproveOrDeny(tripFound) {
+	addHiddenClass([
+		searchForUserContainer,
+		searchButton,
+		allTripsTable,
+		agentStats,
+		searchedUserTable,
+	]);
+	foundTrip.classList.remove("hidden");
+	deleteTripButton.addEventListener("click", function () {
+		deleteTrip(tripFound.id);
+	});
+	approveTripButton.addEventListener("click", function () {
+		approveTrip(tripFound.id);
+	});
+}
+
+function deleteTrip(id) {
+	fetch(`http://localhost:3001/api/v1/trips/${id}`, {
+		method: "DELETE",
+	})
+		.then((response) => {
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showAgentResult("unknown");
+			} else {
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+							showAgentResult("success");
+							createInstances();
+							createAgentTable();
+							allTripsTable.classList.add("hidden");
+						});
+					});
+			}
+		})
+		.catch((error) => {
+			showAgentResult("server error");
+		});
+}
+
+function goBackToTable() {
+	removeHiddenClass([
+		searchForUserContainer,
+		searchButton,
+		allTripsTable,
+		agentStats,
+	]);
+	addHiddenClass([foundTrip, noUsersWithNameMessage]);
+}
+
+function approveTrip(id) {
+	fetch(`http://localhost:3001/api/v1/updateTrip?id=${id}`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ id: id, status: "approved" }),
+	})
+		.then((response) => {
+			console.log("res", response);
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showAgentResult("unknown");
+			} else {
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+							showAgentResult("update");
+							createInstances();
+							allTripsTable.classList.add("hidden");
+							createAgentTable();
+						});
+					});
+			}
+		})
+		.catch((error) => {
+			showAgentResult("server error");
+		});
 }
