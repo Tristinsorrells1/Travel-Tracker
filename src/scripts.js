@@ -399,7 +399,12 @@ function showAgentResult(result) {
 	} else if (result === "server error") {
 		agentResponseMessage.innerText =
 			"A server issue has occured. Please try again later.";
-	} else {
+	} else if (result === 'update') {
+		agentResponseMessage.innerText =
+			"Success! The trip is approved and the status has been changed.";
+	}
+	
+	else {
 		agentResponseMessage.innerText =
 			"An unexpected issue has occured. Please try again later.";
 	}
@@ -681,6 +686,9 @@ function getTripToApproveOrDeny(tripFound) {
 	deleteTripButton.addEventListener("click", function () {
 		deleteTrip(tripFound.id);
 	});
+	approveTripButton.addEventListener("click", function () {
+		approveTrip(tripFound.id);
+	});
 }
 
 function deleteTrip(id) {
@@ -719,4 +727,35 @@ function goBackToTable() {
 		agentStats,
 	]);
 	foundTrip.classList.add("hidden");
+}
+
+function approveTrip(id) {
+	fetch(`http://localhost:3001/api/v1/updateTrip?id=${id}`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ id: id, status: "approved" }),
+	})
+		.then((response) => {
+			console.log("res", response);
+			if (!response.ok) {
+				response.json().then((response) => {
+					console.log(response.message);
+				});
+				return showAgentResult("unknown");
+			} else {
+				fetch(`http://localhost:3001/api/v1/trips`)
+					.then((response) => response.json())
+					.then((data) => {
+						fetchApiPromises().then(() => {
+							createInstances();
+							allTripsTable.classList.add("hidden");
+							resetTable();
+							showAgentResult("update");
+						});
+					});
+			}
+		})
+		.catch((error) => {
+			showAgentResult("server error");
+		});
 }
