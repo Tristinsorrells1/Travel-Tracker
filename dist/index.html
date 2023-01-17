@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webpack Starter Kit</title>
     <link rel="stylesheet" type="text/css" href="./src/css/styles.css">
-    <link href='https://fonts.googleapis.com/css?family=Noto Serif' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Noto%20Serif' rel='stylesheet'>
   </head>
   <body>
     <nav class="blue-background border">
@@ -29,11 +29,11 @@
               <h3 class="login-text">Login</h3>
               <div>
                 <label for="username">Username</label>
-                <input type="text" name="username" id="username" required />
+                <input type="text" name="username" id="username" required>
               </div>
               <div>
                 <label for="password">Password</label>
-                <input type="text" name="password" id="password" required />
+                <input type="text" name="password" id="password" required>
               </div>
           </form>
           <button class="login-button">Login</button>
@@ -85,11 +85,11 @@
               </div>
               <div>
                 <label for="numberOfDays">Number of Days</label>
-                <input type="number" name="number-of-days" min="1" oninput="validity.valid||(value='');" id="numberOfDays" required />
+                <input type="number" name="number-of-days" min="1" oninput="validity.valid||(value='');" id="numberOfDays" required>
               </div>
               <div>
                 <label for="numberOfPeople">Number of People</label>
-                <input type="number" name="number-of-people" min="1" oninput="validity.valid||(value='');" id="numberOfPeople" required />
+                <input type="number" name="number-of-people" min="1" oninput="validity.valid||(value='');" id="numberOfPeople" required>
               </div>
               <div class="destination-input">
                 <label for="destinationInput">Destination</label>
@@ -168,7 +168,7 @@
           </div>
           <div class="search-for-user-container auto-margins border center">
             <label for="search">Find a User By First and Last Name</label>
-            <input type="text" name="search" id="search" required />
+            <input type="text" name="search" id="search" required>
             <button class="search-button auto-margins">Search for User</button>
             <button class="show-all-users-table-button auto-margins hidden">See Trips for all Users</button>
             <div class="no-user-with-name hidden">No user with that first and last name found. Please check spelling and try again.</div>
@@ -208,7 +208,6 @@
         </table>
       </section>
     </main>
-    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
   </body>
 </html>
