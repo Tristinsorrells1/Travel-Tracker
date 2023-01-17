@@ -632,6 +632,9 @@ function showAgentResult(result) {
 	} else if (result === "update") {
 		agentResponseMessage.innerText =
 			"Success! The trip is approved and the status has been changed.";
+	} else if (result === "already approved") {
+		agentResponseMessage.innerText =
+			"Trip has already been approved.";
 	} else {
 		agentResponseMessage.innerText =
 			"An unexpected issue has occured. Please try again later.";
@@ -775,6 +778,10 @@ function goBackToTable() {
 }
 
 function approveTrip(id) {
+	let trip = trips.data.find((trip) => trip.id === id)
+	if (trip.status === "approved") {
+		return showAgentResult("already approved")
+	}
 	fetch(`http://localhost:3001/api/v1/updateTrip?id=${id}`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
