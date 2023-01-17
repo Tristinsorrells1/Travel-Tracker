@@ -19,11 +19,9 @@ class Agent {
 	findUsersOnATripToday(week) {
 		let date = new Date(week);
 		let usersOnTrips = [];
-
 		this.tripsInfo.forEach((trip) => {
 			let startDate = new Date(trip.date);
 			let endDate = new Date(startDate.getTime() + trip.duration * 86400000);
-
 			if (
 				date.getTime() >= startDate.getTime() &&
 				date.getTime() <= endDate.getTime()
@@ -31,6 +29,9 @@ class Agent {
 				usersOnTrips.push(trip);
 			}
 		});
+		if (usersOnTrips.length === 0) {
+			return `There are no users currently on a trip`;
+		}
 		return usersOnTrips;
 	}
 }

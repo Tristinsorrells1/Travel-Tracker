@@ -420,14 +420,17 @@ describe("Destinations", function () {
 		expect(destinations).to.be.an.instanceof(Destinations);
 	});
 
-	it("should store all destination data", function () {
+	it("should store all destination information", function () {
 		expect(destinations.data).to.deep.equal(destinationsData);
 	});
 
 	it("should calculate how much a user's trip request would cost", function () {
-       let request = user.createTripRequest(19,"2022/04/30", 6, 5, trips)
-		expect(
-			destinations.findTripCost(request)
-		).to.equal(7392);
+		let request = user.createTripRequest(19, "2022/04/30", 6, 5, trips);
+		expect(destinations.findTripCost(request)).to.equal(7392);
+	});
+
+	it("should calculate how much commission an agent would earn from a trip request", function () {
+		let request = user.createTripRequest(19, "2022/04/30", 6, 5, trips);
+		expect(destinations.findTripCost(request, "agent")).to.equal(672);
 	});
 });

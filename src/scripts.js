@@ -126,7 +126,6 @@ searchButton.addEventListener("click", function () {
 	searchForUser();
 });
 
-
 searchedUserTable.addEventListener("click", function (event) {
 	let tripFound = trips.data.find(
 		(trip) => trip.id === Number(event.target.innerText)
@@ -424,8 +423,8 @@ function showAgentResult(result) {
 }
 
 function resetAgentDashboard() {
-	removeHiddenClass([agentStats, searchForUserContainer, searchButton]);
-	foundTrip.classList.add("hidden")
+	removeHiddenClass([agentStats, searchForUserContainer, searchInput]);
+	foundTrip.classList.add("hidden");
 	agentResponseMessage.innerText = "";
 	getAgentStats();
 }
@@ -561,6 +560,7 @@ function logoutUser() {
 		expenseSection,
 		agentView,
 	]);
+	requestToBookText.innerText = "Login"
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
 	resetTable();
@@ -653,10 +653,6 @@ function createAgentTable() {
 function searchForUser() {
 	let foundUser = agent.findUserByName(searchInput.value);
 	allTripsTable.classList.add("hidden");
-
-	// Marijo MacNeilley
-	// Rachael Vaughten
-	// Ham Leadbeater
 	searchInput.value = "";
 	if (foundUser instanceof User) {
 		noUsersWithNameMessage.classList.add("hidden");
@@ -664,7 +660,16 @@ function searchForUser() {
 		return createTableForSearchUser(foundUser);
 	}
 	noUsersWithNameMessage.classList.remove("hidden");
+	addHiddenClass([searchButton, searchInput]);
+
+	setTimeout(resetForNewUserSearch, 4000);
 	resetAgentDashboard();
+}
+
+function resetForNewUserSearch() {
+	noUsersWithNameMessage.classList.add("hidden");
+	searchButton.classList.remove("hidden");
+	removeHiddenClass([searchButton, searchInput]);
 }
 
 function createTableForSearchUser(user) {

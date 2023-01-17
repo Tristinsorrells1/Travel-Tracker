@@ -153,7 +153,7 @@ describe("Agent", function () {
 		expect(agent).to.be.an.instanceof(Agent);
 	});
 
-	it("should store travelers' information", function () {
+	it("should store all travelers' information", function () {
 		expect(agent.travelersInfo).to.deep.equal(travelersData);
 	});
 
@@ -161,13 +161,11 @@ describe("Agent", function () {
 		expect(agent.tripsInfo).to.deep.equal(tripsData);
 	});
 
-
 	it("should find a traveler by their first and last name", function () {
 		expect(agent.findUserByName("Rachael Vaughten")).to.deep.equal({
 			id: 2,
 			name: "Rachael Vaughten",
 			travelerType: "thrill-seeker",
-			amountSpent: 0,
 		});
 	});
 
@@ -200,5 +198,11 @@ describe("Agent", function () {
 				suggestedActivities: [],
 			},
 		]);
+	});
+
+	it("should inform agent if there are no Travelers currently on a trip", function () {
+		expect(agent.findUsersOnATripToday("2023/12/19")).to.equal(
+			`There are no users currently on a trip`
+		);
 	});
 });
