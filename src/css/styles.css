@@ -112,22 +112,6 @@ button:hover {
   max-width: 15vw;
 }
 
-h2,
-.journey-message {
-  font-size: 1.5vw;
-  height: .5vh;
-  padding: 1vh;
-}
-
-h2 {
-  width: fit-content;
-}
-
-h1 {
-  font-size: 2vw;
-  margin-top: -2vw;
-}
-
 .expense-container {
   height: fit-content;
 }
@@ -249,6 +233,22 @@ caption {
   border: 2px solid rgb(57, 55, 55);
 }
 
+h2,
+.journey-message {
+  font-size: 1.5vw;
+  height: .5vh;
+  padding: 1vh;
+}
+
+h2 {
+  width: fit-content;
+}
+
+h1 {
+  font-size: 2vw;
+  margin-top: -2vw;
+}
+
 .auto-margins,
 h2,
 input {
@@ -290,6 +290,10 @@ body {
   flex-direction: column;
 }
 
+.agent-result {
+  text-align: center;
+}
+
 .found-trip {
   width: 35vw;
   height: 50vh;
@@ -323,5 +327,3 @@ body {
 .hidden {
   display: none !important;
 }
-
-
