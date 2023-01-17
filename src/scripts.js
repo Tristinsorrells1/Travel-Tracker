@@ -126,7 +126,6 @@ searchButton.addEventListener("click", function () {
 	searchForUser();
 });
 
-
 searchedUserTable.addEventListener("click", function (event) {
 	let tripFound = trips.data.find(
 		(trip) => trip.id === Number(event.target.innerText)
@@ -420,12 +419,12 @@ function showAgentResult(result) {
 		agentResponseMessage.innerText =
 			"An unexpected issue has occured. Please try again later.";
 	}
-	setTimeout(resetAgentDashboard, 4000);
+	setTimeout(resetAgentDashboard, 6000);
 }
 
 function resetAgentDashboard() {
-	removeHiddenClass([agentStats, searchForUserContainer, searchButton]);
-	foundTrip.classList.add("hidden")
+	removeHiddenClass([agentStats, searchForUserContainer, searchInput]);
+	foundTrip.classList.add("hidden");
 	agentResponseMessage.innerText = "";
 	getAgentStats();
 }
@@ -664,7 +663,16 @@ function searchForUser() {
 		return createTableForSearchUser(foundUser);
 	}
 	noUsersWithNameMessage.classList.remove("hidden");
+	addHiddenClass([searchButton, searchInput]);
+
+	setTimeout(resetForNewUserSearch, 4000);
 	resetAgentDashboard();
+}
+
+function resetForNewUserSearch() {
+	noUsersWithNameMessage.classList.add("hidden");
+	searchButton.classList.remove("hidden");
+	removeHiddenClass([searchButton, searchInput]);
 }
 
 function createTableForSearchUser(user) {

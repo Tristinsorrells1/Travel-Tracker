@@ -153,14 +153,13 @@ describe("Agent", function () {
 		expect(agent).to.be.an.instanceof(Agent);
 	});
 
-	it("should store travelers' information", function () {
+	it("should store all travelers' information", function () {
 		expect(agent.travelersInfo).to.deep.equal(travelersData);
 	});
 
 	it("should store all trips information", function () {
 		expect(agent.tripsInfo).to.deep.equal(tripsData);
 	});
-
 
 	it("should find a traveler by their first and last name", function () {
 		expect(agent.findUserByName("Rachael Vaughten")).to.deep.equal({
