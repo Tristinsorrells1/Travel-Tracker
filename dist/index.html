@@ -23,7 +23,7 @@
       </div>
     </nav>
     <main class="center">
-      <section class="login-view hidden">
+      <section class="login-view">
         <div class="login-container border center auto-margins">
           <form class="login-form">
               <h3 class="request-to-book-text">Login</h3>
@@ -157,7 +157,7 @@
             <h2 class="post-response-message auto-margins center hidden">Status of Post Request</h2>
         </div>
       </section>
-      <section class="agent-view blue-background">
+      <section class="agent-view blue-background hidden">
         <h2>Travel Tracker Agent View</h2>
         <div class="agent-stats center auto-margins">
           <div class="agent-stats-text-container border">
@@ -166,14 +166,16 @@
             <p class="money-earned center">Total Money Earned</p>
             <p class="annual-money-earned center">Annual Money Earned</p>
           </div>
-          <div class="search-for-user-container auto-margins border">
+          <div class="search-for-user-container auto-margins border center">
             <label for="search">Find a User By First and Last Name</label>
             <input type="text" name="search" id="search" required />
             <button class="search-button auto-margins">Search for User</button>
+            <button class="show-all-users-table-button auto-margins hidden">See Trips for all Users</button>
+            <div class="no-user-with-name hidden">No user with that first and last name found. Please check spelling and try again.</div>
           </div>
         </div>
         <table class="all-users-table">
-          <caption>To approve or delete a trip, click on the trip ID in the table</caption>
+          <caption>To Approve or Cancel a Trip, Click on the Trip ID Number in the Table</caption>
           <tr>
             <th>User Name</th>
             <th>Destination</th>
@@ -186,9 +188,9 @@
           </tr>
         </table>
         <div class="found-trip auto-margins center hidden border">
-            <button class="aprove-trip-button agent-button">Click to Approve Trip</button>
-            <button class="delete-trip-button agent-button">Click to Cancel Trip</button>
-            <button class="see-all-trips-button agent-button">Go Back</button>
+            <button class="aprove-trip-button agent-button">Approve Trip Request</button>
+            <button class="delete-trip-button agent-button">Deny Trip Request or Cancel Trip</button>
+            <button class="see-all-trips-button agent-button">Go Back Home</button>
             <div class="agent-result"></div>
         </div>
         <table class="searched-table hidden">

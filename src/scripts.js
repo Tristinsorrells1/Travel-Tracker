@@ -36,6 +36,7 @@ let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
 let loginMessage = document.querySelector(".request-to-book-text");
 let agentResponseMessage = document.querySelector(".agent-result");
+let noUsersWithNameMessage = document.querySelector(".no-user-with-name ");
 let agentStats = document.querySelector(".agent-stats");
 let h1 = document.querySelector("#h1");
 
@@ -50,6 +51,7 @@ let searchButton = document.querySelector(".search-button");
 let approveTripButton = document.querySelector(".aprove-trip-button");
 let deleteTripButton = document.querySelector(".delete-trip-button");
 let goBackButton = document.querySelector(".see-all-trips-button");
+let showAllUsersButton = document.querySelector(".show-all-users-table-button");
 
 let bookingSection = document.querySelector(".booking-view");
 let tripsSection = document.querySelector(".trips-view");
@@ -126,12 +128,10 @@ searchButton.addEventListener("click", function () {
 
 
 searchedUserTable.addEventListener("click", function (event) {
-	console.log("hey")
 	let tripFound = trips.data.find(
 		(trip) => trip.id === Number(event.target.innerText)
 	);
 	if (tripFound) {
-		console.log("yeah")
 		getTripToApproveOrDeny(tripFound);
 	}
 });
@@ -146,6 +146,10 @@ allTripsTable.addEventListener("click", function (event) {
 });
 
 goBackButton.addEventListener("click", function () {
+	goBackToTable();
+});
+
+showAllUsersButton.addEventListener("click", function () {
 	goBackToTable();
 });
 
@@ -421,7 +425,8 @@ function showAgentResult(result) {
 
 function resetAgentDashboard() {
 	removeHiddenClass([agentStats, searchForUserContainer, searchButton]);
-	agentResponseMessage = "";
+	foundTrip.classList.add("hidden")
+	agentResponseMessage.innerText = "";
 	getAgentStats();
 }
 
@@ -595,7 +600,7 @@ function getAgentStats() {
 	)}`;
 	annualMoneyEarned.innerText = `You have earned $${annualSum.toLocaleString(
 		"en-US"
-	)} this year`;
+	)} in 2020`;
 	createAgentTable();
 }
 
@@ -651,9 +656,15 @@ function searchForUser() {
 
 	// Marijo MacNeilley
 	// Rachael Vaughten
+	// Ham Leadbeater
 	searchInput.value = "";
-	if (found)
-	createTableForSearchUser(foundUser);
+	if (foundUser instanceof User) {
+		noUsersWithNameMessage.classList.add("hidden");
+		showAllUsersButton.classList.remove("hidden");
+		return createTableForSearchUser(foundUser);
+	}
+	noUsersWithNameMessage.classList.remove("hidden");
+	resetAgentDashboard();
 }
 
 function createTableForSearchUser(user) {
@@ -756,7 +767,7 @@ function goBackToTable() {
 		allTripsTable,
 		agentStats,
 	]);
-	foundTrip.classList.add("hidden");
+	addHiddenClass([foundTrip, noUsersWithNameMessage]);
 }
 
 function approveTrip(id) {
