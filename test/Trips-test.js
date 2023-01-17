@@ -219,7 +219,7 @@ describe("Trips", function () {
 		expect(trips).to.be.an.instanceof(Trips);
 	});
 
-	it("should return every trip for all travelers", function () {
+	it("should return trips for all travelers", function () {
 		expect(trips.getTripsForAllUsers()).to.deep.equal(tripsData);
 	});
 

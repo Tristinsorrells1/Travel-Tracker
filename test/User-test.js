@@ -15,9 +15,11 @@ describe("User", function () {
 	let userData;
 	let userData2;
 	let userData3;
+	let userData4;
 	let user;
 	let user2;
 	let user3;
+	let user4;
 	beforeEach("test setup", function () {
 		destinationsData = [
 			{
@@ -319,9 +321,15 @@ describe("User", function () {
 			name: "Ronan Kennedy",
 			travelerType: "thrill-seeker",
 		};
+		userData4 = {
+			id: 500,
+			name: "Shari Eiden",
+			travelerType: "luxury",
+		};
 		user = new User(userData);
 		user2 = new User(userData2);
 		user3 = new User(userData3);
+		user4 = new User(userData4);
 		travelersData = [user, user2, user3];
 		travelers = new Travelers(travelersData);
 		user.getTrips(travelers, trips);
@@ -347,6 +355,11 @@ describe("User", function () {
 
 	it("should store a user's traveler type", function () {
 		expect(user.travelerType).to.equal("thrill-seeker");
+	});
+
+	it("should store the total amount a user has spent", function () {
+		user.totalAmountSpent(destinations, "2022/04/30");
+		expect(user.amountSpent).to.equal(5918);
 	});
 
 	it("should get a user's trips", function () {
@@ -428,8 +441,13 @@ describe("User", function () {
 		);
 	});
 
-	it("should store the total amount a user has spent", function () {
-		expect(user.hasOwnProperty("amountSpent")).to.equal(true);
+	it("should return an error message if a user with an id is not found", function () {
+		expect(user4.checkIDandTrips(travelers, trips)).to.deep.equal(
+			`No user with this ID found`
+		);
+		expect(user4.getTrips(travelers, trips)).to.deep.equal(
+			`No user with this ID found`
+		);
 	});
 
 	it("should return all of a user's upcoming trips", function () {
@@ -460,6 +478,16 @@ describe("User", function () {
 		expect(
 			user2.getTripByStatus("upcoming", trips, travelers, "2022/09/16")
 		).to.deep.equal([
+			{
+				id: 1,
+				userID: 4,
+				destinationID: 49,
+				travelers: 1,
+				date: "2022/09/16",
+				duration: 8,
+				status: "approved",
+				suggestedActivities: [],
+			},
 			{
 				id: 2,
 				userID: 4,
@@ -534,19 +562,20 @@ describe("User", function () {
 			},
 		]);
 	});
+
 	it("should create a trip request", function () {
-		expect(
-			user.createTripRequest(11, "2022/04/30", 6, 6, trips)
-		).to.deep.equal({
-			id: 11,
-			userID: 3,
-			destinationID: 11,
-			travelers: 6,
-			date: "2022/04/30",
-			duration: 6,
-			status: "pending",
-			suggestedActivities: [],
-		});
+		expect(user.createTripRequest(11, "2022/04/30", 6, 6, trips)).to.deep.equal(
+			{
+				id: 11,
+				userID: 3,
+				destinationID: 11,
+				travelers: 6,
+				date: "2022/04/30",
+				duration: 6,
+				status: "pending",
+				suggestedActivities: [],
+			}
+		);
 	});
 
 	it("should calculate the total amount a user has spent on trips", function () {

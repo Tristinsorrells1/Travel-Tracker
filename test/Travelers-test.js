@@ -119,7 +119,7 @@ describe("Travelers", function () {
 		expect(travelers).to.be.an.instanceof(Travelers);
 	});
 
-	it("should store all travelers' data", function () {
+	it("should store all travelers' information", function () {
 		expect(travelers.data).to.deep.equal(travelersData);
 	});
 
@@ -136,7 +136,7 @@ describe("Travelers", function () {
 		});
 	});
 
-	it("should return false if a traveler with that id is not found", function () {
+	it("should return false if a traveler with an id is not found", function () {
 		expect(travelers.findIfUserExists(90)).to.equal(false);
 	});
 

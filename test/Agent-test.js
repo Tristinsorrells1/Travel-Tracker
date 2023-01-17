@@ -166,7 +166,6 @@ describe("Agent", function () {
 			id: 2,
 			name: "Rachael Vaughten",
 			travelerType: "thrill-seeker",
-			amountSpent: 0,
 		});
 	});
 
@@ -199,5 +198,11 @@ describe("Agent", function () {
 				suggestedActivities: [],
 			},
 		]);
+	});
+
+	it("should inform agent if there are no Travelers currently on a trip", function () {
+		expect(agent.findUsersOnATripToday("2023/12/19")).to.equal(
+			`There are no users currently on a trip`
+		);
 	});
 });

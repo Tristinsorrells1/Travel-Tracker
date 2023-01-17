@@ -296,12 +296,13 @@ body {
 
 .agent-stats {
   width: 80vw;
-  display: flex;
   flex-direction: column;
 }
 
 .found-trip {
   width: 35vw;
+  height: 50vh;
+  margin-bottom: 15vh;
 }
 
 .agent-button {

@@ -419,7 +419,7 @@ function showAgentResult(result) {
 		agentResponseMessage.innerText =
 			"An unexpected issue has occured. Please try again later.";
 	}
-	setTimeout(resetAgentDashboard, 6000);
+	setTimeout(resetAgentDashboard, 4000);
 }
 
 function resetAgentDashboard() {
@@ -560,6 +560,7 @@ function logoutUser() {
 		expenseSection,
 		agentView,
 	]);
+	requestToBookText.innerText = "Login"
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
 	resetTable();
@@ -652,10 +653,6 @@ function createAgentTable() {
 function searchForUser() {
 	let foundUser = agent.findUserByName(searchInput.value);
 	allTripsTable.classList.add("hidden");
-
-	// Marijo MacNeilley
-	// Rachael Vaughten
-	// Ham Leadbeater
 	searchInput.value = "";
 	if (foundUser instanceof User) {
 		noUsersWithNameMessage.classList.add("hidden");
