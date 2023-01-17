@@ -161,7 +161,8 @@ describe("Agent", function () {
 		expect(agent.tripsInfo).to.deep.equal(tripsData);
 	});
 
-	it("should find a traveler by their first name", function () {
+
+	it("should find a traveler by their first and last name", function () {
 		expect(agent.findUserByName("Rachael Vaughten")).to.deep.equal({
 			id: 2,
 			name: "Rachael Vaughten",
