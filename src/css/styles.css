@@ -84,7 +84,6 @@ button:hover {
   overflow: auto;
 }
 
-
 #h1,
 .trip-expense-text {
   background-color: rgba(154, 196, 200, 0.61);
@@ -112,24 +111,6 @@ button:hover {
   height: 12vw;
   max-width: 15vw;
 }
-
-h2,
-.journey-message {
-  font-size: 1.5vw;
-  height: .5vh;
-  padding: 1vh;
-}
-
-h2 {
-  width: fit-content;
-}
-
-
-h1 {
-  font-size: 2vw;
-  margin-top: -2vw;
-}
-
 
 .expense-container {
   height: fit-content;
@@ -245,11 +226,27 @@ caption {
 }
 
 .blue-background {
-  background-color: rgba(154, 196, 200, 0.932);
+  background-color: rgba(154, 196, 200, 0.848);
 }
 
 .border {
   border: 2px solid rgb(57, 55, 55);
+}
+
+h2,
+.journey-message {
+  font-size: 1.5vw;
+  height: .5vh;
+  padding: 1vh;
+}
+
+h2 {
+  width: fit-content;
+}
+
+h1 {
+  font-size: 2vw;
+  margin-top: -2vw;
 }
 
 .auto-margins,
@@ -261,16 +258,11 @@ input {
 
 h2,
 h1,
+label,
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-label,
-.expense-table {
-  display: flex;
-  justify-content: center;
 }
 
 section,
@@ -280,8 +272,7 @@ body {
   width: 100%;
 }
 
-/* Agent */
-
+/* Agent Page Styling*/
 .search-for-user-container {
   display: flex;
   flex-direction: column;
@@ -299,6 +290,10 @@ body {
   flex-direction: column;
 }
 
+.agent-result {
+  text-align: center;
+}
+
 .found-trip {
   width: 35vw;
   height: 50vh;
@@ -311,15 +306,14 @@ body {
   height: 8vh;
 }
 
-
-.hidden {
-  display: none !important;
-}
-
 .search-button,
 .show-all-users-table-button {
  width: 10vw;
  margin-bottom: 1vw;
+}
+
+.searched-table {
+  width: 100%;
 }
 
 .aprove-trip-button {
@@ -330,3 +324,6 @@ body {
   background-color: rgb(216, 129, 129);
 }
 
+.hidden {
+  display: none !important;
+}
