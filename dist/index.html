@@ -16,31 +16,15 @@
           <div><span id="dateTime"></span></div>
           <a class="date">01/05/2020</a>
         </div>
-          <button class="trips-button hidden">Your Trips</button>
-          <button class="expense-button hidden">Your Expenses</button>
-          <button class="book-trip-button hidden">Book a New Trip</button>
-          <button class="logout-button hidden">Logout</button>
+          <button class="trips-button">Your Trips</button>
+          <button class="expense-button">Your Expenses</button>
+          <button class="book-trip-button">Book a New Trip</button>
+          <button class="logout-button">Logout</button>
       </div>
     </nav>
     <main class="center">
-      <section class="login-view">
-        <div class="login-container border center auto-margins">
-          <form class="login-form">
-              <h3 class="request-to-book-text">Login</h3>
-              <div>
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" required />
-              </div>
-              <div>
-                <label for="password">Password</label>
-                <input type="text" name="password" id="password" required />
-              </div>
-          </form>
-          <button class="login-button">Login</button>
-        </div>
-      </section>
-      <section class="trips-view hidden">
-        <h1 class="border auto-margins center" id="h1">Your Trips</h1>
+      <section class="trips-view">
+        <h1 class="border auto-margins center blue-background" id="h1">Your Trips</h1>
         <h2 class="past-pending-upcoming-h2 border">Upcoming Trips</h2>
         <div class="grid-container blue-background border auto-margins">
           <section class="future-trips-grid trips-grid auto-margins"></section>
@@ -54,16 +38,16 @@
           <section class="past-trips-grid trips-grid auto-margins"></section>
         </div>
       </section>
-      <section class="expense-view hidden">
+      <section class="expense-view">
         <div class="expense-container">
-          <h2 class="trip-expense-text border auto-margins">Your Trip Expenses</h2>
+          <h2 class="trip-expense-text border auto-margins blue-background">Your Trip Expenses</h2>
           <div class="expense-text-container blue-background border auto-margins center">
             <p class="amount-this-year-text">You've spent $0 on trips this year</p>
             <p class="total-spent-text">You've spent $$$ total</p>
           </div>
           <p class="expense-message blue-background auto-margins center">*Price includes a 10% travel agent fee</p>
           <table class="expense-table">
-            <caption class="hidden">Your Expenses</caption>
+            <caption></caption>
             <tr>
               <th>Location</th>
               <th>Date</th>
@@ -75,7 +59,7 @@
           </table>
         </div>
       </section>
-      <section class="booking-view hidden">
+      <section class="booking-view">
         <div class="booking-form-container blue-background border auto-margins">
             <form class="booking-form auto-margins center">
               <h2 class="request-to-book-text">Request to Book a Trip</h2>
@@ -156,56 +140,6 @@
             </form>
             <h2 class="post-response-message auto-margins center hidden">Status of Post Request</h2>
         </div>
-      </section>
-      <section class="agent-view blue-background hidden">
-        <h2>Travel Tracker Agent View</h2>
-        <div class="agent-stats center auto-margins">
-          <div class="agent-stats-text-container border">
-            <p class="pending-trips center">Number of Pending Trips</p>
-            <p class="users-on-a-trip center">Users on a Trip</p>
-            <p class="money-earned center">Total Money Earned</p>
-            <p class="annual-money-earned center">Annual Money Earned</p>
-          </div>
-          <div class="search-for-user-container auto-margins border center">
-            <label for="search">Find a User By First and Last Name</label>
-            <input type="text" name="search" id="search" required />
-            <button class="search-button auto-margins">Search for User</button>
-            <button class="show-all-users-table-button auto-margins hidden">See Trips for all Users</button>
-            <div class="no-user-with-name hidden">No user with that first and last name found. Please check spelling and try again.</div>
-          </div>
-        </div>
-        <table class="all-users-table">
-          <caption>To Approve or Cancel a Trip, Click on the Trip ID Number in the Table</caption>
-          <tr>
-            <th>User Name</th>
-            <th>Destination</th>
-            <th>Date</th>
-            <th>Number of Days</th>
-            <th>Number of Travelers</th>
-            <th>Commision</th>
-            <th>Status</th>
-            <th>Trip ID</th>
-          </tr>
-        </table>
-        <div class="found-trip auto-margins center hidden border">
-            <button class="aprove-trip-button agent-button">Approve Trip Request</button>
-            <button class="delete-trip-button agent-button">Deny Trip Request or Cancel Trip</button>
-            <button class="see-all-trips-button agent-button">Go Back Home</button>
-            <div class="agent-result"></div>
-        </div>
-        <table class="searched-table hidden">
-          <caption>To approve or cancel a trip, click on the trip's ID number in the table</caption>
-          <tr>
-            <th>User Name</th>
-            <th>Destination</th>
-            <th>Date</th>
-            <th>Number of Days</th>
-            <th>Number of Travelers</th>
-            <th>Commision</th>
-            <th>Status</th>
-            <th>Trip ID</th>
-          </tr>
-        </table>
       </section>
     </main>
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->

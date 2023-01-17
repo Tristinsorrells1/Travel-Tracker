@@ -22,6 +22,7 @@ body {
 
 main {
   margin-top: 8vh;
+  flex-direction: column;
 }
 
 section {
@@ -87,7 +88,6 @@ button:hover {
 
 #h1,
 .trip-expense-text {
-  background-color: rgba(154, 196, 200, 0.61);
   border-radius: .25vw;
   width: fit-content;
   padding: 0 2vw 0 2vw;
@@ -178,13 +178,12 @@ td {
 }
 
 tr:nth-child(even) {
-  background: rgba(154, 196, 200, 0.856);
+  background: rgb(154, 196, 200);
 }
 
 .past-pending-upcoming-h2 {
   margin-left: 15vw;
   height: 3.5vh;
-  background-color: rgb(0, 0, 0);
   width: 12vw;
   padding: 0 1vw 0 1vw;
   margin-bottom: -3vw;
@@ -199,6 +198,7 @@ tr:hover {
 }
 
 .booking-form-container {
+  margin-top: 39vh;
   height: 70vh;
   display: flex;
   width: 50vw;
@@ -245,7 +245,7 @@ caption {
 }
 
 .blue-background {
-  background-color: rgba(154, 196, 200, 0.932);
+  background-color: rgb(154, 196, 200);
 }
 
 .border {
@@ -311,15 +311,10 @@ body {
   height: 8vh;
 }
 
-
-.hidden {
-  display: none !important;
-}
-
 .search-button,
 .show-all-users-table-button {
- width: 10vw;
- margin-bottom: 1vw;
+  width: 10vw;
+  margin-bottom: 1vw;
 }
 
 .aprove-trip-button {
@@ -330,3 +325,6 @@ body {
   background-color: rgb(216, 129, 129);
 }
 
+.hidden {
+  display: none !important;
+}
