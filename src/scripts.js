@@ -6,8 +6,6 @@ import User from "../src/User";
 import Trips from "../src/Trips";
 import Travelers from "../src/Travelers";
 import Agent from "../src/Agent";
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/turing-logo.png";
 
 // ----------------------------------Variables----------------------------
@@ -30,11 +28,11 @@ let yourJourneyAwaitsText = document.querySelector(".journey-message");
 let totalSpentText = document.querySelector(".total-spent-text");
 let yearlyAmountText = document.querySelector(".amount-this-year-text");
 let emptyInputText = document.querySelector(".empty-input-message");
-let requestToBookText = document.querySelector(".request-to-book-text");
+let bookingText = document.querySelector(".request-to-book-text");
+let loginMessage = document.querySelector(".login-text");
 let tripEstimateText = document.querySelector(".trip-estimate-text");
 let agentFeeText = document.querySelector(".agent-fee-text");
 let postResponseMessage = document.querySelector(".post-response-message");
-let loginMessage = document.querySelector(".request-to-book-text");
 let agentResponseMessage = document.querySelector(".agent-result");
 let noUsersWithNameMessage = document.querySelector(".no-user-with-name ");
 let agentStats = document.querySelector(".agent-stats");
@@ -60,9 +58,7 @@ let loginSection = document.querySelector(".login-view");
 let agentView = document.querySelector(".agent-view");
 
 let form = document.querySelector(".booking-form");
-
 let expenseTable = document.querySelector(".expense-table");
-
 let dateandTime = document.querySelector(".date-container");
 
 let dateInput = document.querySelector("#departureDate");
@@ -83,9 +79,7 @@ let foundTrip = document.querySelector(".found-trip");
 let searchForUserContainer = document.querySelector(
 	".search-for-user-container"
 );
-
 //-----------------------------------eventListeners------------------------
-
 expenseButton.addEventListener("click", function () {
 	expenseSection.classList.remove("hidden");
 	addHiddenClass([tripsSection, bookingSection]);
@@ -108,7 +102,6 @@ submitRequestButton.addEventListener("click", function (event) {
 
 priceEstimateButton.addEventListener("click", function (event) {
 	event.preventDefault();
-	checkForEmptyInputs();
 	getTripEstimate();
 });
 
@@ -161,7 +154,7 @@ document.getElementById("dateTime").innerHTML = dt.toLocaleTimeString("en-US", {
 	hour12: true,
 });
 
-const fetchApiPromises = () => {
+function fetchApiPromises()  {
 	return apiCalls.fetchData().then((data) => {
 		travelersData = data[0].travelers;
 		tripsData = data[1].trips;
@@ -171,6 +164,13 @@ const fetchApiPromises = () => {
 };
 
 fetchApiPromises();
+
+function createInstances() {
+	travelers = new Travelers(travelersData);
+	trips = new Trips(tripsData);
+	destinations = new Destinations(destinationsData);
+	agent = new Agent(travelersData, tripsData);
+}
 
 function addHiddenClass(array) {
 	array.forEach((item) => {
@@ -202,18 +202,6 @@ function createLayout() {
 	h1.innerText = `Welcome Back, ${user.name.split(" ")[0]}`;
 }
 
-// function test() {
-//     console.log(travelers)
-// 	user = new User(travelers.data[22])
-// }
-
-function createInstances() {
-	travelers = new Travelers(travelersData);
-	trips = new Trips(tripsData);
-	destinations = new Destinations(destinationsData);
-	agent = new Agent(travelersData, tripsData);
-	getAgentStats();
-}
 
 function createTripsGrid(tripGrid, tripTimeline) {
 	tripGrid.innerHTML = "";
@@ -331,16 +319,19 @@ function checkForEmptyInputs() {
 		filtered.forEach((field) => {
 			field.classList.add("missing-info");
 		});
-		requestToBookText.innerText = "Please Fill Out All Fields";
-		requestToBookText.classList.add("red-text");
+		bookingText.classList.remove("hidden");
+		bookingText.innerText = "Please Fill Out All Fields";
+		bookingText.classList.add("red-text");
+		console.log("hello")
 		return false;
 	}
-	requestToBookText.classList.remove("red-text");
-	requestToBookText.innerText = "Request to Book a Trip";
+	console.log("bye")
+	bookingText.classList.remove("red-text");
+	bookingText.innerText = "Request to Book a Trip";
 	inputValues.forEach((field) => {
 		field.classList.remove("missing-info");
 	});
-	return true;
+	return true
 }
 
 function createTrip() {
@@ -363,6 +354,9 @@ function createTrip() {
 }
 
 function getTripEstimate() {
+	if (!checkForEmptyInputs()) {
+		return checkForEmptyInputs();
+	}
 	let tripRequest = createTrip();
 	let estimateCost = destinations.findTripCost(tripRequest);
 	addHiddenClass([submitRequestButton, priceEstimateButton]);
@@ -374,7 +368,7 @@ function getTripEstimate() {
 
 	setTimeout(() => {
 		resetAfterEstimate();
-	}, "6000");
+	}, "5000");
 }
 
 function resetAfterEstimate() {
@@ -382,6 +376,19 @@ function resetAfterEstimate() {
 	removeHiddenClass([submitRequestButton, priceEstimateButton]);
 	agentFeeText.classList.add("hidden");
 }
+
+function resetForm() {
+	form.classList.remove("hidden");
+	postResponseMessage.innerText = "";
+	postResponseMessage.classList.add("hidden");
+}
+
+function resetTable() {
+	while (expenseTable.rows.length > 1) {
+		expenseTable.deleteRow(1);
+	}
+}
+
 function showPostResult(result) {
 	form.classList.add("hidden");
 	postResponseMessage.classList.remove("hidden");
@@ -396,43 +403,6 @@ function showPostResult(result) {
 			"An unexpected issue has occured. Please try again later.";
 	}
 	setTimeout(resetForm, 6000);
-}
-
-function showAgentResult(result) {
-	addHiddenClass([
-		agentStats,
-		approveTripButton,
-		deleteTripButton,
-		goBackButton,
-	]);
-
-	if (result === "success") {
-		agentResponseMessage.innerText =
-			"Success! This trip request has been deleted.";
-	} else if (result === "server error") {
-		agentResponseMessage.innerText =
-			"A server issue has occured. Please try again later.";
-	} else if (result === "update") {
-		agentResponseMessage.innerText =
-			"Success! The trip is approved and the status has been changed.";
-	} else {
-		agentResponseMessage.innerText =
-			"An unexpected issue has occured. Please try again later.";
-	}
-	setTimeout(resetAgentDashboard, 4000);
-}
-
-function resetAgentDashboard() {
-	removeHiddenClass([agentStats, searchForUserContainer, searchInput]);
-	foundTrip.classList.add("hidden");
-	agentResponseMessage.innerText = "";
-	getAgentStats();
-}
-
-function resetForm() {
-	form.classList.remove("hidden");
-	postResponseMessage.innerText = "";
-	postResponseMessage.classList.add("hidden");
 }
 
 function postTripRequest() {
@@ -469,6 +439,13 @@ function postTripRequest() {
 		.catch((error) => {
 			showPostResult("server error");
 		});
+}
+
+//------------------------------------------Login/Logout Functions-----------------------------
+function loginAsAdmin() {
+	getAgentStats();
+	removeHiddenClass([agentView, logoutButton]);
+	addHiddenClass([loginSection]);
 }
 
 function verifyLoginInfo() {
@@ -539,11 +516,6 @@ function loginAsUser() {
 	createLayout();
 }
 
-function loginAsAdmin() {
-	removeHiddenClass([agentView, logoutButton]);
-	addHiddenClass([loginSection]);
-}
-
 function logoutUser() {
 	user = null;
 	passwordInput.value = "";
@@ -560,20 +532,13 @@ function logoutUser() {
 		expenseSection,
 		agentView,
 	]);
-	requestToBookText.innerText = "Login"
+	loginMessage.innerText = "Login";
 	yourJourneyAwaitsText.innerText =
 		"Travel Tracker - Imagine Where Life Can Take You";
 	resetTable();
 }
 
-function resetTable() {
-	while (expenseTable.rows.length > 1) {
-		expenseTable.deleteRow(1);
-	}
-}
-
-///// Agents
-
+// -----------------------------------------Agent View Functions -----------------------------------
 function getAgentStats() {
 	let allUsersTrips = trips.getTripsForAllUsers();
 	let getPendingTrips = allUsersTrips.filter(
@@ -648,6 +613,37 @@ function createAgentTable() {
 			}
 		});
 	});
+}
+
+function showAgentResult(result) {
+	addHiddenClass([
+		agentStats,
+		approveTripButton,
+		deleteTripButton,
+		goBackButton,
+	]);
+
+	if (result === "success") {
+		agentResponseMessage.innerText =
+			"Success! This trip request has been deleted.";
+	} else if (result === "server error") {
+		agentResponseMessage.innerText =
+			"A server issue has occured. Please try again later.";
+	} else if (result === "update") {
+		agentResponseMessage.innerText =
+			"Success! The trip is approved and the status has been changed.";
+	} else {
+		agentResponseMessage.innerText =
+			"An unexpected issue has occured. Please try again later.";
+	}
+	setTimeout(resetAgentDashboard, 4000);
+}
+
+function resetAgentDashboard() {
+	removeHiddenClass([agentStats, searchForUserContainer, searchInput]);
+	foundTrip.classList.add("hidden");
+	agentResponseMessage.innerText = "";
+	getAgentStats();
 }
 
 function searchForUser() {
@@ -728,10 +724,13 @@ function getTripToApproveOrDeny(tripFound) {
 		agentStats,
 		searchedUserTable,
 	]);
-	foundTrip.classList.remove("hidden");
+
+	removeHiddenClass([approveTripButton, deleteTripButton, goBackButton, foundTrip]);
+	
 	deleteTripButton.addEventListener("click", function () {
 		deleteTrip(tripFound.id);
 	});
+
 	approveTripButton.addEventListener("click", function () {
 		approveTrip(tripFound.id);
 	});
