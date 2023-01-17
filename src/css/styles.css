@@ -141,6 +141,10 @@ button:hover {
   height: 60vh;
   border-collapse: collapse;
   padding-bottom: 2vw;
+  margin-top: 10vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 th {
