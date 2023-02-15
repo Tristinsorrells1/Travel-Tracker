@@ -8,7 +8,9 @@ class Agent {
 
   findUserByName(name) {
     let foundUser = this.travelersInfo.find((userInfo) => {
-      return userInfo.name === name;
+      return (
+        userInfo.name.trim().toLowerCase() === name.trim().toLowerCase()
+      );
     });
     if (!foundUser) {
       return `No Travelers by the name of ${name} found`;
